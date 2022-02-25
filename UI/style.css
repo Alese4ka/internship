@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
+:root {
+  --bg-color: #726476;
+  --btn-color: #d9ba5f;
+  --font-color1: #ffffff;
+  --font-color2: #000000;
+}
+main {
+  max-width: 94.5rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: "Ubuntu", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+.left-block__wrapper {
+  background-color: var(--bg-color);
+  width: 16.375rem;
+  height: 100vh;
+}
+.left-block__head,
+.left-block__footer {
+  text-align: center;
+}
+.left-block__head {
+  padding-top: 2.1875rem;
+  margin-bottom: 16rem;
+}
+h1 {
+  margin: 0.75rem 0 2.1875rem 0;
+  font-size: 1rem;
+  line-height: 1.75rem;
+  color: var(--font-color1);
+}
+.left-block__head__btn {
+  border: none;
+  background: var(--btn-color);
+  border-radius: 0.625rem;
+  padding: 0.9375rem 4.4375rem;
+}
+a {
+  text-decoration: none;
+  font-size: 1rem;
+  line-height: 1.3125rem;
+  color: var(--font-color2);
+}
+.left-block__footer__btn {
+  border: none;
+  background: var(--bg-color);
+  border-radius: 0.625rem;
+  padding: 0.9375rem 4.65rem;
+  border: 0.0625rem solid #e9ecf2;
+  box-sizing: border-box;
+  border-radius: 0.625rem;
+  margin-bottom: 3.0625rem;
+}
+.left-block__footer__btn > a {
+  color: var(--font-color1);
+}
+h5 {
+  font-size: 0.75rem;
+  line-height: 1.3125rem;
+  color: var(--font-color1);
+}
