@@ -7,6 +7,9 @@
   --font-color2: #000000;
   --font-color3: #989898;
 }
+body {
+  height: 100%;
+}
 .wrapper {
   max-width: 94.5rem;
   min-height: 100%;
@@ -38,7 +41,7 @@ main {
   padding-top: 2.1875rem;
 }
 h1 {
-  margin: 0.75rem 0 2.1875rem 0;
+  margin: 0.75rem 0 0;
   font-size: 1rem;
   line-height: 1.75rem;
   color: var(--font-color1);
@@ -58,6 +61,58 @@ a {
   line-height: 1.3125rem;
   color: var(--font-color2);
 }
+.left-block__filters {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+h3 {
+  font-size: 1rem;
+  line-height: 1.1487rem;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.left-block__filters > input {
+  margin-bottom: 0.75rem;
+  padding: 0.25rem;
+  background: #eeeeee;
+  border-radius: 10px;
+  color: var(--font-color3);
+}
+::-webkit-input-placeholder {
+  color: var(--font-color3);
+}
+.left-block__filters__date:focus,
+.left-block__filters__text:focus {
+  background: var(--font-color1);
+}
+.left-block__filters__btn {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.left-block__filters__btn-clear,
+.left-block__filters__btn-apply {
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background: #eeeeee;
+  border-radius: 10px;
+  color: var(--font-color1);
+  background-color: #d89a91;
+}
+.left-block__filters__btn-apply {
+  padding: 0.25rem 0.5rem;
+  margin-left: 1rem;
+  background-color: #6e9485;
+}
+.left-block__filters__btn-clear:hover {
+  background-color: #ffbbb1;
+}
+.left-block__filters__btn-apply:hover {
+  background-color: #9bc2b3;
+}
+
 .left-block__footer__btn {
   border: none;
   background: var(--bg-color);
@@ -109,6 +164,9 @@ header {
   border-radius: 0.625rem;
   margin: 0 11.875rem 1.8125rem 11.875rem;
 }
+.right-block__add-twit:hover {
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
 .right-block__twit__title {
   margin-left: 1.5rem;
   display: flex;
@@ -149,7 +207,7 @@ span {
   margin-right: 0.25rem;
 }
 .right-block__scroll-twit {
-  height: 35vh;
+  height: 38vh;
   overflow-y: scroll;
 }
 .right-block__comment:last-child {
@@ -163,8 +221,7 @@ span {
 }
 .right-block__add-twit {
   margin: 0 12.85rem 3rem 11.875rem;
-  justify-content: space-evenly;
-  align-items: center;
+  justify-content: space-around;
   padding: 1rem 0 1.375rem 0;
 }
 .right-block__add-twit__btn {
@@ -173,6 +230,7 @@ span {
   background: url(/assets/img/send.svg) no-repeat center;
   width: 2rem;
   height: 2rem;
+  align-self: flex-end;
 }
 textarea {
   border: 0.0625rem solid #9f9f9f;
@@ -198,7 +256,7 @@ footer {
   font-size: 0.75rem;
   display: flex;
   justify-content: space-around;
-  align-items: flex-end;
+  align-items: center;
   color: var(--font-color3);
 }
 footer > a {

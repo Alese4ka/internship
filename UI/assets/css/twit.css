@@ -7,8 +7,12 @@
   --font-color2: #000000;
   --font-color3: #989898;
 }
-main {
+body {
+  height: 100%;
+}
+.wrapper {
   max-width: 94.5rem;
+  min-height: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -16,6 +20,10 @@ main {
   font-family: "Ubuntu", sans-serif;
   font-style: normal;
   font-weight: normal;
+}
+main {
+  display: flex;
+  flex: 1 1 auto;
 }
 .left-block__wrapper {
   background-color: var(--bg-color);
@@ -76,8 +84,11 @@ a {
   color: var(--font-color1);
   margin-bottom: 1rem;
 }
+.right-block {
+  height: 100vh;
+}
 header {
-  height: 4.65rem;
+  height: 10vh;
   text-align: center;
   margin-top: 1rem;
   box-shadow: 0 0.4375rem 0.625rem -0.5625rem rgba(221, 221, 221, 1);
@@ -144,7 +155,7 @@ span {
   margin: 0 11.875rem 0 16.4375rem;
 }
 .right-block__scroll-comment {
-  height: 21.875rem;
+  height: 50vh;
   overflow-y: scroll;
 }
 .right-block__comment:last-child {
@@ -179,11 +190,11 @@ textarea {
 }
 footer {
   box-shadow: 0 -0.4375rem 0.625rem -0.5625rem rgba(221, 221, 221, 1);
-  height: 4rem;
+  height: 10vh;
   font-size: 0.75rem;
   display: flex;
   justify-content: space-around;
-  align-items: flex-end;
+  align-items: center;
   color: var(--font-color3);
 }
 footer > a {
