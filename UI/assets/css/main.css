@@ -20,7 +20,7 @@ body {
 }
 main {
   display: flex;
-  align-items: flex-start;
+  flex-direction: row;
 }
 .left-block__wrapper {
   background-color: var(--bg-color);
@@ -147,7 +147,7 @@ header {
   flex-wrap: nowrap;
   justify-content: center;
   align-items: flex-start;
-  width: 60vw;
+  max-width: 60vw;
   height: 74vh;
   flex: 1;
   margin: 0 8rem;
