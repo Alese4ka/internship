@@ -20,19 +20,15 @@ body {
 }
 main {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  flex: 100%;
 }
 .left-block__wrapper {
   background-color: var(--bg-color);
+  width: 16.375rem;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex: 40%;
-  flex: 1 1 auto;
-  padding: 0 2rem;
 }
 .left-block__head__mobile {
   display: none;
@@ -145,17 +141,15 @@ header {
   margin-top: 1rem;
   box-shadow: 0 0.4375rem 0.625rem -0.5625rem rgba(221, 221, 221, 1);
 }
-.right-block {
-  flex: 60%;
-}
 .right-block__chat {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 60vw;
   height: 74vh;
+  flex: 1;
   margin: 0 8rem;
   margin-top: 1.8125rem;
   padding-bottom: 1rem;
@@ -184,6 +178,14 @@ header {
   justify-content: space-between;
   align-items: flex-end;
 }
+.right-block__twit__title__edit,
+.right-block__twit__title__comment {
+  display: flex;
+  justify-content: space-between;
+}
+.right-block__twit__title__comment {
+  align-items: flex-end;
+}
 h2 {
   font-size: 1.25rem;
   line-height: 1.4375rem;
@@ -210,10 +212,6 @@ span {
 }
 .right-block__add-twit-none {
   display: none;
-}
-.right-block__twit__title__comment {
-  margin-right: 0.5rem;
-  cursor: pointer;
 }
 .right-block__twit__icons {
   display: grid;
@@ -254,10 +252,7 @@ span {
   height: 2rem;
   align-self: flex-end;
 }
-.right-block__add-twit__btn:hover {
-  background-color: #9bc2b3;
-  border-radius: 10%;
-}
+.right-block__add-twit__btn:hover,
 .right-block__twit_edit:hover,
 .right-block__twit_delete:hover {
   background-color: #9bc2b3;
@@ -285,7 +280,7 @@ footer {
   box-shadow: 0 -0.4375rem 0.625rem -0.5625rem rgba(221, 221, 221, 1);
   font-size: 0.75rem;
   display: flex;
-  height: 8vh;
+  height: 10vh;
   justify-content: space-around;
   align-items: center;
   color: var(--font-color3);
@@ -331,7 +326,6 @@ footer > a {
 }
 @media (max-width: 1024px) {
   .left-block__wrapper {
-    flex: 10%;
     padding: 0;
   }
   .right-block {
@@ -369,17 +363,12 @@ footer > a {
     background: url(/assets/img/bg_mobile.png) no-repeat center;
     background-size: cover;
     max-width: 100%;
-    height: 160%;
     z-index: -1;
   }
   .left-block__wrapper {
     background: none;
-    width: 97vw;
-    height: 40vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex: 1 1 auto;
+    width: 100vw;
+    height: 27vh;
   }
   .left-block__head {
     padding-top: 0.75rem;
@@ -447,7 +436,6 @@ footer > a {
   .right-block__chat__filters input[type="checkbox"]:checked ~ .collapsible {
     display: table;
   }
-
   .footer__mobile {
     display: block;
   }
@@ -462,5 +450,10 @@ footer > a {
   .right-block__add-twit-none {
     display: block;
     margin: 0.5rem;
+  }
+  .footer__mobile,
+  footer > h5,
+  footer > a {
+    font-size: 0.5rem;
   }
 }
