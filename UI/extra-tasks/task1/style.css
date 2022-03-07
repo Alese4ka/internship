@@ -1,11 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
+:root {
+  --bg-color: #fff;
+  --second-color: #000000;
+  --third-color: #808080;
+  --fourth-color: #3d81f5;
+  --font-color: #292b2c;
+  --border-color: #eceeef;
+}
 body {
   font-family: "Ubuntu", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
-  color: #292b2c;
-  background-color: #fff;
+  color: var(--font-color);
+  background-color: var(--bg-color);
   margin: 0;
   padding: 0;
 }
@@ -14,7 +22,7 @@ body {
 }
 a {
   text-decoration: none;
-  color: black;
+  color: var(--second-color);
 }
 .fixed-overlay {
   position: fixed;
@@ -48,7 +56,7 @@ a {
   right: 0;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: var(--bg-color);
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
@@ -59,13 +67,13 @@ a {
   align-items: center;
   justify-content: space-between;
   padding: 5px;
-  border-bottom: 1px solid #eceeef;
+  border-bottom: 1px solid var(--border-color);
 }
 .modal-footer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  border-top: 1px solid #eceeef;
+  border-top: 1px solid var(--border-color);
   padding: 15px;
 }
 .modal-title {
@@ -87,15 +95,15 @@ a {
   font-size: 24px;
   font-weight: 700;
   line-height: 1;
-  color: #000;
-  text-shadow: 0 1px 0 #fff;
+  color: var(--second-color);
+  text-shadow: 0 1px 0 var(--bg-color);
   opacity: 0.5;
   text-decoration: none;
   padding: 10px;
 }
 .close:focus,
 .close:hover {
-  color: #000;
+  color: var(--second-color);
   text-decoration: none;
   cursor: pointer;
   opacity: 0.75;
@@ -104,18 +112,18 @@ a {
   border: none;
   border-radius: 5px;
   padding: 0.5rem 1rem;
-  background-color: grey;
+  background-color: var(--third-color);
   margin-right: 0.5rem;
 }
 .close-btn > a,
 .save-btn > a {
-  color: white;
+  color: var(--bg-color);
 }
 .save-btn {
   border: none;
   border-radius: 5px;
   padding: 0.5rem 1rem;
-  background-color: rgb(61, 129, 245);
+  background-color: var(--fourth-color);
   margin-right: 0.5rem;
 }
 
