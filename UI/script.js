@@ -1,4 +1,6 @@
-let tweet = [
+'use strict';
+
+const tweets = [
   { id: '1', 
     text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
     createdAt: new Date('2022-02-16T03:30:00'),
@@ -229,4 +231,122 @@ let tweet = [
       }
     ]
   },
-]
+];
+
+const myModule = (function() {
+  let user = 'Алеся Брановицкая';
+  function getTweet(id) {
+    return tweets[id-1];
+  }
+  /*filterConfig = {
+      author: 'Anna', 
+      dateFrom: new Date('2022-03-10T18:30:00'),
+      dateTo: new Date('2022-03-13T18:30:00'),
+      hashtags: #main,
+      text: 'hello' 
+  }*/
+  //getTweets(skip, top, filterConfig)
+  function getTweets(skip, top, filterConfig) {
+//сортируем от большей к меньшей дате
+    tweets = tweets.sort((a, b) => a.filterConfig.dateFrom - b.filterConfig.dateTo);
+//потом по автору
+    tweets = tweets.filter(tweet => tweet.author === filterConfig.author);
+//потом по хэштегу
+    tweets = tweets.filter(tweet => tweet.text === filterConfig.hashtags);
+//потом по тексту
+    tweets = tweets.filter(tweet => tweet.text === filterConfig.text);
+    //потом skip
+    tweets.slice(skip,top)
+    //потом top
+  }
+  function validateTweet(tw) {
+    if (tw?.id?.text?.createdAt?.author?.comments !== undefined) {
+      return true;
+    }
+    else {
+     return false;
+    }
+  }
+  function addTweet(text){
+    let item = {
+      id: tweets.length,
+      text: text,
+      createdAt: new Date(),
+      author: user,
+      comments: []
+    }
+    console.log(item)
+    return tweets.push(item);
+    //проверить валидацию
+    //надо ли return
+    //как сделать генерацию id
+  }
+  function editTweet(id, text){
+    if (tweets[id-1].author === user) {
+      tweets[id-1].text = text
+      return true
+    }
+    else {
+     return false
+    }
+  }
+  function removeTweet(id, user) {
+    if (tweets[id-1].author === user) {
+      let removed = tweets.splice(id-1,1)
+      return true
+    }
+    else {
+     return false
+    }
+  }
+  function validateComment(com) {
+    if (com?.id?.text?.createdAt?.author !== undefined) {
+      return true
+    }
+    else {
+     return false
+    }
+  }
+  function addComment(id, text){
+    let item = {
+      id: Math.floor(Math.random() * id),
+      text: text,
+      createdAt: new Date(),
+      author: user
+  }
+  console.log(item)
+    return tweets[id-1].comments.push(item);
+    //проверить валидацию
+    //надо ли return
+    //как сделать генерацию id +-
+  }
+  //void?
+  // function changeUser(usr){
+  //   console.log(user)
+  //   user  = usr;
+  //   return usr
+  // }
+  function changeUser(usr){
+    void function () {
+      user = usr;
+      return usr;
+    }
+  }
+  return {
+    getTweets,
+    getTweet,
+    validateTweet,
+    addTweet,
+    editTweet,
+    removeTweet,
+    validateComment,
+    addComment,
+    changeUser
+  };
+  })();
+
+  
+  //console.log(myModule.getTweet(id));
+  //console.log(myModule.validateTweet(tw));
+  //console.log(myModule.removeTweet(id));
+  //console.log(myModule.changeUser('Alesya'));
