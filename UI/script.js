@@ -235,102 +235,148 @@ const tweets = [
 
 const myModule = (function() {
   let user = 'Алеся Брановицкая';
+  /*
+  const filterItems = (filterConfig) => {
+    filterConfig.author = filterConfig.author ? filterConfig.author : null;
+    filterConfig.hashtag = filterConfig.hashtag ? filterConfig.hashtag : null;
+    filterConfig.text = filterConfig.text ? filterConfig.text : null;
+    return tweets.filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1);
+  }
+  return tweets.filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1);
+*/  
+/*const filterItems = (filterConfig) => {
+ filterConfig.dateFrom = filterConfig.dateFrom ? new Date(filterConfig.dateFrom) : null;
+  filterConfig.dateTo = filterConfig.dateTo ? new Date(filterConfig.dateTo) : null;
+
+  return tweets.reverse().filter(({ createdAt }) => {
+    return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
+  });
+};
+console.log(filterItems ({dateFrom: '2022-03-11T09:30:00', dateTo: '2022-03-13T09:30:00'}));*/
+/*const filterItems = (filterConfig) => {
+  let array = [];
+  for(let i = 0; i < filterConfig.hashtag.length; i++){
+      array = array.concat(tweets.filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.hashtag[i].toLowerCase()) !== -1));
+  }
+ return array;
+ };
+ 
+ 
+ console.log(filterItems ({hashtag: ['#xel', '#datamola']}));*/
+
+/*function getTweets(filterConfig) {
+  /*filterConfig.author = filterConfig.author ? filterConfig.author : null;
+  filterConfig.dateFrom = filterConfig.dateFrom ? new Date(filterConfig.dateFrom) : null;
+  filterConfig.dateTo = filterConfig.dateTo ? new Date(filterConfig.dateTo) : null;
+  filterConfig.hashtag = filterConfig.hashtag ? filterConfig.hashtag : null;
+  filterConfig.text = filterConfig.text ? filterConfig.text : null;
+
+  let array = [];
+  for (let key in filterConfig) {
+    filterConfig[key] = filterConfig[key] ? filterConfig[key]: null;
+    for(let i = 0; i < filterConfig.hashtag.length; i++){
+    array = array.concat(tweets.filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.hashtag[i].toLowerCase()) !== -1));
+  }
+    return array
+      .reverse()
+      .filter(array => array.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
+      .filter(array => array.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
+      .filter(({ createdAt }) => {
+        return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
+      })
+  }
+ }
+console.log(getTweets({author: 'Алеся', dateFrom: new Date('2022-03-11T09:30:00'), dateTo: new Date('2022-03-13T09:30:00'), hashtag: ['#xel', '#datamola'], text: 'sum'})); */
+
+
+function getTweets(skip = 0, top = 10, filterConfig) {
+    if (filterConfig === undefined){
+      //потом skip top
+      return tweets.slice(skip,skip+top).reverse();
+    }
+    else {
+      if (filterConfig?.author !== undefined) {
+        //потом по автору
+        tweets = tweets.filter(tweet => tweet.author === filterConfig.author);
+      }
+      else if (filterConfig?.author?.dateFrom !== undefined) {
+//сортируем от большей к меньшей дате
+tweets = tweets.sort((a, b) => a.filterConfig.dateFrom - b.filterConfig.dateTo);
+      }
+
+      //сортируем от большей к меньшей дате
+      tweets = tweets.sort((a, b) => a.filterConfig.dateFrom - b.filterConfig.dateTo);
+      //потом по автору
+      tweets = tweets.filter(tweet => tweet.author === filterConfig.author);
+      //потом по хэштегу
+      tweets = tweets.filter(tweet => tweet.text === filterConfig.hashtags);
+      //потом по тексту
+      tweets = tweets.filter(tweet => tweet.text === filterConfig.text);
+      //потом skip top
+      return tweets.slice(skip,skip+top).reverse();
+    }
+    
+  }
   function getTweet(id) {
     return tweets[id-1];
   }
-  /*filterConfig = {
-      author: 'Anna', 
-      dateFrom: new Date('2022-03-10T18:30:00'),
-      dateTo: new Date('2022-03-13T18:30:00'),
-      hashtags: #main,
-      text: 'hello' 
-  }*/
-  //getTweets(skip, top, filterConfig)
-  function getTweets(skip, top, filterConfig) {
-//сортируем от большей к меньшей дате
-    tweets = tweets.sort((a, b) => a.filterConfig.dateFrom - b.filterConfig.dateTo);
-//потом по автору
-    tweets = tweets.filter(tweet => tweet.author === filterConfig.author);
-//потом по хэштегу
-    tweets = tweets.filter(tweet => tweet.text === filterConfig.hashtags);
-//потом по тексту
-    tweets = tweets.filter(tweet => tweet.text === filterConfig.text);
-    //потом skip
-    tweets.slice(skip,top)
-    //потом top
-  }
   function validateTweet(tw) {
-    if (tw?.id?.text?.createdAt?.author?.comments !== undefined) {
+    if (typeof tw.id === 'string' && typeof tw.text === 'string' && toString.call(tw.createdAt) === "[object Date]" && typeof tw.author === 'string' && tw.comments instanceof Array) 
       return true;
-    }
-    else {
-     return false;
-    }
+      return false;
   }
   function addTweet(text){
     let item = {
-      id: tweets.length,
+      id: String(Math.floor(Math.random() * 911)),
       text: text,
       createdAt: new Date(),
       author: user,
       comments: []
+    };
+    if (typeof item.id === 'string' && typeof item.text === text && toString.call(item.createdAt) === "[object Date]" && typeof item.author === 'string' && item.comments instanceof Array) {
+      tweets.push(item);
+      return true;
     }
-    console.log(item)
-    return tweets.push(item);
-    //проверить валидацию
-    //надо ли return
-    //как сделать генерацию id
+      return false;
   }
   function editTweet(id, text){
-    if (tweets[id-1].author === user) {
-      tweets[id-1].text = text
-      return true
+    if (tweets[id-1].author === user && typeof text === 'string') {
+      tweets[id-1].text = text;
+      return true;
     }
     else {
-     return false
+      return false;
     }
   }
-  function removeTweet(id, user) {
-    if (tweets[id-1].author === user) {
-      let removed = tweets.splice(id-1,1)
-      return true
+  function removeTweet(id) {
+    if (tweets[id-1]) {
+      tweets.splice(id-1,1);
+      return true;
     }
     else {
-     return false
+      return false;
     }
   }
   function validateComment(com) {
-    if (com?.id?.text?.createdAt?.author !== undefined) {
-      return true
-    }
-    else {
-     return false
-    }
+    if (typeof com.id === 'string' && typeof com.text === 'string' && toString.call(com.createdAt) === "[object Date]" && typeof com.author === 'string') 
+      return true;
+      return false;
   }
   function addComment(id, text){
     let item = {
-      id: Math.floor(Math.random() * id),
+      id: String(Math.floor(Math.random() * 1200)),
       text: text,
       createdAt: new Date(),
       author: user
-  }
-  console.log(item)
-    return tweets[id-1].comments.push(item);
-    //проверить валидацию
-    //надо ли return
-    //как сделать генерацию id +-
-  }
-  //void?
-  // function changeUser(usr){
-  //   console.log(user)
-  //   user  = usr;
-  //   return usr
-  // }
-  function changeUser(usr){
-    void function () {
-      user = usr;
-      return usr;
+    };
+    if (typeof item.id === 'string' && typeof item.text === text && toString.call(item.createdAt) === "[object Date]" && typeof item.author === 'string') {
+      tweets[id-1].comments.push(item);
+      return true;
     }
+      return false;
+  }
+  function changeUser(usr){
+    user = usr;
   }
   return {
     getTweets,
@@ -346,7 +392,34 @@ const myModule = (function() {
   })();
 
   
-  //console.log(myModule.getTweet(id));
-  //console.log(myModule.validateTweet(tw));
-  //console.log(myModule.removeTweet(id));
-  //console.log(myModule.changeUser('Alesya'));
+ 
+  //console.log(myModule.getTweets(0,10)); 
+  //console.log(myModule.getTweets(0,10, {author: 'Anna'}));
+  //console.log(myModule.getTweet(20)); + 
+  /*console.log(myModule.validateTweet({ id: '20', 
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    createdAt: new Date('2022-03-13T09:30:00'),
+    author: 'Алеся Брановицкая',
+    comments: [
+      { id: '919',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        createdAt: new Date('2022-03-13T12:30:00'),
+        author: 'Анджелина Джоли',
+      },
+      { id: '920',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        createdAt: new Date('2022-03-13T18:30:00'),
+        author: 'Анджелина Джоли',
+      }
+    ]
+  })); + */
+  //console.log(myModule.addTweet('hello')); +
+  //console.log(myModule.editTweet('text')); +
+  //console.log(myModule.removeTweet(1)); +
+  /*console.log(myModule.validateComment({ id: '919',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        createdAt: new Date('2022-03-13T12:30:00'),
+        author: 'Анджелина Джоли',
+      })); + */
+  //console.log(myModule.addComment(1,'hello')); +
+  //console.log(myModule.changeUser('Alesya')); +

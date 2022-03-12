@@ -65,6 +65,7 @@ h1 {
   line-height: 14.625rem;
   color: var(--font-color1);
   margin-bottom: 1rem;
+  margin-top: 0;
 }
 h2,
 h2 > a {
