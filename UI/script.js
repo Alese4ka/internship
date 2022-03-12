@@ -235,57 +235,34 @@ const tweets = [
 
 const myModule = (function() {
   let user = 'Алеся Брановицкая';
-  /*
-  const filterItems = (filterConfig) => {
-    filterConfig.author = filterConfig.author ? filterConfig.author : null;
-    filterConfig.hashtag = filterConfig.hashtag ? filterConfig.hashtag : null;
-    filterConfig.text = filterConfig.text ? filterConfig.text : null;
-    return tweets.filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1);
-  }
-  return tweets.filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1);
-*/  
-/*const filterItems = (filterConfig) => {
- filterConfig.dateFrom = filterConfig.dateFrom ? new Date(filterConfig.dateFrom) : null;
-  filterConfig.dateTo = filterConfig.dateTo ? new Date(filterConfig.dateTo) : null;
-
-  return tweets.reverse().filter(({ createdAt }) => {
-    return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
-  });
-};
-console.log(filterItems ({dateFrom: '2022-03-11T09:30:00', dateTo: '2022-03-13T09:30:00'}));*/
-/*const filterItems = (filterConfig) => {
-  let array = [];
-  for(let i = 0; i < filterConfig.hashtag.length; i++){
-      array = array.concat(tweets.filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.hashtag[i].toLowerCase()) !== -1));
-  }
- return array;
- };
- 
- 
- console.log(filterItems ({hashtag: ['#xel', '#datamola']}));*/
-
-/*function getTweets(filterConfig) {
-  /*filterConfig.author = filterConfig.author ? filterConfig.author : null;
-  filterConfig.dateFrom = filterConfig.dateFrom ? new Date(filterConfig.dateFrom) : null;
-  filterConfig.dateTo = filterConfig.dateTo ? new Date(filterConfig.dateTo) : null;
-  filterConfig.hashtag = filterConfig.hashtag ? filterConfig.hashtag : null;
-  filterConfig.text = filterConfig.text ? filterConfig.text : null;
-
-  let array = [];
-  for (let key in filterConfig) {
-    filterConfig[key] = filterConfig[key] ? filterConfig[key]: null;
-    for(let i = 0; i < filterConfig.hashtag.length; i++){
-    array = array.concat(tweets.filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.hashtag[i].toLowerCase()) !== -1));
-  }
-    return array
-      .reverse()
-      .filter(array => array.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
-      .filter(array => array.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
-      .filter(({ createdAt }) => {
-        return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
-      })
-  }
- }
+  function getTweets(filterConfig) {
+    let array = [];
+    filterConfig.author = filterConfig.author ? filterConfig.author : '';
+    filterConfig.dateFrom = filterConfig.dateFrom ? new Date(filterConfig.dateFrom) : null;
+    filterConfig.dateTo = filterConfig.dateTo ? new Date(filterConfig.dateTo) : null;
+      filterConfig.text = filterConfig.text ? filterConfig.text : '';
+      if (filterConfig.hashtags === undefined){
+          return tweets
+        .reverse()
+        .filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
+        .filter(({ createdAt }) => {
+          return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
+        })
+        .filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
+        }
+      else {
+      for(let i = 0; i < filterConfig.hashtags.length; i++){
+        array = array.concat(tweets.filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.hashtags[i].toLowerCase()) !== -1));
+      }
+      return array
+        .reverse()
+        .filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
+        .filter(({ createdAt }) => {
+          return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
+        })
+        .filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
+    }
+   }
 console.log(getTweets({author: 'Алеся', dateFrom: new Date('2022-03-11T09:30:00'), dateTo: new Date('2022-03-13T09:30:00'), hashtag: ['#xel', '#datamola'], text: 'sum'})); */
 
 
