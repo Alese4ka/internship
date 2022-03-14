@@ -1,4 +1,6 @@
-let arr = [-2,1,-3,4,-1,2,1,-5,4];
+'use strict';
+
+const arr = [-2,1,-3,4,-1,2,1,-5,4];
 
 function getNum(arr) {
   let maxNum = 0;

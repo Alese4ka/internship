@@ -109,6 +109,8 @@ footer {
   margin: 1rem;
   flex: 1;
   height: 5vh;
+}
+h5 {
   font-size: 0.75rem;
 }
 footer > a {

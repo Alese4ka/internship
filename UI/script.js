@@ -305,7 +305,7 @@ tweets = tweets.sort((a, b) => a.filterConfig.dateFrom - b.filterConfig.dateTo);
       return false;
   }
   function addTweet(text){
-    let item = {
+    const item = {
       id: String(Math.floor(Math.random() * 911)),
       text: text,
       createdAt: new Date(),
@@ -342,7 +342,7 @@ tweets = tweets.sort((a, b) => a.filterConfig.dateFrom - b.filterConfig.dateTo);
       return false;
   }
   function addComment(id, text){
-    let item = {
+    const item = {
       id: String(Math.floor(Math.random() * 1200)),
       text: text,
       createdAt: new Date(),
