@@ -237,10 +237,10 @@ const myModule = (function() {
   let user = 'Алеся Брановицкая';
   function getTweets(skip = 0, top = 10, filterConfig = {}) {
     let array = [];
-    filterConfig.author = filterConfig.author ? filterConfig.author : ' ';
+    filterConfig.author = filterConfig.author ? filterConfig.author : '';
     filterConfig.dateFrom = filterConfig.dateFrom ? new Date(filterConfig.dateFrom) : null;
     filterConfig.dateTo = filterConfig.dateTo ? new Date(filterConfig.dateTo) : null;
-    filterConfig.text = filterConfig.text ? filterConfig.text : ' ';
+    filterConfig.text = filterConfig.text ? filterConfig.text : '';
     if(filterConfig = {}){
       return tweets.slice(skip, skip+top);
     }
