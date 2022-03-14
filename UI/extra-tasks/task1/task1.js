@@ -12,4 +12,4 @@ function getNum(arr) {
   return maxNum;
 }
 
-console.log(getNum(arr));
+//console.log(getNum(arr));

@@ -1,22 +1,22 @@
-let arr = [7,1,5,3,6,4]
-//нашли миним число и продали по этой цене
-let minPrice = Math.min(...arr);
-let indexMinPrice = arr.indexOf(Math.min.apply(null,arr));
-//написать цикл 
-if(arr[indexMinPrice] < arr[indexMinPrice+1]){
-  let sum = arr[indexMinPrice+1] - arr[indexMinPrice] 
-  //console.log(sum)
-  if (sum > arr[indexMinPrice+2] || arr[indexMinPrice+2] > arr[indexMinPrice+3]) {
-   let sum2 = arr[indexMinPrice+3]  - arr[indexMinPrice+2]
-  console.log(sum+sum2)
+let prices = [10006,4,1,5,3,6,4];
+function getProfit(prices) {
+  if(prices.length >= 1 && prices.length <= 3 * 10 ** 4) {
+    let prof = 0;
+    for (let i = 0; i < prices.length; i++) {
+      if((prices[i] >= 0 && prices[i] <= 10 ** 4) && (prices[i+1] >= 0 && prices[i+1] <= 10 ** 4)){
+        if(prices[i+1] < prices[i]){
+          continue;
+        }
+        else if (prices[i+1] > prices[i]){
+          prof += prices[i+1] - prices[i];
+        } 
+      }
+    }
+    return prof;
+  }
+  else {
+    alert('Массив не соответствует заданию')
+  }
 }
-  
-}
 
-
-
-arr = arr.slice(indexMinPrice)
-let maxPrice = Math.max(...arr);
-//let indexMaxPrice = arr.indexOf(Math.max.apply(null,arr));
-let sum = maxPrice - minPrice
-//console.log(maxPrice);
+//console.log(getProfit(prices));
