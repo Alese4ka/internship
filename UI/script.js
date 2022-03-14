@@ -235,13 +235,16 @@ const tweets = [
 
 const myModule = (function() {
   let user = 'Алеся Брановицкая';
-  function getTweets(skip = 0, top = 10, filterConfig) {
+  function getTweets(skip = 0, top = 10, filterConfig = {}) {
     let array = [];
-    filterConfig.author = filterConfig.author ? filterConfig.author : '';
+    filterConfig.author = filterConfig.author ? filterConfig.author : ' ';
     filterConfig.dateFrom = filterConfig.dateFrom ? new Date(filterConfig.dateFrom) : null;
     filterConfig.dateTo = filterConfig.dateTo ? new Date(filterConfig.dateTo) : null;
-    filterConfig.text = filterConfig.text ? filterConfig.text : '';
-    if (filterConfig.hashtags === undefined){
+    filterConfig.text = filterConfig.text ? filterConfig.text : ' ';
+    if(filterConfig = {}){
+      return tweets.slice(skip, skip+top);
+    }
+    else if (filterConfig.hashtags === undefined){
       return tweets
         .reverse()
         .filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
@@ -265,7 +268,6 @@ const myModule = (function() {
         .slice(skip, skip+top);
     }
   }
-//console.log(getTweets({author: 'Алеся', dateFrom: new Date('2022-03-11T09:30:00'), dateTo: new Date('2022-03-13T09:30:00'), hashtag: ['#xel', '#datamola'], text: 'sum'})); */
   /*function getTweets(skip = 0, top = 10, filterConfig) {
     if (filterConfig === undefined){
       //потом skip top
@@ -369,9 +371,9 @@ tweets = tweets.sort((a, b) => a.filterConfig.dateFrom - b.filterConfig.dateTo);
   })();
 
   
- 
   //console.log(myModule.getTweets(0,10)); 
   //console.log(myModule.getTweets(0,10, {author: 'Anna'}));
+  //console.log(myModule.getTweets({author: 'Алеся', dateFrom: new Date('2022-03-11T09:30:00'), dateTo: new Date('2022-03-13T09:30:00'), hashtags: ['#xel', '#datamola'], text: 'sum'})); */
   //console.log(myModule.getTweet(20)); + 
   /*console.log(myModule.validateTweet({ id: '20', 
     text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
