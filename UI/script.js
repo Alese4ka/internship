@@ -241,12 +241,7 @@ const myModule = (function() {
     filterConfig.dateFrom = filterConfig.dateFrom ? new Date(filterConfig.dateFrom) : null;
     filterConfig.dateTo = filterConfig.dateTo ? new Date(filterConfig.dateTo) : null;
     filterConfig.text = filterConfig.text ? filterConfig.text : '';
-    if(filterConfig = {}){
-      return tweets
-        .slice(skip, skip+top)
-        .sort((a, b) => b.createdAt - a.createdAt);
-    }
-    else if (filterConfig.hashtags === undefined){
+    if (filterConfig.hashtags === undefined){
       return tweets
         .filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
         .filter(({ createdAt }) => {
@@ -267,7 +262,7 @@ const myModule = (function() {
         })
         .filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
         .slice(skip, skip+top)
-        .sort((a, b) => b.createdAt - a.createdAt);
+        .sort((a, b) => b.createdAt - a.createdAt);   
     }
   }
   function getTweet(id) {
