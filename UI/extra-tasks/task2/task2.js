@@ -1,7 +1,5 @@
 'use strict';
 
-const prices = [10006,4,1,5,3,6,4];
-
 function getProfit(prices) {
   if(prices.length >= 1 && prices.length <= 3 * 10 ** 4) {
     let profit = 0;
@@ -18,8 +16,8 @@ function getProfit(prices) {
     return profit;
   }
   else {
-    alert('Массив не соответствует заданию')
+    alert('Массив не соответствует заданию');
   }
 }
 
-//console.log(getProfit(prices));
+//console.log(getProfit([7, 1, 5, 3, 6, 4]));

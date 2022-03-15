@@ -1,7 +1,5 @@
 'use strict';
 
-const arr = [-2,1,-3,4,-1,2,1,-5,4];
-
 function getNum(arr) {
   let maxNum = 0;
   for (let i = 0; i < arr.length; i++) {
@@ -14,4 +12,4 @@ function getNum(arr) {
   return maxNum;
 }
 
-//console.log(getNum(arr));
+//console.log(getNum([-2,1,-3,4,-1,2,1,-5,4]));
