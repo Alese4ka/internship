@@ -2,7 +2,7 @@
 
 const tweets = [
   { id: '1', 
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro #datamola',
     createdAt: new Date('2022-02-16T03:30:00'),
     author: 'Алеся Брановицкая',
     comments: [
@@ -243,12 +243,12 @@ const myModule = (function() {
     filterConfig.text = filterConfig.text ? filterConfig.text : '';
     if (filterConfig.hashtags === undefined){
       return tweets
+        .slice(skip, skip+top)
         .filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
         .filter(({ createdAt }) => {
           return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
         })
         .filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
-        .slice(skip, skip+top)
         .sort((a, b) => b.createdAt - a.createdAt);
     }
     else {
@@ -256,13 +256,13 @@ const myModule = (function() {
         array = array.concat(tweets.filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.hashtags[i].toLowerCase()) !== -1));
       }
       return array
+      .slice(skip, skip+top)
         .filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
         .filter(({ createdAt }) => {
           return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
         })
         .filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
-        .slice(skip, skip+top)
-        .sort((a, b) => b.createdAt - a.createdAt);   
+        .sort((a, b) => b.createdAt - a.createdAt);
     }
   }
   function getTweet(id) {
@@ -285,7 +285,7 @@ const myModule = (function() {
       author: user,
       comments: []
     };
-    if (typeof item.id === 'string' && typeof item.text === 'string' && toString.call(item.createdAt) === "[object Date]" && item.author === user && item.comments instanceof Array) {
+    if (validateTweet(item) && item.author === user) { 
       tweets.push(item);
       return true;
     }
@@ -293,7 +293,7 @@ const myModule = (function() {
   }
   function editTweet(id, text){
     for(let i = 0; i < tweets.length; i++){
-      if (tweets[i].id === String(id) && tweets[i].author === user && typeof text === 'string'){
+      if (validateTweet(tweets[i]) && tweets[i].id === String(id) && tweets[i].author === user){
         tweets[i].text = text;
         return true;
       }
@@ -302,7 +302,7 @@ const myModule = (function() {
   }
   function removeTweet(id) {
     for(let i = 0; i < tweets.length; i++){
-      if (tweets[i].id === String(id) && tweets[i].author === user){
+      if (validateTweet(tweets[i]) && tweets[i].id === String(id) && tweets[i].author === user){
         tweets.splice(i,1);
         return true;
       }
@@ -323,8 +323,7 @@ const myModule = (function() {
           createdAt: new Date(),
           author: user,
         };
-        console.log(item)
-        if (typeof item.id === 'string' && typeof item.text === 'string' && toString.call(item.createdAt) === "[object Date]" && typeof item.author === 'string') {
+        if (validateComment(item)) {
           tweets[i].comments.push(item);
           return true;
         }
