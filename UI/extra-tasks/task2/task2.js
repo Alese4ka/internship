@@ -21,3 +21,4 @@ function getProfit(prices) {
 }
 
 //console.log(getProfit([7, 1, 5, 3, 6, 4]));
+   
