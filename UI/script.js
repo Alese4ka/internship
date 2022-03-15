@@ -243,25 +243,25 @@ const myModule = (function() {
     filterConfig.text = filterConfig.text ? filterConfig.text : '';
     if (filterConfig.hashtags === undefined){
       return tweets
-        .slice(skip, skip+top)
         .filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
         .filter(({ createdAt }) => {
           return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
         })
         .filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
-        .sort((a, b) => b.createdAt - a.createdAt);
+        .slice(skip, skip+top)
+        .sort((a, b) => b.createdAt - a.createdAt)
     }
     else {
       for(let i = 0; i < filterConfig.hashtags.length; i++){
         array = array.concat(tweets.filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.hashtags[i].toLowerCase()) !== -1));
       }
       return array
-      .slice(skip, skip+top)
         .filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
         .filter(({ createdAt }) => {
           return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
         })
         .filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
+        .slice(skip, skip+top)
         .sort((a, b) => b.createdAt - a.createdAt);
     }
   }
@@ -302,7 +302,7 @@ const myModule = (function() {
   }
   function removeTweet(id) {
     for(let i = 0; i < tweets.length; i++){
-      if (validateTweet(tweets[i]) && tweets[i].id === String(id) && tweets[i].author === user){
+      if (tweets[i].id === String(id) && tweets[i].author === user){
         tweets.splice(i,1);
         return true;
       }
@@ -315,22 +315,24 @@ const myModule = (function() {
       return false;
   }
   function addComment(id, text){
+    let num = 0;
+    let item = {
+      id: String(+(tweets[tweets.length-1].comments[tweets[tweets.length-1].comments.length-1].id)+1),
+      text: text,
+      createdAt: new Date(),
+      author: user,
+    };
     for(let i = 0; i < tweets.length; i++){
       if (tweets[i].id === String(id)){
-        let item = {
-          id: String(+(tweets[tweets.length-1].comments[tweets[tweets.length-1].comments.length-1].id)+1),
-          text: text,
-          createdAt: new Date(),
-          author: user,
-        };
-        if (validateComment(item)) {
-          tweets[i].comments.push(item);
-          return true;
-        }
-        return false;
+        num = id;
       }
       return false;
     }
+    if (typeof item.id === 'string' && typeof item.text === 'string' && toString.call(item.createdAt) === "[object Date]" && typeof item.author === 'string'){
+      tweets[num].comments.push(item);
+      return true;
+    }
+    return false;
   }
   function changeUser(usr){
     user = usr;
