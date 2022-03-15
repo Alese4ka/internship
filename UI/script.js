@@ -324,7 +324,7 @@ const myModule = (function() {
     };
     for(let i = 0; i < tweets.length; i++){
       if (tweets[i].id === String(id)){
-        num = id;
+        num = i;
       }
     }
     if (typeof item.id === 'string' && typeof item.text === 'string' && toString.call(item.createdAt) === "[object Date]" && typeof item.author === 'string'){
