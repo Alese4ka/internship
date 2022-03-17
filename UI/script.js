@@ -234,6 +234,8 @@ const tweets = [
 ];
 
 const myModule = (function() {
+  let lastId;
+  let lastCom;
   let user = 'Алеся Брановицкая';
   function getTweets(skip = 0, top = 10, filterConfig = {}) {
     let array = [];
@@ -242,44 +244,34 @@ const myModule = (function() {
     filterConfig.dateTo = filterConfig.dateTo ? new Date(filterConfig.dateTo) : null;
     filterConfig.text = filterConfig.text ? filterConfig.text : '';
     if (filterConfig.hashtags === undefined){
-      return tweets
-        .filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
-        .filter(({ createdAt }) => {
-          return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
-        })
-        .filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
-        .slice(skip, skip+top)
-        .sort((a, b) => b.createdAt - a.createdAt)
+      array = tweets;
     }
     else {
       for(let i = 0; i < filterConfig.hashtags.length; i++){
         array = array.concat(tweets.filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.hashtags[i].toLowerCase()) !== -1));
       }
-      return array
-        .filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
-        .filter(({ createdAt }) => {
-          return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
-        })
-        .filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
-        .slice(skip, skip+top)
-        .sort((a, b) => b.createdAt - a.createdAt);
     }
+    return array
+      .filter(tweets => tweets.author.toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
+      .filter(({ createdAt }) => {
+        return !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt) || (filterConfig.dateTo && filterConfig.dateTo < createdAt));
+      })
+      .filter(tweets => tweets.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
+      .sort((a, b) => b.createdAt - a.createdAt)
+      .slice(skip, skip+top);
   }
   function getTweet(id) {
-    for(let i = 0; i < tweets.length; i++){
-      if (tweets[i].id === String(id)){
-        return tweets[i];
-      }
-    }
+    return tweets.find(tweet => tweet.id == id);
   }
   function validateTweet(tw) {
-    if (typeof tw.id === 'string' && typeof tw.text === 'string' && toString.call(tw.createdAt) === "[object Date]" && typeof tw.author === 'string' && tw.comments instanceof Array) 
+    if (typeof tw.id === 'string' && typeof tw.text === 'string' && tw.text.length <= 280 && toString.call(tw.createdAt) === "[object Date]" && typeof tw.author === 'string' && tw.comments instanceof Array) 
       return true;
       return false; 
   }
   function addTweet(text){
-    let item = {
-      id: String(+(tweets[tweets.length-1].id)+1),
+    lastId = tweets.find(tweet => tweet.id == tweets.length).id;
+    const item = {
+      id: String(+lastId+1),
       text: text,
       createdAt: new Date(),
       author: user,
@@ -292,42 +284,39 @@ const myModule = (function() {
       return false;
   }
   function editTweet(id, text){
-    for(let i = 0; i < tweets.length; i++){
-      if (validateTweet(tweets[i]) && tweets[i].id === String(id) && tweets[i].author === user){
-        tweets[i].text = text;
-        return true;
-      }
+    getTweet(id);
+    const clone = tweets[id-1];
+    clone.text = text;
+    if (validateTweet(clone) && clone.author === user){
+      tweets[id-1] = clone;
+      return true;
     }
     return false;
   }
   function removeTweet(id) {
-    for(let i = 0; i < tweets.length; i++){
-      if (tweets[i].id === String(id) && tweets[i].author === user){
-        tweets.splice(i,1);
-        return true;
-      }
+    getTweet(id);
+    if (tweets[id-1].author === user){
+      tweets.splice(id-1,1);
+      return true;
     }
     return false;
   }
   function validateComment(com) {
-    if (typeof com.id === 'string' && typeof com.text === 'string' && toString.call(com.createdAt) === "[object Date]" && typeof com.author === 'string') 
+    if (typeof com.id === 'string' && com.text.length <= 280 && typeof com.text === 'string' && toString.call(com.createdAt) === "[object Date]" && typeof com.author === 'string') 
       return true;
       return false;
   }
   function addComment(id, text){
+    lastCom = tweets.find(tweet => tweet.id == id).comments;
     let num = 0;
-    let item = {
-      id: String(+(tweets[tweets.length-1].comments[tweets[tweets.length-1].comments.length-1].id)+1),
+    const item = {
+      id: String(+(lastCom[lastCom.length-1].id)+1),
       text: text,
       createdAt: new Date(),
       author: user,
     };
-    for(let i = 0; i < tweets.length; i++){
-      if (tweets[i].id === String(id)){
-        num = i;
-      }
-    }
-    if (typeof item.id === 'string' && typeof item.text === 'string' && toString.call(item.createdAt) === "[object Date]" && typeof item.author === 'string'){
+    getTweet(id);
+    if (validateComment(item)){
       tweets[num].comments.push(item);
       return true;
     }

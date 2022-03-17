@@ -1,7 +1,7 @@
 'use strict';
 
 function getNum(arr) {
-  let maxNum = 0;
+  let maxNum = -Infinity;
   for (let i = 0; i < arr.length; i++) {
     let sum = 0;
     for (let j = i; j < arr.length; j++) {
