@@ -284,18 +284,16 @@ const myModule = (function() {
       return false;
   }
   function editTweet(id, text){
-    getTweet(id);
     const clone = tweets[id-1];
     clone.text = text;
-    if (validateTweet(clone) && clone.author === user){
+    if (getTweet(id).id === String(id) && validateTweet(clone) && clone.author === user){
       tweets[id-1] = clone;
       return true;
     }
     return false;
   }
   function removeTweet(id) {
-    getTweet(id);
-    if (tweets[id-1].author === user){
+    if (getTweet(id).id === String(id) && tweets[id-1].author === user){
       tweets.splice(id-1,1);
       return true;
     }
@@ -308,16 +306,14 @@ const myModule = (function() {
   }
   function addComment(id, text){
     lastCom = tweets.find(tweet => tweet.id == id).comments;
-    let num = 0;
     const item = {
       id: String(+(lastCom[lastCom.length-1].id)+1),
       text: text,
       createdAt: new Date(),
       author: user,
     };
-    getTweet(id);
-    if (validateComment(item)){
-      tweets[num].comments.push(item);
+    if (getTweet(id).id === String(id) && validateComment(item)){
+      tweets[id-1].comments.push(item);
       return true;
     }
     return false;
