@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "eslint-config-airbnb": "^19.0.4"
+  },
+  "name": "internship",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alese4ka/internship.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alese4ka/internship/issues"
+  },
+  "homepage": "https://github.com/Alese4ka/internship#readme"
+}
