@@ -365,15 +365,6 @@ class Tweet {
     console.log('can not change', author);
   }
 
-  addComment(id, text) {
-    const comment = new Comment(id, text, new Date(), 'Alesya');
-    if (Comment.validate(comment)) {
-      this.comments.push(comment);
-      return true;
-    }
-    return false;
-  }
-
   static maxTextLength() {
     return 280;
   }
@@ -394,7 +385,6 @@ class Tweet {
 // tweet.createdAt = 5;
 // tweet.author = 5;
 // console.log(tweet.id, tweet.createdAt, tweet.author);
-// console.log(tweet.addComment(5, 'hello'), tweet);
 // console.log(Tweet.validate({
 //   id: '1',
 //   text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro #datamola',
@@ -494,6 +484,16 @@ class TweetCollection {
     return false;
   }
 
+  addComment(id, text) {
+    const comment = new Comment(id, text, new Date(), 'Alesya');
+    if (this.get(id).id === String(id) && Comment.validate(comment)) {
+      tweets[id - 1].comments.push(comment);
+      // this.comments.push(comment);
+      return true;
+    }
+    return false;
+  }
+
   addAll(tws) {
     // this.tws.add(tws);
     this.tws = new Set(tws);
@@ -513,4 +513,5 @@ tweetCollection.addAll(tweets);
 // console.log(tweetCollection.add('hello'), tweetCollection);
 // console.log(tweetCollection.edit(4, 'text'), tweetCollection);
 // console.log(tweetCollection.remove(1), tweetCollection);
+// console.log(tweetCollection.addComment(5, 'hello'), tweetCollection);
 // tweetCollection.clear();
