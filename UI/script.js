@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-return */
 /* eslint-disable consistent-return */
 /* eslint-disable no-setter-return */
 /* eslint-disable no-shadow */
@@ -53,6 +54,13 @@ const tweets = [
   },
   {
     id: '3',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    createdAt: new Date('2022-02-24T03:30:00'),
+    author: 'Анджелина Джоли',
+    comments: [],
+  },
+  {
+    id: 3,
     text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
     createdAt: new Date('2022-02-24T03:30:00'),
     author: 'Анджелина Джоли',
@@ -274,71 +282,14 @@ const tweets = [
       }],
   },
 ];
-class Comment {
-  constructor(id, text, createdAt, author) {
-    this._id = String(Math.ceil((Math.random(new Date(0))) * 1000));
-    this.text = text;
-    this._createdAt = createdAt;
-    this._author = author;
-  }
-
-  get id() {
-    return this._id;
-  }
-
-  set id(id) {
-    console.log('can not change', id);
-  }
-
-  get createdAt() {
-    return this._createdAt;
-  }
-
-  set createdAt(createdAt) {
-    console.log('can not change', createdAt);
-  }
-
-  get author() {
-    return this._author;
-  }
-
-  set author(author) {
-    console.log('can not change', author);
-  }
-
-  static maxTextLength() {
-    return 280;
-  }
-
-  static validate(com) {
-    if (typeof com.id === 'string' && com.text.length <= 280
-    && typeof com.text === 'string' && toString.call(com.createdAt) === '[object Date]'
-    && typeof com.author === 'string') {
-      return true;
-    }
-    return false;
-  }
-}
-
-// const comment = new Comment('1', '2', new Date('2022-02-19T19:30:00'), 'Alesya');
-// comment.id = 5;
-// comment.createdAt = 5;
-// comment.author = 5;
-// console.log(comment.id, comment.createdAt, comment.author);
-// console.log(Comment.validate({
-//   id: '904',
-//   text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
-//   createdAt: new Date('2022-02-22T17:30:00'),
-//   author: 'Алеся Брановицкая',
-// }));
 
 class Tweet {
   constructor(id, text, createdAt, author, comments) {
-    this._id = String(Math.ceil((Math.random(new Date(0))) * 1000));
+    this._id = String((Math.ceil((Math.random(new Date(0))) * 1000)) + id);
     this.text = text;
-    this._createdAt = createdAt;
-    this._author = author;
-    this.comments = comments;
+    this._createdAt = new Date(0);
+    this._author = tweetCollection._user;
+    this.comments = [];
   }
 
   get id() {
@@ -354,7 +305,7 @@ class Tweet {
   }
 
   set createdAt(createdAt) {
-    console.log('can not change', createdAt);
+    console.log('can\'t change', createdAt);
   }
 
   get author() {
@@ -362,7 +313,7 @@ class Tweet {
   }
 
   set author(author) {
-    console.log('can not change', author);
+    console.log('can\'t change', author);
   }
 
   static maxTextLength() {
@@ -379,7 +330,7 @@ class Tweet {
   }
 }
 
-// const tweet = new Tweet('1', '2', new Date('2022-02-19T19:30:00'), 'Alesya', []);
+// const tweet = new Tweet('1', '2', new Date(), 'Алеся Брановицкая', []);
 // console.log(tweet);
 // tweet.id = 5;
 // tweet.createdAt = 5;
@@ -411,6 +362,63 @@ class Tweet {
 //     }],
 // }));
 
+class Comment {
+  constructor(id, text, createdAt, author) {
+    this._id = String((Math.ceil((Math.random(new Date(0))) * 1000)) + id);
+    this.text = text;
+    this._createdAt = new Date(0);
+    this._author = tweetCollection._user;
+  }
+
+  get id() {
+    return this._id;
+  }
+
+  set id(id) {
+    console.log('can\'t change', id);
+  }
+
+  get createdAt() {
+    return this._createdAt;
+  }
+
+  set createdAt(createdAt) {
+    console.log('can\'t change', createdAt);
+  }
+
+  get author() {
+    return this._author;
+  }
+
+  set author(author) {
+    console.log('can\'t change', author);
+  }
+
+  static maxTextLength() {
+    return 280;
+  }
+
+  static validate(com) {
+    if (typeof com.id === 'string' && com.text.length <= 280
+    && typeof com.text === 'string' && toString.call(com.createdAt) === '[object Date]'
+    && typeof com.author === 'string') {
+      return true;
+    }
+    return false;
+  }
+}
+
+// const comment = new Comment('1', '2', new Date('2022-02-19T19:30:00'), 'Alesya');
+// comment.id = 5;
+// comment.createdAt = 5;
+// comment.author = 5;
+// console.log(comment.id, comment.createdAt, comment.author);
+// console.log(Comment.validate({
+//   id: '904',
+//   text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+//   createdAt: new Date('2022-02-22T17:30:00'),
+//   author: 'Алеся Брановицкая',
+// }));
 class TweetCollection {
   constructor(tws) {
     this._tws = new Set(tws);
@@ -421,11 +429,8 @@ class TweetCollection {
     return this._user;
   }
 
-  set user(_user) {
-    if (this._user) {
-      return this._user;
-    }
-    this._user = 'Гость';
+  set user(user) {
+    this._user = user;
   }
 
   getPage(skip = 0, top = 10, filterConfig = {}) {
@@ -459,8 +464,8 @@ class TweetCollection {
 
   add(text) {
     const tweet = new Tweet('5', text, new Date(), this._user, []);
-    if (Tweet.validate(tweet)) {
-      this.tws.add(tweet);
+    if (Tweet.validate(tweet) && tweet.author === tweetCollection._user) {
+      this._tws.add(tweet);
       return true;
     }
     return false;
@@ -470,7 +475,7 @@ class TweetCollection {
     const clone = tweets[id - 1];
     clone.text = text;
     if (this.get(id).id === String(id) && Tweet.validate(clone) && clone.author === this._user) {
-      tweets[id - 1] = clone;
+      this._tws[id - 1] = clone;
       return true;
     }
     return false;
@@ -478,35 +483,43 @@ class TweetCollection {
 
   remove(id) {
     if (this.get(id).id === String(id) && tweets[id - 1].author === this._user) {
-      this.tws.delete(tweets[id - 1]);
+      this._tws.delete(tweets[id - 1]);
       return true;
     }
     return false;
   }
 
   addComment(id, text) {
-    const comment = new Comment(id, text, new Date(), 'Alesya');
+    const comment = new Comment(id, text, new Date(), this._author);
     if (this.get(id).id === String(id) && Comment.validate(comment)) {
       tweets[id - 1].comments.push(comment);
-      // this.comments.push(comment);
       return true;
     }
     return false;
   }
 
   addAll(tws) {
-    // this.tws.add(tws);
-    this.tws = new Set(tws);
+    const noValidArr = [];
+    const validArr = [];
+    for (let i = 0; i < tws.length; i += 1) {
+      if (!Tweet.validate(tws[i])) {
+        noValidArr.push(tws[i]);
+      }
+      validArr.push(tws[i]);
+    }
+    this._tws = new Set(validArr);
+    return noValidArr;
+    // валидаия, вернуть массив не прошедший проверку
   }
 
   clear() {
-    this.tws.clear();
+    this._tws.clear();
   }
 }
 
-const tweetCollection = new TweetCollection();
+// const tweetCollection = new TweetCollection();
 // console.log(tweetCollection);
-tweetCollection.addAll(tweets);
+// tweetCollection.addAll(tweets);
 // console.log(tweetCollection.getPage(0, 10));
 // console.log(tweetCollection.getPage(0, 10, { hashtags: ['#datamola'] }));
 // console.log(tweetCollection.get(20));
