@@ -61,7 +61,7 @@ class List {
     let nodeToDelete = null;
     let deletedNode = null;
     if (i === undefined || i === this.length) {
-      while (count < this.length-1) {
+      while (count < this.length - 1) {
         currentNode = currentNode.next;
         count += 1;
       }
@@ -77,7 +77,7 @@ class List {
         return true;
       }
       while (count < i) {
-        beforeNodeToDelete = currentNode.next;
+        beforeNodeToDelete = currentNode;
         nodeToDelete = beforeNodeToDelete.next;
         count += 1;
       }
