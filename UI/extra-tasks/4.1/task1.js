@@ -76,7 +76,7 @@ class List {
         this.length -= 1;
         return true;
       }
-      while (count < i - 1) {
+      while (count < i) {
         currentNode = currentNode.next;
         beforeNodeToDelete = currentNode;
         nodeToDelete = beforeNodeToDelete.next;
