@@ -23,7 +23,7 @@ class List {
 
   addNode(value, i) {
     const node = new Node(value);
-    if (i === undefined) {
+    if (i === undefined || i === this.length) {
       let currentNode = this.root;
       if (!this.root) {
         this.root = node;
@@ -36,7 +36,7 @@ class List {
       currentNode.next = node;
       this.length += 1;
       return true;
-    } else if (i >= 0 && i <= this.length - 1 && this.length >= 0) {
+    } else if (i >= 0 && i < this.length && this.length >= 0) {
       let currentNode = this.root;
       let nextNode = this.root.next;
       let count = 0;
@@ -60,16 +60,14 @@ class List {
     let beforeNodeToDelete = null;
     let nodeToDelete = null;
     let deletedNode = null;
-    if (i === undefined) {
-      while (count < this.length - 1) {
+    if (i === undefined || i === this.length) {
+      while (currentNode.next) {
         currentNode = currentNode.next;
-        nodeToDelete = currentNode.next.next;
-        count += 1;
       }
-      nodeToDelete = null;
+      currentNode.next = null;
       this.length -= 1;
       return true;
-    } else if (i <= this.length) {
+    } else if (i < this.length) {
       if (i === 0) {
         this.root = currentNode.next;
         deletedNode = currentNode;
