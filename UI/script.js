@@ -60,13 +60,6 @@ const tweets = [
     comments: [],
   },
   {
-    id: 3,
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
-    createdAt: new Date('2022-02-24T03:30:00'),
-    author: 'Анджелина Джоли',
-    comments: [],
-  },
-  {
     id: '4',
     text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
     createdAt: new Date('2022-02-25T03:30:00'),
