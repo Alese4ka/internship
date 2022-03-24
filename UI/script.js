@@ -459,28 +459,34 @@ class TweetCollection {
   }
 
   add(text) {
-    const tweet = new Tweet('5', text, new Date(), this._user, []);
-    if (Tweet.validate(tweet) && tweet.author === tweetCollection._user) {
-      this._tws.add(tweet);
-      return true;
+    if (this._user) {
+      const tweet = new Tweet('5', text, new Date(), this._user, []);
+      if (Tweet.validate(tweet) && tweet.author === tweetCollection._user) {
+        this._tws.add(tweet);
+        return true;
+      }
     }
     return false;
   }
 
   edit(id, text) {
-    const clone = tweets[id - 1];
-    clone.text = text;
-    if (this.get(id).id === String(id) && Tweet.validate(clone) && clone.author === this._user) {
-      this._tws[id - 1] = clone;
-      return true;
+    if (this._user) {
+      const clone = tweets[id - 1];
+      clone.text = text;
+      if (this.get(id).id === String(id) && Tweet.validate(clone) && clone.author === this._user) {
+        this._tws[id - 1] = clone;
+        return true;
+      }
     }
     return false;
   }
 
   remove(id) {
-    if (this.get(id).id === String(id) && tweets[id - 1].author === this._user) {
-      this._tws.delete(tweets[id - 1]);
-      return true;
+    if (this._user) {
+      if (this.get(id).id === String(id) && tweets[id - 1].author === this._user) {
+        this._tws.delete(tweets[id - 1]);
+        return true;
+      }
     }
     return false;
   }
@@ -515,6 +521,7 @@ class TweetCollection {
 // const tweetCollection = new TweetCollection();
 // console.log(tweetCollection);
 // tweetCollection.addAll(tweets);
+// console.log(tweetCollection.addAll(tweets));
 // console.log(tweetCollection);
 // console.log(tweetCollection.getPage(0, 10));
 // console.log(tweetCollection.getPage(0, 10, { hashtags: ['#datamola'] }));
