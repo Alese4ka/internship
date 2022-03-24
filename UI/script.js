@@ -280,9 +280,9 @@ class Tweet {
   constructor(id, text, createdAt, author, comments) {
     this._id = String((Math.ceil((Math.random(new Date(0))) * 1000)) + id);
     this.text = text;
-    this._createdAt = new Date(0);
+    this._createdAt = new Date();
     this._author = tweetCollection._user;
-    this.comments = [];
+    this.comments = comments;
   }
 
   get id() {
@@ -323,6 +323,7 @@ class Tweet {
   }
 }
 
+// const tweetCollection = new TweetCollection();
 // const tweet = new Tweet('1', '2', new Date(), 'Алеся Брановицкая', []);
 // console.log(tweet);
 // tweet.id = 5;
@@ -359,7 +360,7 @@ class Comment {
   constructor(id, text, createdAt, author) {
     this._id = String((Math.ceil((Math.random(new Date(0))) * 1000)) + id);
     this.text = text;
-    this._createdAt = new Date(0);
+    this._createdAt = new Date();
     this._author = tweetCollection._user;
   }
 
@@ -401,7 +402,9 @@ class Comment {
   }
 }
 
+// const tweetCollection = new TweetCollection();
 // const comment = new Comment('1', '2', new Date('2022-02-19T19:30:00'), 'Alesya');
+// console.log(comment);
 // comment.id = 5;
 // comment.createdAt = 5;
 // comment.author = 5;
@@ -502,7 +505,6 @@ class TweetCollection {
     }
     this._tws = new Set(validArr);
     return noValidArr;
-    // валидаия, вернуть массив не прошедший проверку
   }
 
   clear() {
@@ -513,6 +515,7 @@ class TweetCollection {
 // const tweetCollection = new TweetCollection();
 // console.log(tweetCollection);
 // tweetCollection.addAll(tweets);
+// console.log(tweetCollection);
 // console.log(tweetCollection.getPage(0, 10));
 // console.log(tweetCollection.getPage(0, 10, { hashtags: ['#datamola'] }));
 // console.log(tweetCollection.get(20));
