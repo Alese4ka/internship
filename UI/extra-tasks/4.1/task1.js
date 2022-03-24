@@ -56,13 +56,14 @@ class List {
 
   removeNode(i) {
     let currentNode = this.root;
-    let count = 0;
+    let count = 1;
     let beforeNodeToDelete = null;
     let nodeToDelete = null;
     let deletedNode = null;
     if (i === undefined || i === this.length) {
-      while (currentNode.next) {
+      while (count < this.length-1) {
         currentNode = currentNode.next;
+        count += 1;
       }
       currentNode.next = null;
       this.length -= 1;
