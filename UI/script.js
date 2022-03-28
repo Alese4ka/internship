@@ -277,8 +277,8 @@ const tweets = [
 ];
 
 class Tweet {
-  constructor(id, text, createdAt = new Date(), author = tweetCollection._user, comments = []) {
-    this._id = String(Math.ceil((Math.random(new Date())) * 1000));
+  constructor(text, id = String(Math.ceil((Math.random(new Date())) * 1000)), createdAt = new Date(), author = tweetCollection._user, comments = []) {
+    this._id = id
     this.text = text;
     this._createdAt = createdAt;
     this._author = author;
@@ -356,8 +356,8 @@ class Tweet {
 // }));
 
 class Comment {
-  constructor(id, text, createdAt = new Date(), author = tweetCollection._user) {
-    this._id = String(Math.ceil((Math.random(new Date())) * 1000));
+  constructor(text, id = String(Math.ceil((Math.random(new Date())) * 1000)), createdAt = new Date(), author = tweetCollection._user) {
+    this._id = id;
     this.text = text;
     this._createdAt = createdAt;
     this._author = author;
