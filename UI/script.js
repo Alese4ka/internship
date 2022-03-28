@@ -277,12 +277,12 @@ const tweets = [
 ];
 
 class Tweet {
-  constructor(text) {
+  constructor(id, text, createdAt = new Date(), author = tweetCollection._user, comments = []) {
     this._id = String(Math.ceil((Math.random(new Date())) * 1000));
     this.text = text;
-    this._createdAt = new Date();
-    this._author = tweetCollection._user;
-    this.comments = [];
+    this._createdAt = createdAt;
+    this._author = author;
+    this.comments = comments;
   }
 
   get id() {
@@ -323,7 +323,7 @@ class Tweet {
 
 // const tweetCollection = new TweetCollection();
 // tweetCollection._user = 'Алеся Брановицкая';
-// const tweet = new Tweet('hello, world');
+// const tweet = new Tweet('14', 'Hello', new Date('2022-02-19T19:30:00'), 'Алеся Брановицкая', []);
 // console.log(tweet);
 // tweet.id = 5;
 // tweet.createdAt = 5;
@@ -356,11 +356,11 @@ class Tweet {
 // }));
 
 class Comment {
-  constructor(text) {
+  constructor(id, text, createdAt = new Date(), author = tweetCollection._user) {
     this._id = String(Math.ceil((Math.random(new Date())) * 1000));
     this.text = text;
-    this._createdAt = new Date();
-    this._author = tweetCollection._user;
+    this._createdAt = createdAt;
+    this._author = author;
   }
 
   get id() {
@@ -401,7 +401,7 @@ class Comment {
 
 // const tweetCollection = new TweetCollection();
 // tweetCollection._user = 'Алеся Брановицкая'
-// const comment = new Comment('hello');
+// const comment = new Comment('24', 'Hello', new Date('2022-02-19T19:30:00'), 'Алеся Брановицкая');
 // console.log(comment);
 // comment.id = 5;
 // comment.createdAt = 5;
