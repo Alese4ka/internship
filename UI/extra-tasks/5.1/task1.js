@@ -5,9 +5,9 @@
 /* eslint-disable lines-around-directive */
 /* eslint-disable strict */
 'use strict';
-function createCalendar(year, month) {
+function createCalendar(id, year, month) {
+  const elem = document.querySelector(id);
   const oneTr = document.querySelector('#oneTR');
-  const elem = document.querySelector('#table');
   const one = document.querySelector('#one');
   const one1 = document.querySelector('#one1');
   const two = document.querySelector('#two');
@@ -22,6 +22,7 @@ function createCalendar(year, month) {
   const six1 = document.querySelector('#six1');
   const zero = document.querySelector('#zero');
   const date = new Date(year, month);
+  console.log(date)
   const getDaysInMonth = (month, year) => {
     return new Date(year, month, 0).getDate();
   };
@@ -81,7 +82,7 @@ function createCalendar(year, month) {
   // z.appendChild(t);
   // document.getElementById("myTr").appendChild(z);
 
-createCalendar(2022, 3);
+createCalendar('table', 2022, 3);
 
 
 // for (let j = 0; j < arr.length / 8; j += 1) {

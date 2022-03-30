@@ -37,9 +37,12 @@ const nodeList = [
 ];
 
 function createList(title, list) {
+  const nameTitle = document.createElement(title);
+  nameTitle.textContent = 'Список';
+  document.body.appendChild(nameTitle);
   const ul = document.createElement('ul');
   for (let i = 0; i < list.length; i += 1) {
-    const li = document.createElement(title);
+    const li = document.createElement('li');
     li.textContent = list[i].value;
     ul.appendChild(li);
     if (list[i].children !== null) {
