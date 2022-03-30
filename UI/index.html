@@ -29,10 +29,11 @@
           </div>
           <div class="left-block__filters">
             <h3>Фильтры</h3>
-            <input type="text" class="left-block__filters__text" placeholder="По имени">
+            <div id="filters-id" class="left-block__filters"></div>
+            <!-- <input type="text" class="left-block__filters__text" placeholder="По имени">
             <input type="date" class="left-block__filters__date" placeholder="По дате">
             <input type="text" class="left-block__filters__text" placeholder="По тексту">
-            <input type="text" class="left-block__filters__text" placeholder="По хештегу">
+            <input type="text" class="left-block__filters__text" placeholder="По хештегу"> -->
             <div class="left-block__filters__btn">
               <button class="left-block__filters__btn-clear">Сбросить</button>
               <button class="left-block__filters__btn-apply">Применить</button>
@@ -50,7 +51,8 @@
         <header>
           <img src="assets/img/logo_.svg" alt="logotype" class="right-block__img">
         </header>
-        <div id="tweet-id"></div>
+        <div id="tweet-id">
+        </div>
         <article class="right-block__add-twit">
           <img src="assets/img/avatar_mini.png" alt="avatar">
           <textarea cols="185" rows="5" maxlength="280" style="width: 100%;"
@@ -59,6 +61,7 @@
             class="right-block__add-twit-none"></textarea>
           <button class="right-block__add-twit__btn"></button>
         </article>
+        <div id="comment-id"></div>
         <section class="right-block__chat">
           <div class="right-block__chat__filters">
             <input type="checkbox" />
@@ -109,6 +112,6 @@
   </div>
 </body>
 
-<script src="newTask.js"></script>
+<script src="./js/dom.js"></script>
 
 </html>

@@ -41,9 +41,9 @@ main {
 .left-block__head {
   padding-top: 2.1875rem;
 }
-h1 {
+#header-id {
   margin: 0.75rem 0 0;
-  font-size: 1rem;
+  font-size: 1.25rem;
   line-height: 1.75rem;
   color: var(--font-color1);
 }
@@ -76,10 +76,9 @@ h3 {
 }
 .left-block__filters > input {
   margin-bottom: 0.75rem;
-  padding: 0.25rem;
+  padding: 0.25rem 1.25rem;
   background: #eeeeee;
   border-radius: 0.625rem;
-  color: var(--font-color3);
 }
 ::-webkit-input-placeholder {
   color: var(--font-color3);
@@ -160,13 +159,54 @@ header {
   flex: 1;
   margin: 0 5rem;
 }
-.child,
-#tweet-id {
+.child {
+  display: flex;
+  flex-direction: column;
   padding: 1rem 1.5625rem 1.375rem 1.5625rem;
   border: 0.0625rem solid #9f9f9f;
   box-sizing: border-box;
   border-radius: 0.625rem;
   margin-bottom: 1.8125rem;
+}
+.child {
+  background: url("../../assets/img/avatar_mini.png") no-repeat 2% 15%;
+}
+.comments {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  text-align: center;
+  background: url("../../assets/img/comment.svg") no-repeat right;
+  background-position-x: 56.5rem;
+}
+.tweet,
+.comment {
+  padding: 1rem 1.5625rem 1.375rem 1.5625rem;
+  border: 0.0625rem solid #9f9f9f;
+  box-sizing: border-box;
+  border-radius: 0.625rem;
+  margin: 1.25rem 5rem 1.8125rem 5rem;
+  font-size: 1.125rem;
+  line-height: 1.4375rem;
+  color: var(--font-color2);
+  background: url("../../assets/img/avatar_mini.png") no-repeat 2% 15%;
+}
+.comment {
+  margin: 0 5rem 1rem 8rem;
+}
+#comment-id {
+  height: 50vh;
+  overflow-y: scroll;
+}
+.title {
+  display: flex;
+  margin: 0 0 1rem 4.5rem;
+  background: url("../../assets/img/delete.svg") no-repeat 100% 0,
+    url("../../assets/img/edit.svg") no-repeat 95% 45%;
+}
+.text {
+  max-width: 48rem;
+  padding: 0 8rem 0 4.5rem;
 }
 .right-block__twit,
 .right-block__comment {
@@ -235,6 +275,10 @@ h4 {
   font-size: 0.75rem;
   line-height: 1rem;
   margin-left: 0.75rem;
+}
+.child > h4,
+.tweet > h4 {
+  margin-left: 0;
 }
 p {
   font-size: 1.125rem;
