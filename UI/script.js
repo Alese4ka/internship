@@ -277,11 +277,11 @@ const tweets = [
 ];
 
 class Tweet {
-  constructor(id, text, createdAt, author, comments) {
-    this._id = String((Math.ceil((Math.random(new Date(0))) * 1000)) + id);
+  constructor(text, id = String(Math.ceil((Math.random(new Date())) * 1000)), createdAt = new Date(), author = tweetCollection._user, comments = []) {
+    this._id = id
     this.text = text;
-    this._createdAt = new Date();
-    this._author = tweetCollection._user;
+    this._createdAt = createdAt;
+    this._author = author;
     this.comments = comments;
   }
 
@@ -309,12 +309,10 @@ class Tweet {
     console.log('can\'t change', author);
   }
 
-  static maxTextLength() {
-    return 280;
-  }
+  static maxTextLength = 280;
 
   static validate(tw) {
-    if (typeof tw.id === 'string' && tw.text.length <= Tweet.maxTextLength()
+    if (typeof tw.id === 'string' && tw.text.length <= Tweet.maxTextLength
     && typeof tw.text === 'string' && toString.call(tw.createdAt) === '[object Date]'
     && typeof tw.author === 'string' && tw.comments instanceof Array) {
       return true;
@@ -324,7 +322,8 @@ class Tweet {
 }
 
 // const tweetCollection = new TweetCollection();
-// const tweet = new Tweet('1', '2', new Date(), 'Алеся Брановицкая', []);
+// tweetCollection._user = 'Алеся Брановицкая';
+// const tweet = new Tweet('14', 'Hello', new Date('2022-02-19T19:30:00'), 'Алеся Брановицкая', []);
 // console.log(tweet);
 // tweet.id = 5;
 // tweet.createdAt = 5;
@@ -357,11 +356,11 @@ class Tweet {
 // }));
 
 class Comment {
-  constructor(id, text, createdAt, author) {
-    this._id = String((Math.ceil((Math.random(new Date(0))) * 1000)) + id);
+  constructor(text, id = String(Math.ceil((Math.random(new Date())) * 1000)), createdAt = new Date(), author = tweetCollection._user) {
+    this._id = id;
     this.text = text;
-    this._createdAt = new Date();
-    this._author = tweetCollection._user;
+    this._createdAt = createdAt;
+    this._author = author;
   }
 
   get id() {
@@ -388,12 +387,10 @@ class Comment {
     console.log('can\'t change', author);
   }
 
-  static maxTextLength() {
-    return 280;
-  }
+  static maxTextLength = 280;
 
   static validate(com) {
-    if (typeof com.id === 'string' && com.text.length <= 280
+    if (typeof com.id === 'string' && com.text.length <= Comment.maxTextLength
     && typeof com.text === 'string' && toString.call(com.createdAt) === '[object Date]'
     && typeof com.author === 'string') {
       return true;
@@ -403,7 +400,8 @@ class Comment {
 }
 
 // const tweetCollection = new TweetCollection();
-// const comment = new Comment('1', '2', new Date('2022-02-19T19:30:00'), 'Alesya');
+// tweetCollection._user = 'Алеся Брановицкая'
+// const comment = new Comment('24', 'Hello', new Date('2022-02-19T19:30:00'), 'Алеся Брановицкая');
 // console.log(comment);
 // comment.id = 5;
 // comment.createdAt = 5;
@@ -418,7 +416,7 @@ class Comment {
 class TweetCollection {
   constructor(tws) {
     this._tws = new Set(tws);
-    this._user = 'Алеся Брановицкая';
+    this._user = 'Гость';
   }
 
   get user() {
@@ -436,11 +434,12 @@ class TweetCollection {
     filterConfig.dateTo = filterConfig.dateTo ? new Date(filterConfig.dateTo) : null;
     filterConfig.text = filterConfig.text ? filterConfig.text : '';
     if (filterConfig.hashtags === undefined) {
-      array = tweets;
+      array = Array.from(this._tws);
     } else {
       for (let i = 0; i < filterConfig.hashtags.length; i += 1) {
-        array = array.concat(tweets
-          .filter((tweets) => tweets.text
+        let twsArray = Array.from(this._tws);
+        array = array.concat(twsArray
+          .filter((twsArray) => twsArray.text
             .toLowerCase().indexOf(filterConfig.hashtags[i].toLowerCase()) !== -1));
       }
     }
@@ -455,12 +454,18 @@ class TweetCollection {
   }
 
   get(id) {
-    return tweets.find((tweet) => tweet.id === String(id));
+    for (let value of this._tws) {
+      if (value.id === String(id)) {
+        return value;
+      }
+      continue;
+    }
+    return false;
   }
 
   add(text) {
-    if (this._user) {
-      const tweet = new Tweet('5', text, new Date(), this._user, []);
+    if (this._user !== 'Гость') {
+      const tweet = new Tweet(text);
       if (Tweet.validate(tweet) && tweet.author === tweetCollection._user) {
         this._tws.add(tweet);
         return true;
@@ -470,46 +475,44 @@ class TweetCollection {
   }
 
   edit(id, text) {
-    if (this._user) {
-      const clone = tweets[id - 1];
-      clone.text = text;
-      if (this.get(id).id === String(id) && Tweet.validate(clone) && clone.author === this._user) {
-        this._tws[id - 1] = clone;
+    const clone = this.get(id);
+    if (text.length <= Tweet.maxTextLength
+      && typeof text === 'string' && clone.id === String(id) 
+      && Tweet.validate(clone) && clone.author === this._user) {
+        clone.text = text;
         return true;
-      }
     }
     return false;
   }
 
   remove(id) {
-    if (this._user) {
-      if (this.get(id).id === String(id) && tweets[id - 1].author === this._user) {
-        this._tws.delete(tweets[id - 1]);
-        return true;
-      }
+    const deleteTweet = this.get(id);
+    if (deleteTweet.id === String(id) && deleteTweet.author === this._user) {
+      this._tws.delete(deleteTweet);
+      return true;
     }
     return false;
   }
 
   addComment(id, text) {
-    const comment = new Comment(id, text, new Date(), this._author);
-    if (this.get(id).id === String(id) && Comment.validate(comment)) {
-      tweets[id - 1].comments.push(comment);
-      return true;
+    if (this._user !== 'Гость') {
+      const comment = new Comment(text);
+      if (this.get(id).id === String(id) && Comment.validate(comment)) {
+        this.get(id).comments.push(comment);
+        return true;
+      }
     }
     return false;
   }
 
   addAll(tws) {
     const noValidArr = [];
-    const validArr = [];
     for (let i = 0; i < tws.length; i += 1) {
       if (!Tweet.validate(tws[i])) {
         noValidArr.push(tws[i]);
       }
-      validArr.push(tws[i]);
+      this._tws.add(tws[i]);
     }
-    this._tws = new Set(validArr);
     return noValidArr;
   }
 
