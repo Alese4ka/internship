@@ -486,8 +486,9 @@ class TweetCollection {
   }
 
   remove(id) {
-    if (this.get(id).id === String(id) && this.get(id).author === this._user) {
-      this._tws.delete(this.get(id));
+    const deleteTweet = this.get(id);
+    if (deleteTweet.id === String(id) && deleteTweet.author === this._user) {
+      this._tws.delete(deleteTweet);
       return true;
     }
     return false;
