@@ -670,6 +670,12 @@ function showTweet(id){
   const newTweet = tweetCollection.get(id);
   tweetView.display(newTweet);
   commentView.display(newTweet.comments);
+  const addComment = document.getElementById('add-comment');
+  addComment.setAttribute('class', 'right-block__add-comment');
+    addComment.innerHTML = `<img src="assets/img/avatar_25.png" alt="avatar">
+    <textarea cols="155" rows="1" maxlength="280" style="width: 100%;" placeholder="Написать комментарий"
+      class="right-block__add-comment__block"></textarea>
+    <button class="right-block__add-comment__btn"></button>`;
 }
 function formatDate(date){
   let dd = date.getDate();
