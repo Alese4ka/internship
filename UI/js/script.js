@@ -509,25 +509,33 @@ class TweetFeedView {
       if(item.comments !== undefined && item.comments.length > 0) {
         if(item.author === 'Анджелина Джоли'){
           msg.setAttribute('class', 'jlo');
-          msg.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
-          <div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
+          msg.innerHTML = `<div class="title"><div><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div>
+          <img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
+          <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete">
+          </div></div><div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
           tweetFeed.appendChild(msg);
         } else {
           msg.setAttribute('class', 'child');
-          msg.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
-          <div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
+          msg.innerHTML = `<div class="title"><div><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div>
+          <img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
+          <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete">
+          </div></div><div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
           tweetFeed.appendChild(msg);
         }
       } else {
         if(item.author === 'Анджелина Джоли'){
           msg.setAttribute('class', 'jlo');
-          msg.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
-          <div class="text">${item.text}</div>`;
+          msg.innerHTML = `<div class="title"><div><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div>
+          <img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
+          <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete">
+          </div></div><div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
           tweetFeed.appendChild(msg);
         } else {
           msg.setAttribute('class', 'child');
-          msg.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
-          <div class="text">${item.text}</div>`;
+          msg.innerHTML = `<div class="title"><div><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div>
+          <img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
+          <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete">
+          </div></div><div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
           tweetFeed.appendChild(msg);
         }
       }
@@ -603,11 +611,13 @@ class TweetView {
     const msg = document.getElementById(this.containerId);
     if(tweet.author === 'Анджелина Джоли'){
       msg.setAttribute('class', 'tweet-jlo');
-      msg.innerHTML = `<div class="title"><h2>${tweet.author} <h4 style="margin-top: 0.25rem;">${formatDate(tweet.createdAt)}</h4></h2></div>
+      msg.innerHTML = `<div class="title"><div><h2>${tweet.author}<h4 style="margin-top: 0.25rem;">${formatDate(tweet.createdAt)}</h4></h2></div><div><img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
+      <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"></div></div>
       <div class="text">${tweet.text}</div>`;
     } else {
       msg.setAttribute('class', 'tweet');
-      msg.innerHTML = `<div class="title"><h2>${tweet.author} <h4 style="margin-top: 0.25rem;">${formatDate(tweet.createdAt)}</h4></h2></div>
+      msg.innerHTML = `<div class="title"><div><h2>${tweet.author} <h4 style="margin-top: 0.25rem;">${formatDate(tweet.createdAt)}</h4></h2></div><div><img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
+      <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"></div></div>
       <div class="text">${tweet.text}</div>`;
       }
   }
@@ -672,10 +682,10 @@ function showTweet(id){
   commentView.display(newTweet.comments);
   const addComment = document.getElementById('add-comment');
   addComment.setAttribute('class', 'right-block__add-comment');
-    addComment.innerHTML = `<img src="assets/img/avatar_25.png" alt="avatar">
-    <textarea cols="155" rows="1" maxlength="280" style="width: 100%;" placeholder="Написать комментарий"
-      class="right-block__add-comment__block"></textarea>
-    <button class="right-block__add-comment__btn"></button>`;
+  addComment.innerHTML = `<img src="assets/img/avatar_25.png" alt="avatar">
+                          <textarea cols="155" rows="1" maxlength="280" style="width: 100%;" placeholder="Написать комментарий"
+                          class="right-block__add-comment__block"></textarea>
+                          <button class="right-block__add-comment__btn"></button>`;
 }
 function formatDate(date){
   let dd = date.getDate();

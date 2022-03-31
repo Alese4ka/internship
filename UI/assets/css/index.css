@@ -234,7 +234,7 @@ textarea {
   padding: 1rem;
   text-align: center;
   background: url("../../assets/img/comment.svg") no-repeat right;
-  background-position-x: 55rem;
+  background-position-x: 54rem;
 }
 .tweet,
 .tweet-jlo,
@@ -266,9 +266,8 @@ textarea {
 }
 .title {
   display: flex;
+  justify-content: space-between;
   margin: 0 0 1rem 4.5rem;
-  background: url("../../assets/img/delete.svg") no-repeat 100% 0,
-    url("../../assets/img/edit.svg") no-repeat 95% 45%;
 }
 .text {
   max-width: 48rem;
@@ -346,6 +345,7 @@ h4 {
   margin-left: 0.75rem;
 }
 .child > h4,
+.title > div > h4,
 .tweet > h4 {
   margin-left: 0;
 }
