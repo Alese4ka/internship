@@ -233,6 +233,9 @@ header {
   max-width: 48rem;
   padding: 0 8rem 0 4.5rem;
 }
+.disappear {
+  display: none;
+}
 .right-block__twit,
 .right-block__comment {
   padding: 1rem 1.5625rem 1.375rem 1.5625rem;

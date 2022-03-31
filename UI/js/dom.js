@@ -474,12 +474,16 @@ class HeaderView {
   display(user) {
     const userName = document.getElementById(this.containerId);
     const img = document.querySelector('.avatar');
-    img.setAttribute('class', 'avatar-img');
+    img.classList.toggle('avatar-img')
     const button = document.querySelector('.left-block__footer');
     button.innerHTML = `<button class="left-block__footer__btn">
                           <a href="#login">Выйти</a>
                         </button>
                         <h5>Версия 1.0</h5>`;
+    if(user === 'Гость') {
+      img.setAttribute('class', 'avatar')
+      button.innerHTML = `<h5>Версия 1.0</h5>`;
+    }
     userName.textContent = user;
   }
 }
@@ -517,15 +521,14 @@ class TweetFeedView {
       } else {
         if(item.author === 'Анджелина Джоли'){
           msg.setAttribute('class', 'jlo');
-        msg.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
-        <div class="text">${item.text}</div>`;
-        tweetFeed.appendChild(msg);
-        }
-        else {
+          msg.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
+          <div class="text">${item.text}</div>`;
+          tweetFeed.appendChild(msg);
+        } else {
           msg.setAttribute('class', 'child');
-        msg.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
-        <div class="text">${item.text}</div>`;
-        tweetFeed.appendChild(msg);
+          msg.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
+          <div class="text">${item.text}</div>`;
+          tweetFeed.appendChild(msg);
         }
       }
     });
@@ -533,7 +536,9 @@ class TweetFeedView {
 
   clear() {
     const child = document.querySelectorAll('.child');
+    const jlo = document.querySelectorAll('.jlo');
     child.forEach((item) => item.remove());
+    jlo.forEach((item) => item.remove());
   }
 }
 
@@ -658,8 +663,8 @@ function getFeed(skip, top, filterConfig) {
   tweetFeedView.display(filter);
 }
 function showTweet(id){
-  const addTwit = document.querySelector('.right-block__add-twit');
-  addTwit.remove();
+  const addTweet = document.querySelector('.right-block__add-twit');
+  addTweet.remove();
   const chat = document.querySelector('.right-block__chat');
   chat.remove();
   const newTweet = tweetCollection.get(id);
@@ -698,6 +703,7 @@ function clearFilters() {
 // const tweetFeedView = new TweetFeedView('tweet-feed-id');
 // const tweetView = new TweetView('tweet-id');
 // const commentView = new CommentView('comment-id');
+// const filterView = new FilterView('filters-id');
 // setCurrentUser('Алеся Брановицкая');
 // getFeed();
 
@@ -710,9 +716,6 @@ function clearFilters() {
 
 // const filterView = new FilterView('filters-id');
 // filterView.display('Анджелина','2002-02-22', 'sum', ['#datamola','gg']);
-
-
-
 
 
 
