@@ -53,7 +53,9 @@ class List {
     let previousNode = null;
     let currentNode = this.root;
     let count = 0;
-    if (i === undefined || i === this.length) {
+    if (this.length === 1) {
+      return false;
+    } else if (i === undefined || i === this.length) {
       while (currentNode.next) {
         previousNode = currentNode;
         currentNode = currentNode.next;
@@ -91,11 +93,11 @@ class List {
 
 const list = new List(1);
 console.log(list);
-list.addNode(2);
-list.addNode(3);
-list.addNode(4);
-list.addNode(5);
-list.addNode(6);
+// list.addNode(2);
+// list.addNode(3);
+// list.addNode(4);
+// list.addNode(5);
+// list.addNode(6);
 // console.log(list.addNode(4), list);
 // console.log(list.addNode(4, 2), list);
 // console.log(list.removeNode(1), list);
