@@ -1,9 +1,16 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable class-methods-use-this */
+/* eslint-disable no-useless-return */
+/* eslint-disable consistent-return */
+/* eslint-disable no-setter-return */
+/* eslint-disable no-shadow */
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable max-classes-per-file */
-/* eslint-disable import/newline-after-import */
+/* eslint-disable max-len */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-unused-vars */
+/* eslint max-classes-per-file: ["error", 3] */
+/* eslint-disable lines-around-directive */
+/* eslint-disable strict */
 'use strict';
 
 const tweets = [
@@ -314,6 +321,40 @@ class Tweet {
   }
 }
 
+// const tweetCollection = new TweetCollection();
+// tweetCollection._user = 'Алеся Брановицкая';
+// const tweet = new Tweet('14', 'Hello', new Date('2022-02-19T19:30:00'), 'Алеся Брановицкая', []);
+// console.log(tweet);
+// tweet.id = 5;
+// tweet.createdAt = 5;
+// tweet.author = 5;
+// console.log(tweet.id, tweet.createdAt, tweet.author);
+// console.log(Tweet.validate({
+//   id: '1',
+//   text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro #datamola',
+//   createdAt: new Date('2022-02-16T03:30:00'),
+//   author: 'Алеся Брановицкая',
+//   comments: [
+//     {
+//       id: '901',
+//       text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+//       createdAt: new Date('2022-02-17T05:30:00'),
+//       author: 'Анджелина Джоли',
+//     },
+//     {
+//       id: '902',
+//       text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+//       createdAt: new Date('2022-02-18T15:30:00'),
+//       author: 'Анджелина Джоли',
+//     },
+//     {
+//       id: '903',
+//       text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+//       createdAt: new Date('2022-02-19T19:30:00'),
+//       author: 'Анджелина Джоли',
+//     }],
+// }));
+
 class Comment {
   constructor(text, id = String(Math.ceil((Math.random(new Date())) * 1000)), createdAt = new Date(), author = tweetCollection._user) {
     this._id = id;
@@ -358,6 +399,20 @@ class Comment {
   }
 }
 
+// const tweetCollection = new TweetCollection();
+// tweetCollection._user = 'Алеся Брановицкая'
+// const comment = new Comment('24', 'Hello', new Date('2022-02-19T19:30:00'), 'Алеся Брановицкая');
+// console.log(comment);
+// comment.id = 5;
+// comment.createdAt = 5;
+// comment.author = 5;
+// console.log(comment.id, comment.createdAt, comment.author);
+// console.log(Comment.validate({
+//   id: '904',
+//   text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+//   createdAt: new Date('2022-02-22T17:30:00'),
+//   author: 'Алеся Брановицкая',
+// }));
 class TweetCollection {
   constructor(tws) {
     this._tws = new Set(tws);
@@ -466,256 +521,16 @@ class TweetCollection {
   }
 }
 
-class HeaderView {
-  constructor(containerId) {
-    this.containerId = containerId;
-  }
-
-  display(user) {
-    const userName = document.getElementById(this.containerId);
-    const img = document.querySelector('.avatar');
-    img.classList.toggle('avatar-img')
-    const button = document.querySelector('.left-block__footer');
-    button.innerHTML = `<button class="left-block__footer__btn">
-                          <a href="#login">Выйти</a>
-                        </button>
-                        <h5>Версия 1.0</h5>`;
-    if(user === 'Гость') {
-      img.setAttribute('class', 'avatar')
-      button.innerHTML = `<h5>Версия 1.0</h5>`;
-    }
-    userName.textContent = user;
-  }
-}
-
-class TweetFeedView {
-  constructor(containerId) {
-    this.containerId = containerId;
-  }
-
-  display(tweets) {
-    const addTweet = document.getElementById('add-tweet');
-    addTweet.setAttribute('class', 'right-block__add-twit');
-    addTweet.innerHTML = `<img src="assets/img/avatar_mini.png" alt="avatar">
-                          <textarea cols="185" rows="5" maxlength="280" style="width: 100%;"
-                          placeholder="О чем бы вы хотели рассказать?" class="right-block__add-twit-block"></textarea>
-                          <textarea cols="185" rows="5" maxlength="280" style="width: 100%;" placeholder="Расскажите?"
-                          class="right-block__add-twit-none"></textarea>
-                          <button class="right-block__add-twit__btn"></button>`;
-    const tweetFeed = document.getElementById(this.containerId);
-    const array = Array.from(tweets);
-    array.sort((a, b) => b.createdAt - a.createdAt).forEach((item) => {
-      const msg = document.createElement('div');
-      if(item.comments !== undefined && item.comments.length > 0) {
-        if(item.author === 'Анджелина Джоли'){
-          msg.setAttribute('class', 'jlo');
-          msg.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
-          <div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
-          tweetFeed.appendChild(msg);
-        } else {
-          msg.setAttribute('class', 'child');
-          msg.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
-          <div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
-          tweetFeed.appendChild(msg);
-        }
-      } else {
-        if(item.author === 'Анджелина Джоли'){
-          msg.setAttribute('class', 'jlo');
-          msg.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
-          <div class="text">${item.text}</div>`;
-          tweetFeed.appendChild(msg);
-        } else {
-          msg.setAttribute('class', 'child');
-          msg.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
-          <div class="text">${item.text}</div>`;
-          tweetFeed.appendChild(msg);
-        }
-      }
-    });
-  }
-
-  clear() {
-    const child = document.querySelectorAll('.child');
-    const jlo = document.querySelectorAll('.jlo');
-    child.forEach((item) => item.remove());
-    jlo.forEach((item) => item.remove());
-  }
-}
-
-class FilterView {
-  constructor(containerId) {
-    this.containerId = containerId;
-  }
-
-  static authorFil = document.createElement('input');
-  static dateFil = document.createElement('input');
-  static textFil = document.createElement('input');
-  static hashtagsFil = document.createElement('input');
-
-  display(author = '', date = '', text = '', hashtags = []) {
-    const blockFilters = document.querySelector('.left-block__filters');
-    blockFilters.innerHTML = `<h3>Фильтры</h3>
-                              <div id="filters-id" class="left-block__filters"></div>
-                              <div class="left-block__filters__btn">
-                                <button class="left-block__filters__btn-clear">Сбросить</button>
-                                <button class="left-block__filters__btn-apply">Применить</button>
-                              </div>`;
-    clearFilters();
-    const filters = document.getElementById(this.containerId);
-    const authorV = FilterView.authorFil;
-    const dateV = FilterView.dateFil;
-    const textV = FilterView.textFil;
-    const hashtagsV = FilterView.hashtagsFil;
-    if (authorV) {
-      const authorInput = authorV;
-      authorInput.setAttribute('class', 'filter-author');
-      const dateData = dateV;
-      dateData.setAttribute('type', 'date');
-      dateData.setAttribute('class', 'filter-date');
-      const textInput = textV;
-      textInput.setAttribute('class', 'filter-text');
-      const hashtagsInput = hashtagsV;
-      hashtagsInput.setAttribute('class', 'filter-hashtag');
-      authorInput.value = author;
-      textInput.value = text;
-      dateData.value = date;
-      hashtagsInput.value = hashtags.join(' ');
-      filters.append(authorInput);
-      filters.append(dateData);
-      filters.append(textInput);
-      filters.append(hashtagsInput);
-    }
-    else {
-      authorInput.value = author;
-      textInput.value = text;
-      dateData.value = date;
-      hashtagsInput.value = hashtags.join(' ');
-    }
-  }
-}
-
-class TweetView {
-  constructor(containerId) {
-    this.containerId = containerId;
-  }
-
-  display(tweet) {
-    const msg = document.getElementById(this.containerId);
-    if(tweet.author === 'Анджелина Джоли'){
-      msg.setAttribute('class', 'tweet-jlo');
-      msg.innerHTML = `<div class="title"><h2>${tweet.author} <h4 style="margin-top: 0.25rem;">${formatDate(tweet.createdAt)}</h4></h2></div>
-      <div class="text">${tweet.text}</div>`;
-    } else {
-      msg.setAttribute('class', 'tweet');
-      msg.innerHTML = `<div class="title"><h2>${tweet.author} <h4 style="margin-top: 0.25rem;">${formatDate(tweet.createdAt)}</h4></h2></div>
-      <div class="text">${tweet.text}</div>`;
-      }
-  }
-}
-
-class CommentView {
-  constructor(containerId) {
-    this.containerId = containerId;
-  }
-
-  display(comment) {
-    const commentFeed = document.getElementById(this.containerId);
-    comment.sort((a, b) => b.createdAt - a.createdAt).forEach((item) => {
-      if(item.author === 'Анджелина Джоли'){
-        const msgCom = document.createElement('div');
-        msgCom.setAttribute('class', 'comment-jlo');
-        msgCom.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
-        <div class="text">${item.text}</div>`;
-        commentFeed.appendChild(msgCom);
-      } else {
-        const msgCom = document.createElement('div');
-        msgCom.setAttribute('class', 'comment');
-        msgCom.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
-        <div class="text">${item.text}</div>`;
-        commentFeed.appendChild(msgCom);
-      }
-    });
-  }
-}
-
-function setCurrentUser(user) {
-  headerView.display(user);
-  tweetCollection.user = user;
-}
-function addTweet(text) {
-  tweetCollection.add(text);
-  tweetFeedView.clear();
-  tweetFeedView.display(tweetCollection._tws);
-}
-function editTweet(id, text) {
-  tweetFeedView.clear();
-  tweetCollection.edit(id, text);
-  tweetFeedView.display(tweetCollection._tws);
-}
-function removeTweet(id) {
-  tweetCollection.remove(id);
-  tweetFeedView.clear();
-  tweetFeedView.display(tweetCollection._tws);
-}
-function getFeed(skip, top, filterConfig) {
-  tweetFeedView.clear();
-  const filter = tweetCollection.getPage(skip, top, filterConfig);
-  tweetFeedView.display(filter);
-}
-function showTweet(id){
-  const addTweet = document.querySelector('.right-block__add-twit');
-  addTweet.remove();
-  const chat = document.querySelector('.right-block__chat');
-  chat.remove();
-  const newTweet = tweetCollection.get(id);
-  tweetView.display(newTweet);
-  commentView.display(newTweet.comments);
-}
-function formatDate(date){
-  let dd = date.getDate();
-  if (dd < 10) dd = '0' + dd;
-
-  let mm = date.getMonth() + 1;
-  if (mm < 10) mm = '0' + mm;
-
-  let yy = date.getFullYear() % 100;
-  if (yy < 10) yy = '0' + yy;
-
-  let tt = date.getHours();
-  if (tt < 10) tt = '0' + tt;
-
-  let m = date.getMinutes();
-  if (m < 10) m = '0' + m;
-
-  return dd + '.' + mm + '.' + yy + ' ' + tt + '.' + m;
-}
-function clearFilters() {
-  document.querySelector('.left-block__filters__btn-clear').addEventListener('click', () => {
-    document.querySelector('.filter-author').value = '';
-    document.querySelector('.filter-date').value = '';
-    document.querySelector('.filter-text').value = '';
-    document.querySelector('.filter-hashtag').value = '';
-  });
-}
-
-// const tweetCollection = new TweetCollection(tweets);
-// const headerView = new HeaderView('header-id');
-// const tweetFeedView = new TweetFeedView('tweet-feed-id');
-// const tweetView = new TweetView('tweet-id');
-// const commentView = new CommentView('comment-id');
-// const filterView = new FilterView('filters-id');
-// setCurrentUser('Алеся Брановицкая');
-// getFeed();
-
-// addTweet('text');
-// editTweet(4, 'text FOO');
-// removeTweet(1);
-// getFeed(0, 4);
-// getFeed(0, 10, { hashtags: ['#datamola'] });
-// showTweet(10);
-
-// const filterView = new FilterView('filters-id');
-// filterView.display('Анджелина','2002-02-22', 'sum', ['#datamola','gg']);
-
-
-
+// const tweetCollection = new TweetCollection();
+// console.log(tweetCollection);
+// tweetCollection.addAll(tweets);
+// console.log(tweetCollection.addAll(tweets));
+// console.log(tweetCollection);
+// console.log(tweetCollection.getPage(0, 10));
+// console.log(tweetCollection.getPage(0, 10, { hashtags: ['#datamola'] }));
+// console.log(tweetCollection.get(20));
+// console.log(tweetCollection.add('hello'), tweetCollection);
+// console.log(tweetCollection.edit(4, 'text'), tweetCollection);
+// console.log(tweetCollection.remove(1), tweetCollection);
+// console.log(tweetCollection.addComment(5, 'hello'), tweetCollection);
+// tweetCollection.clear();
