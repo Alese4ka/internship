@@ -5,6 +5,7 @@
 /* eslint-disable lines-around-directive */
 /* eslint-disable strict */
 'use strict';
+
 function createCalendar(id, year, month) {
   const elem = document.querySelector(id);
   elem.innerHTML = '<tr class="tr"><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>вс</th></tr><tr>';
@@ -16,68 +17,86 @@ function createCalendar(id, year, month) {
   const sixTr = document.createElement('TR');
   const date = new Date(year, month - 1);
   let newDay = date.getDay();
-  let a = 1;
+  let counter = 1;
   if (newDay === 0) {
     newDay = 7;
-    while (a < 7) {
+    while (counter < 7) {
       const one = document.createElement('TD');
       elem.appendChild(oneTr);
       oneTr.appendChild(one);
-      a += 1;
+      counter += 1;
     }
   }
-  while (a < newDay) {
+  while (counter < newDay) {
     const one = document.createElement('TD');
     elem.appendChild(oneTr);
     oneTr.appendChild(one);
-    a += 1;
+    counter += 1;
   }
   const getDaysInMonth = (month, year) => {
     return new Date(year, month, 0).getDate();
   };
   const daysInMonth = getDaysInMonth(month, year);
-  let b = 1;
   newDay = date.getDay() + 1;
   let numOfDay;
   numOfDay = (9 - newDay);
   if (newDay === 1) {
     numOfDay = (2 - newDay);
   }
-  const count = 7;
-  while (b <= daysInMonth) {
-    if (b <= numOfDay) {
+  const dayOfWeek = 7;
+  let cell;
+  let a = 1;
+  while (a <= daysInMonth) {
+    if (a <= numOfDay) {
       const one = document.createElement('TD');
-      one.textContent = b;
+      one.textContent = a;
       elem.appendChild(oneTr);
       oneTr.appendChild(one);
-    } else if (b > numOfDay && b <= (numOfDay + count)) {
+    } else if (a > numOfDay && a <= (numOfDay + dayOfWeek)) {
       const two = document.createElement('TD');
-      two.textContent = b;
+      two.textContent = a;
       elem.appendChild(twoTr);
       twoTr.appendChild(two);
-    } else if (b > (numOfDay + count) && b <= (numOfDay + count * 2)) {
+    } else if (a > (numOfDay + dayOfWeek) && a <= (numOfDay + dayOfWeek * 2)) {
       const three = document.createElement('TD');
-      three.textContent = b;
+      three.textContent = a;
       elem.appendChild(threeTr);
       threeTr.appendChild(three);
-    } else if (b > (numOfDay + count * 2) && b <= (numOfDay + count * 3)) {
+    } else if (a > (numOfDay + dayOfWeek * 2) && a <= (numOfDay + dayOfWeek * 3)) {
       const four = document.createElement('TD');
-      four.textContent = b;
+      four.textContent = a;
       elem.appendChild(fourTr);
       fourTr.appendChild(four);
-    } else if (b > (numOfDay + count * 3) && b <= (numOfDay + count * 4)) {
+    } else if (a > (numOfDay + dayOfWeek * 3) && a <= (numOfDay + dayOfWeek * 4)) {
       const five = document.createElement('TD');
-      five.textContent = b;
+      five.textContent = a;
       elem.appendChild(fiveTr);
       fiveTr.appendChild(five);
-    } else if (b > (numOfDay + count * 4)) {
+    } else if (a > (numOfDay + dayOfWeek * 4)) {
       const six = document.createElement('TD');
-      six.textContent = b;
+      six.textContent = a;
       elem.appendChild(sixTr);
       sixTr.appendChild(six);
+      cell = 1;
     }
-    b += 1;
+    a += 1;
+  }
+  const searchLastDaY = new Date(year, month);
+  let lastDay = searchLastDaY.getDay() - 1;
+  while (lastDay < 7) {
+    if (cell === 1) {
+      const six = document.createElement('TD');
+      six.textContent = '';
+      elem.appendChild(sixTr);
+      sixTr.appendChild(six);
+    } else {
+      const five = document.createElement('TD');
+      five.textContent = '';
+      elem.appendChild(fiveTr);
+      fiveTr.appendChild(five);
+    }
+    lastDay += 1;
   }
 }
 
-createCalendar('table', 2022, 12);
+createCalendar('table', 2002, 2);
