@@ -20,7 +20,16 @@ const nodeList = [
           },
           {
             value: 'Подпункт 2.2.2.',
-            children: null,
+            children: [
+              {
+                value: 'Подпункт 2.2.1.',
+                children: null,
+              },
+              {
+                value: 'Подпункт 2.2.2.',
+                children: null,
+              },
+            ],
           },
         ],
       },
@@ -36,38 +45,27 @@ const nodeList = [
   },
 ];
 
-function createList(title, list) {
-  const nameTitle = document.createElement(title);
-  nameTitle.textContent = 'Список';
-  document.body.appendChild(nameTitle);
+function getList(list) {
   const ul = document.createElement('ul');
-  for (let i = 0; i < list.length; i += 1) {
+  list.forEach((item) => {
     const li = document.createElement('li');
-    li.textContent = list[i].value;
+    li.textContent = item.value;
     ul.appendChild(li);
-    if (list[i].children !== null) {
-      for (let j = 0; j < list[i].children.length; j += 1) {
-        const ul1 = document.createElement('ul');
-        const li1 = document.createElement('li');
-        li1.textContent = list[i].children[j].value;
-        const calc = `calc(${100}% - ${10}%)`;
-        li1.style.fontSize = calc;
-        ul1.appendChild(li1);
-        li.appendChild(ul1);
-        if (list[i].children[j].children !== null) {
-          for (let c = 0; c < list[i].children[j].children.length; c += 1) {
-            const ul2 = document.createElement('ul');
-            const li2 = document.createElement('li');
-            li2.textContent = list[i].children[j].children[c].value;
-            li2.style.fontSize = calc;
-            ul2.appendChild(li2);
-            li1.appendChild(ul2);
-          }
-        }
-      }
+    const calc = `calc(${100}% - ${10}%)`;
+    ul.style.fontSize = calc;
+    if (item.children !== null) {
+      ul.append(getList(item.children));
     }
-  }
+  });
   document.body.appendChild(ul);
+  return ul;
 }
 
-createList('h2', nodeList);
+function createList(title, list) {
+  const h2 = document.createElement('h2');
+  h2.textContent = title;
+  document.body.appendChild(h2);
+  getList(list);
+}
+
+createList('Список', nodeList);
