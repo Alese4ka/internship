@@ -47,6 +47,14 @@ main {
   line-height: 1.75rem;
   color: var(--font-color1);
 }
+.avatar {
+  background: url("../../assets/img/guest.png") no-repeat center;
+  padding: 5rem;
+}
+.avatar-img {
+  background: url("../../assets/img/avatar.png") no-repeat center;
+  padding: 5rem;
+}
 .left-block__head__btn {
   border: none;
   background: var(--btn-color);
@@ -139,7 +147,7 @@ h3 {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  max-width: 100vw;
+  width: 80vw;
   flex: 1;
 }
 header {
@@ -171,16 +179,26 @@ header {
 .child {
   background: url("../../assets/img/avatar_mini.png") no-repeat 2% 15%;
 }
+.jlo {
+  padding: 1rem 1.5625rem 1.375rem 1.5625rem;
+  border: 0.0625rem solid #9f9f9f;
+  box-sizing: border-box;
+  border-radius: 0.625rem;
+  margin-bottom: 1.8125rem;
+  background: url("../../assets/img/avatar_mini_jo.svg") no-repeat 2% 15%;
+}
 .comments {
   display: flex;
   justify-content: flex-end;
   padding: 1rem;
   text-align: center;
   background: url("../../assets/img/comment.svg") no-repeat right;
-  background-position-x: 56.5rem;
+  background-position-x: 55rem;
 }
 .tweet,
-.comment {
+.tweet-jlo,
+.comment,
+.comment-jlo {
   padding: 1rem 1.5625rem 1.375rem 1.5625rem;
   border: 0.0625rem solid #9f9f9f;
   box-sizing: border-box;
@@ -191,8 +209,15 @@ header {
   color: var(--font-color2);
   background: url("../../assets/img/avatar_mini.png") no-repeat 2% 15%;
 }
-.comment {
+.tweet-jlo {
+  background: url("../../assets/img/avatar_mini_jo.svg") no-repeat 2% 15%;
+}
+.comment,
+.comment-jlo {
   margin: 0 5rem 1rem 8rem;
+}
+.comment-jlo {
+  background: url("../../assets/img/avatar_mini_jo.svg") no-repeat 2% 15%;
 }
 #comment-id {
   height: 50vh;
