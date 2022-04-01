@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/index.css">
+  <title>Main</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <main>
+      <section class="left-block">
+        <div class="left-block__wrapper">
+          <div class="left-block__head">
+            <div class="left-block__head__mobile">
+              <img src="assets/img/logo_mobile.svg" alt="logo">
+              <img src="assets/img/exit_mobile.svg" alt="exit">
+            </div>
+            <img class="avatar">
+            <div id="header-id">Гость</div>
+          </div>
+          <div class="left-block__filters">
+          </div>
+          <div class="left-block__footer">
+            <h5>Версия 1.0</h5>
+          </div>
+        </div>
+      </section>
+      <section class="right-block">
+        <header>
+          <img src="assets/img/logo_.svg" alt="logotype" class="right-block__img">
+        </header>
+        <div id="tweet-id">
+        </div>
+        <article id="add-tweet">
+        </article>
+        <div id="comment-id"></div>
+        <section class="right-block__chat">
+          <div class="right-block__chat__filters">
+            <input type="checkbox" />
+            <span><img src="assets/img/filters_mobile.svg" alt="filters"></span>
+            <span><img src="assets/img/filters_mobile.svg" alt="filters"></span>
+            <table class="collapsible" id="collapsible1">
+              <tr>
+                <td>
+                  <input type="text" class="left-block__filters__text" placeholder="По имени">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="date" class="left-block__filters__date" placeholder="По дате">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="text" class="left-block__filters__text" placeholder="По тексту">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="text" class="left-block__filters__text" placeholder="По хештегу">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="left-block__filters__btn">
+                    <button class="left-block__filters__btn-clear">Сбросить</button>
+                    <button class="left-block__filters__btn-apply">Применить</button>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div id="tweet-feed-id" class="right-block__scroll-twit">
+          </div>
+          <button id="right-block__chat__btn" class="right-block__chat__btn">Загрузить еще</button>
+        </section>
+        <article id="add-comment">
+        </article>
+        <footer>
+          <h5 class="footer__mobile">Версия 1.0</h5>
+          <h5>© Алеся Брановицкая</h5>
+          <a href="mailto:alesun4ik@gmail.com">alesun4ik@gmail.com</a>
+        </footer>
+      </section>
+    </main>
+  </div>
+</body>
+
+<script src="./js/script.js"></script>
+
+</html>

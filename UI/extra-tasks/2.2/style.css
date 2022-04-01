@@ -1,0 +1,382 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  background: rgb(240, 240, 240);
+}
+main {
+  max-width: 45rem;
+  margin: 6rem auto 0 auto;
+}
+.first-block,
+.second-block {
+  position: relative;
+  border-radius: 10px;
+  background-color: white;
+}
+.second-block {
+  margin-top: 1rem;
+}
+.first-block__title,
+.first-block__title-run {
+  position: absolute;
+  background-color: rgb(53, 199, 114);
+  border: 1px solid rgb(53, 199, 114);
+  color: white;
+  border-radius: 9px;
+  padding: 0.125rem 0.3rem;
+  top: -10px;
+  left: 10px;
+  font-size: 0.8rem;
+}
+.first-block__title-run {
+  background-color: rgb(185, 131, 241);
+  border: 1px solid rgb(185, 131, 241);
+}
+.first-block__price-run {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #f57c00;
+  width: 160px;
+}
+.first-block__road-icons,
+.first-block__road-plane {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.first-block__road-icons {
+  margin-bottom: 1rem;
+}
+.first-block__road-way {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.first-block__road-line {
+  justify-content: center;
+}
+.first-block__main {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 200px 460px;
+}
+.horizontal-line {
+  border: none;
+  height: 1px;
+  background-color: #9ea9b7;
+}
+.first-block__main:hover {
+  box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.15);
+}
+.first-block__price {
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1rem;
+  border-right: 1px solid #9ea9b7;
+}
+.first-block__price-btn {
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(242, 121, 56);
+  color: white;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+}
+.first-block__price-btn:active,
+.first-block__price-btn:hover {
+  background-color: rgba(191, 93, 41, 0.9);
+}
+.first-block__road-img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50px;
+  margin-right: 0.5rem;
+}
+.first-block__road-line-one,
+.first-block__road-line-four,
+.first-block__road-line-seven,
+.first-block__road-line-nine,
+.first-block__road-line-ten,
+.first-block__road-line-twelve {
+  background-color: #9ea9b7;
+  border-radius: 5px;
+  border: 1px solid #9ea9b7;
+  height: 5px;
+  width: 30px;
+  position: absolute;
+  bottom: 43px;
+  margin: 0;
+}
+.first-block__road-line-four {
+  width: 90px;
+}
+.first-block__road-line-seven {
+  width: 40px;
+  right: -9px;
+}
+.first-block__road-line-nine {
+  width: 130px;
+  right: -1px;
+}
+.first-block__road-line-ten {
+  width: 105px;
+  right: -71px;
+}
+.first-block__road-line-twelve {
+  width: 70px;
+  right: 0px;
+}
+.first-block__road-line-three,
+.first-block__road-line-six {
+  background-color: #9ea9b7;
+  border-radius: 5px;
+  border: 1px solid #9ea9b7;
+  height: 5px;
+  width: 90px;
+  margin: 0;
+  position: absolute;
+  bottom: 43px;
+}
+.first-block__road-line-six {
+  width: 25px;
+}
+.first-block__road-line-one:hover,
+.first-block__road-line-three:hover,
+.first-block__road-line-four:hover,
+.first-block__road-line-six:hover,
+.first-block__road-line-seven:hover,
+.first-block__road-line-nine:hover,
+.first-block__road-line-ten:hover,
+.first-block__road-line-twelve:hover {
+  border-color: rgb(242, 121, 56);
+  border-radius: 5px;
+  background-color: white;
+}
+.first-block__road-line-two {
+  background-color: #9ea9b7;
+  border: none;
+  height: 1px;
+  width: 100px;
+  margin: 0;
+  position: absolute;
+  bottom: 37px;
+}
+.first-block__road {
+  margin: 1rem 0 1rem 1rem;
+}
+.first-block__road-line-two:hover {
+  background-color: rgb(242, 121, 56);
+}
+.two-block {
+  margin-left: 4rem;
+}
+.first-block__road-line-title {
+  margin-top: 1.6rem;
+}
+.first-block__road-pic-one {
+  color: #f54759;
+  margin-right: 1rem;
+}
+.icon-one {
+  border-radius: 50px;
+  padding: 0.1rem 0.2rem 0rem 0.2rem;
+  box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.15);
+  background-color: rgb(255, 255, 255);
+}
+p {
+  font-size: 2rem;
+  margin: 0;
+}
+h3 {
+  font-size: 0.75rem;
+  line-height: 1.5em;
+  color: #9ea9b7;
+  margin: 0;
+}
+.right {
+  text-align: right;
+}
+h4 {
+  font-size: 0.75rem;
+  color: #9ea9b7;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+.tooltip-one {
+  position: relative;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 15px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tooltip-two .tooltiptext {
+  left: 85%;
+}
+.tooltip-four .tooltiptext {
+  left: 95%;
+}
+.tooltip-three .tooltiptext {
+  left: 35%;
+}
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-top-color: #555;
+}
+.tooltip-one .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 15px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 57px;
+  left: 150%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tooltip-one .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+.tooltip-five .tooltiptext {
+  bottom: 57px;
+  left: 50%;
+}
+.tooltip-six .tooltiptext {
+  bottom: 57px;
+  left: 60%;
+}
+.tooltip-seven .tooltiptext {
+  bottom: 57px;
+  left: 30%;
+}
+.tooltip:hover .tooltiptext,
+.tooltip-one:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+.pic {
+  margin-left: 1rem;
+}
+svg:hover #icon {
+  stroke: blue;
+}
+svg:hover #pic {
+  fill: blue;
+}
+.contact-wrapper {
+  position: relative;
+  height: 65px;
+}
+.one {
+  width: 30px;
+}
+.two {
+  width: 100px;
+}
+.two-title,
+#two-title {
+  margin-left: 4rem;
+}
+#four-title {
+  margin-left: 4rem;
+}
+.three-title {
+  margin-left: 1.5rem;
+}
+.five-title {
+  margin-left: 2.5rem;
+}
+.contact-title-block {
+  margin-top: 2.8rem;
+}
+h4 {
+  margin: 0.4rem 0;
+}
+.center {
+  position: absolute;
+  left: 180px;
+  top: 5px;
+}
+.contact {
+  color: #9ea9b7;
+}
+.contact-title {
+  top: 3rem;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  font-size: 0.625rem;
+  line-height: 1.5;
+  font-weight: 600;
+  white-space: nowrap;
+  color: blue;
+  cursor: default;
+}
+.contact:hover,
+.contact:hover .contact-title,
+.contact:hover h4,
+.contact:hover .first-block__road-line-five,
+.contact:hover .first-block__road-line-eight,
+.contact:hover .first-block__road-line-eleven {
+  color: #f57c00;
+  border-color: #f57c00;
+}
+.first-block__road-line-five,
+.first-block__road-line-eight,
+.first-block__road-line-eleven {
+  position: absolute;
+  right: 0px;
+  bottom: 17px;
+  border-bottom: 1px solid #9ea9b7;
+  z-index: 22;
+  width: 104px;
+  height: 2px;
+}
+.first-block__road-line-eight {
+  width: 53px;
+  right: 40px;
+}
+.first-block__road-line-eleven {
+  width: 50px;
+  right: -19px;
+}
+.one-title {
+  left: 2.3rem;
+}
+.four-title {
+  left: 5.3rem;
+}
