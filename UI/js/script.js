@@ -494,6 +494,8 @@ class TweetFeedView {
   }
 
   display(tweets) {
+    const btn = document.querySelector('#right-block__chat__btn');
+    btn.setAttribute('class', 'right-block__chat__btn');
     const addTweet = document.getElementById('add-tweet');
     addTweet.setAttribute('class', 'right-block__add-twit');
     addTweet.innerHTML = `<img src="assets/img/avatar_mini.png" alt="avatar">
@@ -503,6 +505,7 @@ class TweetFeedView {
                           class="right-block__add-twit-none"></textarea>
                           <button class="right-block__add-twit__btn"></button>`;
     const tweetFeed = document.getElementById(this.containerId);
+    tweetFeed.setAttribute('class', 'right-block__scroll-twit');
     const array = Array.from(tweets);
     array.sort((a, b) => b.createdAt - a.createdAt).forEach((item) => {
       const msg = document.createElement('div');
@@ -630,6 +633,7 @@ class CommentView {
 
   display(comment) {
     const commentFeed = document.getElementById(this.containerId);
+    commentFeed.setAttribute('class', 'commentsV');
     comment.sort((a, b) => b.createdAt - a.createdAt).forEach((item) => {
       if(item.author === 'Анджелина Джоли'){
         const msgCom = document.createElement('div');
@@ -668,15 +672,24 @@ function removeTweet(id) {
   tweetFeedView.display(tweetCollection._tws);
 }
 function getFeed(skip, top, filterConfig) {
+  const tweetView = document.querySelector('#tweet-id');
+  tweetView.setAttribute('class', 'disappear');
+  const commentView = document.querySelector('#comment-id');
+  tweetView.setAttribute('class', 'disappear');
+  commentView.setAttribute('class', 'disappear');
+  const addComment = document.getElementById('add-comment');
+  addComment.setAttribute('class', 'disappear');
   tweetFeedView.clear();
   const filter = tweetCollection.getPage(skip, top, filterConfig);
   tweetFeedView.display(filter);
 }
 function showTweet(id){
   const addTweet = document.querySelector('.right-block__add-twit');
-  addTweet.remove();
-  const chat = document.querySelector('.right-block__chat');
-  chat.remove();
+  addTweet.setAttribute('class', 'disappear');
+  const chat = document.querySelector('.right-block__scroll-twit');
+  chat.setAttribute('class', 'disappear');
+  const btn = document.querySelector('.right-block__chat__btn');
+  btn.setAttribute('class', 'disappear');
   const newTweet = tweetCollection.get(id);
   tweetView.display(newTweet);
   commentView.display(newTweet.comments);
