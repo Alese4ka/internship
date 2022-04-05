@@ -5,7 +5,6 @@
 /* eslint-disable lines-around-directive */
 /* eslint-disable strict */
 'use strict';
-
 class UserList {
   constructor() {
     this.users = ['Алеся Брановицкая', 'Анджелина Джоли'];

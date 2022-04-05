@@ -6,6 +6,8 @@
 /* eslint-disable import/newline-after-import */
 'use strict';
 
+const loadTweets = document.querySelector('#right-block__chat__btn');
+const btnLog = document.querySelector('.left-block__btn');
 const tweets = [
   {
     id: '1',
@@ -362,6 +364,7 @@ class TweetCollection {
   constructor(tws) {
     this._tws = new Set(tws);
     this._user = 'Гость';
+    this.restore();
   }
 
   get user() {
@@ -372,11 +375,19 @@ class TweetCollection {
     this._user = user;
   }
 
+  save() {
+    localStorage.setItem('tws', JSON.stringify(this._tws));
+  }
+
+  restore() {
+    const localTws = JSON.parse(localStorage.getItem('tws'));
+  }
+
   getPage(skip = 0, top = 10, filterConfig = {}) {
     let array = [];
     filterConfig.author = filterConfig.author ? filterConfig.author : '';
-    filterConfig.dateFrom = filterConfig.dateFrom ? new Date(filterConfig.dateFrom) : null;
-    filterConfig.dateTo = filterConfig.dateTo ? new Date(filterConfig.dateTo) : null;
+    filterConfig.dateFrom = filterConfig.dateFrom ? filterConfig.dateFrom : null;
+    filterConfig.dateTo = filterConfig.dateTo ? filterConfig.dateTo : null;
     filterConfig.text = filterConfig.text ? filterConfig.text : '';
     if (filterConfig.hashtags === undefined) {
       array = Array.from(this._tws);
@@ -480,7 +491,7 @@ class HeaderView {
                           <a href="#login">Выйти</a>
                         </button>
                         <h5>Версия 1.0</h5>`;
-    if(user === 'Гость') {
+    if(localStorage.getItem(currentUser) === 'Гость') {
       img.setAttribute('class', 'avatar')
       button.innerHTML = `<h5>Версия 1.0</h5>`;
     }
@@ -496,14 +507,6 @@ class TweetFeedView {
   display(tweets) {
     const btn = document.querySelector('#right-block__chat__btn');
     btn.setAttribute('class', 'right-block__chat__btn');
-    const addTweet = document.getElementById('add-tweet');
-    addTweet.setAttribute('class', 'right-block__add-twit');
-    addTweet.innerHTML = `<img src="assets/img/avatar_mini.png" alt="avatar">
-                          <textarea cols="185" rows="5" maxlength="280" style="width: 100%;"
-                          placeholder="О чем бы вы хотели рассказать?" class="right-block__add-twit-block"></textarea>
-                          <textarea cols="185" rows="5" maxlength="280" style="width: 100%;" placeholder="Расскажите?"
-                          class="right-block__add-twit-none"></textarea>
-                          <button class="right-block__add-twit__btn"></button>`;
     const tweetFeed = document.getElementById(this.containerId);
     tweetFeed.setAttribute('class', 'right-block__scroll-twit');
     const array = Array.from(tweets);
@@ -511,34 +514,34 @@ class TweetFeedView {
       const msg = document.createElement('div');
       if(item.comments !== undefined && item.comments.length > 0) {
         if(item.author === 'Анджелина Джоли'){
+          msg.setAttribute('id', 'main-class');
           msg.setAttribute('class', 'jlo');
-          msg.innerHTML = `<div class="title"><div><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div>
+          msg.innerHTML = `<div class="id" style="font-size:0;">${item.id}</div><div class="title"><div><h2>${item.author}<h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div id="svgs-jlo">
           <img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
-          <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete">
-          </div></div><div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
+          <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"></div></div><div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
           tweetFeed.appendChild(msg);
         } else {
+          msg.setAttribute('id', 'main-class');
           msg.setAttribute('class', 'child');
-          msg.innerHTML = `<div class="title"><div><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div>
+          msg.innerHTML = `<div class="id" style="font-size:0;">${item.id}</div><div class="title"><div><h2>${item.author}<h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div id="svgs">
           <img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
-          <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete">
-          </div></div><div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
+          <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"></div></div><div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
           tweetFeed.appendChild(msg);
         }
       } else {
         if(item.author === 'Анджелина Джоли'){
+          msg.setAttribute('id', 'main-class');
           msg.setAttribute('class', 'jlo');
-          msg.innerHTML = `<div class="title"><div><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div>
+          msg.innerHTML = `<div class="id" style="font-size:0;">${item.id}</div><div class="title"><div><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div id="svgs-jlo">
           <img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
-          <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete">
-          </div></div><div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
+          <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"></div></div><div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
           tweetFeed.appendChild(msg);
         } else {
+          msg.setAttribute('id', 'main-class');
           msg.setAttribute('class', 'child');
-          msg.innerHTML = `<div class="title"><div><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div>
+          msg.innerHTML = `<div class="id" style="font-size:0;">${item.id}</div><div class="title"><div><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div id="svgs">
           <img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
-          <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete">
-          </div></div><div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
+          <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"></div></div><div class="text">${item.text}</div><div class="comments">${item.comments.length}</div>`;
           tweetFeed.appendChild(msg);
         }
       }
@@ -559,11 +562,12 @@ class FilterView {
   }
 
   static authorFil = document.createElement('input');
-  static dateFil = document.createElement('input');
+  static dateFFil = document.createElement('input');
+  static dateTFil = document.createElement('input');
   static textFil = document.createElement('input');
   static hashtagsFil = document.createElement('input');
 
-  display(author = '', date = '', text = '', hashtags = []) {
+  display(author = '', dateF = '', dateT = '', text = '', hashtags = []) {
     const blockFilters = document.querySelector('.left-block__filters');
     blockFilters.innerHTML = `<h3>Фильтры</h3>
                               <div id="filters-id" class="left-block__filters"></div>
@@ -572,27 +576,34 @@ class FilterView {
                                 <button class="left-block__filters__btn-apply">Применить</button>
                               </div>`;
     clearFilters();
+    loaderFilters();
     const filters = document.getElementById(this.containerId);
     const authorV = FilterView.authorFil;
-    const dateV = FilterView.dateFil;
+    const dateFV = FilterView.dateFFil;
+    const dateTV = FilterView.dateTFil;
     const textV = FilterView.textFil;
     const hashtagsV = FilterView.hashtagsFil;
     if (authorV) {
       const authorInput = authorV;
       authorInput.setAttribute('class', 'filter-author');
-      const dateData = dateV;
-      dateData.setAttribute('type', 'date');
-      dateData.setAttribute('class', 'filter-date');
+      const dateFData = dateFV;
+      dateFData.setAttribute('type', 'date');
+      dateFData.setAttribute('class', 'filter-date-from');
+      const dateTData = dateTV;
+      dateTData.setAttribute('type', 'date');
+      dateTData.setAttribute('class', 'filter-date-to');
       const textInput = textV;
       textInput.setAttribute('class', 'filter-text');
       const hashtagsInput = hashtagsV;
       hashtagsInput.setAttribute('class', 'filter-hashtag');
       authorInput.value = author;
       textInput.value = text;
-      dateData.value = date;
+      dateFData.value = dateF;
+      dateTData.value = dateT;
       hashtagsInput.value = hashtags.join(' ');
       filters.append(authorInput);
-      filters.append(dateData);
+      filters.append(dateFData);
+      filters.append(dateTData);
       filters.append(textInput);
       filters.append(hashtagsInput);
     }
@@ -721,10 +732,173 @@ function formatDate(date){
 function clearFilters() {
   document.querySelector('.left-block__filters__btn-clear').addEventListener('click', () => {
     document.querySelector('.filter-author').value = '';
-    document.querySelector('.filter-date').value = '';
+    document.querySelector('.filter-date-from').value = '';
+    document.querySelector('.filter-date-to').value = '';
     document.querySelector('.filter-text').value = '';
     document.querySelector('.filter-hashtag').value = '';
   });
+}
+function loaderFilters() {
+  document.querySelector('.left-block__filters__btn-apply').addEventListener('click', () => {
+    const author = document.querySelector('.filter-author').value;
+    const dateFrom = document.querySelector('.filter-date-from').value;
+    const dateTo = document.querySelector('.filter-date-to').value;
+    const text  = document.querySelector('.filter-text').value;
+    const hashtags = document.querySelector('.filter-hashtag').value;
+    const filterConfig = {};
+    filterConfig.author = author;
+    filterConfig.dateFrom = dateFrom;
+    filterConfig.dateTo = dateTo;
+    filterConfig.text = text;
+    let re = /\s* \s*/;
+    filterConfig.hashtags = hashtags.split(re);
+    tweetFeedView.clear()
+    const filter = tweetCollection.getPage(0, 10, filterConfig);
+    tweetFeedView.display(filter);
+  });
+}
+
+class User {
+  constructor(user) {
+    this.user = user;
+  }
+}
+class UserList {
+  constructor() {
+    // this.users = ['Алеся Брановицкая', 'Анджелина Джоли'];
+    this.restore();
+  }
+
+  addUser(user) {
+    this.users.push(user);
+    this.save();
+  }
+
+  save() {
+    localStorage.setItem('userList', JSON.stringify(this.users));
+  }
+
+  restore() {
+    const localUserList = JSON.parse(localStorage.getItem('userList'));
+  }
+}
+
+class TweetsController {
+  constructor() {
+    this.tweet = new Tweet();
+    this.comment = new Comment();
+    this.tweetCollection = new TweetCollection(tweetCollection._tws);
+    this.headerView = new HeaderView('header-id');
+    this.tweetFeedView = new TweetFeedView('tweet-feed-id');
+    this.filterView = new FilterView('filters-id');
+    this.tweetView = new TweetView('tweet-id');
+    this.commentView = new CommentView('comment-id');
+  }
+
+  setCurrentUser(user) {
+    this.headerView.display(user);
+    tweetCollection.user = user;
+  }
+
+  addTweet(text) {
+    tweetCollection.add(text);
+    tweetFeedView.clear();
+    tweetFeedView.display(tweetCollection._tws);
+    tweetCollection.save();
+  }
+
+  editTweet(id, text) {
+    tweetCollection.edit(id, text);
+    tweetFeedView.clear();
+    tweetFeedView.display(tweetCollection._tws);
+    tweetCollection.save();
+  }
+
+  removeTweet(id) {
+    tweetCollection.remove(id);
+    tweetFeedView.clear();
+    tweetFeedView.display(tweetCollection._tws);
+    this.tweetCollection.remove(id);
+    this.tweetFeedView.clear();
+    this.tweetFeedView.display(tweetCollection._tws);
+    tweetCollection.save();
+  }
+
+  getFeed(skip, top, filterConfig) {
+    const tweetView = document.querySelector('#tweet-id');
+    tweetView.setAttribute('class', 'disappear');
+    const commentView = document.querySelector('#comment-id');
+    tweetView.setAttribute('class', 'disappear');
+    commentView.setAttribute('class', 'disappear');
+    const addComment = document.getElementById('add-comment');
+    addComment.setAttribute('class', 'disappear');
+    tweetFeedView.clear();
+    const filter = tweetCollection.getPage(skip, top, filterConfig);
+    tweetFeedView.display(filter);
+  }
+
+  showTweet(id) {
+    const addTweet = document.querySelector('#add-tweet');
+    addTweet.setAttribute('class', 'disappear');
+    const chat = document.querySelector('.right-block__scroll-twit');
+    chat.setAttribute('class', 'disappear');
+    const btn = document.querySelector('.right-block__chat__btn');
+    btn.setAttribute('class', 'disappear');
+    const newTweet = tweetCollection.get(id);
+    tweetView.display(newTweet);
+    commentView.display(newTweet.comments);
+    const addComment = document.getElementById('add-comment');
+    addComment.setAttribute('class', 'right-block__add-comment');
+    addComment.innerHTML = `<img src="assets/img/avatar_25.png" alt="avatar">
+                            <textarea cols="155" rows="1" maxlength="280" style="width: 100%;" placeholder="Написать комментарий"
+                            class="right-block__add-comment__block"></textarea>
+                            <button class="right-block__add-comment__btn"></button>`;
+  }
+
+  formatDate(date) {
+    let dd = date.getDate();
+    if (dd < 10) dd = `0${dd}`;
+    let mm = date.getMonth() + 1;
+    if (mm < 10) mm = `0${mm}`;
+    let yy = date.getFullYear() % 100;
+    if (yy < 10) yy = `0${yy}`;
+    let tt = date.getHours();
+    if (tt < 10) tt = `0${tt}`;
+    let m = date.getMinutes();
+    if (m < 10) m = `0${m}`;
+    return `${dd}.${mm}.${yy} ${tt}.${m}`;
+  }
+
+  clearFilters() {
+    document.querySelector('.left-block__filters__btn-clear').addEventListener('click', () => {
+      document.querySelector('.filter-author').value = '';
+      document.querySelector('.filter-date').value = '';
+      document.querySelector('.filter-text').value = '';
+      document.querySelector('.filter-hashtag').value = '';
+    });
+  }
+
+  // loadFilters() {
+  //   document.querySelector('.left-block__filters__btn-clear').addEventListener('click', () => {
+  //     const author = document.querySelector('.filter-author').value;
+  //     const date = document.querySelector('.filter-date').value;
+  //     const text  = document.querySelector('.filter-text').value;
+  //     const hashtags = (document.querySelector('.filter-hashtag').value).split(',');
+  //     filterConfig = filterConfig.push(hashtags).push(text).push(date).push(author)
+  //     tweetsController.getFeed(skip = 0, top = 10, filterConfig = {})
+  //   });
+  // }
+
+  registration(user) {
+    const userList = new UserList();
+    userList.addUser(user);
+  }
+
+  login(user) {
+    this.tweetCollection.user = user;
+  }
+
+  //и другие функции 
 }
 
 // const tweetCollection = new TweetCollection(tweets);
@@ -748,3 +922,138 @@ function clearFilters() {
 
 
 
+
+
+loadTweets.addEventListener('click', loaderTweets);
+
+function loaderTweets() {
+  const tweetsController = new TweetsController();
+  tweetsController.getFeed(0,20);
+  const edit = document.querySelectorAll('#svgs');
+  const del = document.querySelectorAll('#svgs-jlo');
+  edit.forEach((item) => item.setAttribute('class', 'disappear'));
+  del.forEach((item) => item.setAttribute('class', 'disappear'));
+  redirectTweet();
+}
+
+btnLog.addEventListener('click', loaderPages);
+
+function loaderPages(event) {
+  if(event.target === document.querySelector('.header__btn-main')) {
+    document.location.href = './login.html';
+  } else {
+    document.location.href = './logup.html';
+  }
+}
+
+const tweetCollection = new TweetCollection(tweets);
+const tweetView = new TweetView('tweet-id');
+const commentView = new CommentView('comment-id');
+const tweetFeedView = new TweetFeedView('tweet-feed-id');
+
+//LOCAL
+// Для заполнение localStorage нужно реализовать глобальную функцию, 
+// которая будет вызываться до создания экземпляра контроллера. 
+// Она будет заполнять localStorage при условии, если он пуст. 
+function createLocalStorage(){
+  const tweetCollect = [new Tweet('24', 'Hello', new Date('2022-02-19T19:30:00'), 'Алеся Брановицкая',[])]
+  const realUsers = ['Алеся Брановицкая', 'Анджелина Джоли'];
+  if(localStorage.getItem('userList') === null && localStorage.getItem('tws') === null){
+    localStorage.setItem('userList', JSON.stringify(realUsers));
+    localStorage.setItem('tws', JSON.stringify(tweetCollect));
+  }
+}
+
+//LOCAL STORAGE - guest
+// const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+// tweetsController.setCurrentUser(user);
+// // new user
+// const addsUser =  JSON.parse(localStorage.getItem('addUser'));
+// userList.addUser(addsUser);
+// tweetsController.setCurrentUser(addsUser);
+
+// if (user === 'Гость') {
+//   const btnS = document.querySelector('.left-block__btn');
+//   btnS.innerHTML = `<button class="header__btn header__btn-main">
+//     Войти
+//   </button>
+//   <button class="header__btn header__btn-reg">
+//     Регистрация
+//   </button>`;
+//   const button = document.querySelector('.left-block__footer');
+//   button.innerHTML = `<h5>Версия 1.0</h5>`;
+//   const img = document.querySelector('.avatar');
+//   img.setAttribute('class', 'avatar')
+// } else {
+//   const btnS = document.querySelector('.left-block__btn');
+//   btnS.innerHTML = '';
+// }
+
+window.onload = function () {
+  createLocalStorage();
+  const tweetsController = new TweetsController();
+  localStorage.setItem('currentUser', JSON.stringify('Гость'));
+  tweetsController.filterView.display();
+  const addTweet = document.getElementById('add-tweet');
+  const addComment = document.getElementById('comment-id');
+  addComment.setAttribute('class', 'disappear');
+  addTweet.setAttribute('class', 'disappear');
+  const filter = tweetCollection.getPage(0, 10);
+  tweetFeedView.display(filter);
+  const edit = document.querySelectorAll('#svgs');
+  const del = document.querySelectorAll('#svgs-jlo');
+  edit.forEach((item) => item.setAttribute('class', 'disappear'));
+  del.forEach((item) => item.setAttribute('class', 'disappear'));
+  const btnS = document.querySelector('.left-block__btn');
+  btnS.innerHTML = `<button class="header__btn header__btn-main">
+    Войти
+  </button>
+  <button class="header__btn header__btn-reg">
+    Регистрация
+  </button>`;
+  const button = document.querySelector('.left-block__footer');
+  button.innerHTML = `<h5>Версия 1.0</h5>`;
+  const img = document.querySelector('.avatar');
+  img.setAttribute('class', 'avatar')
+  if (currentUser !== 'Гость') {
+    const btnS = document.querySelector('.left-block__btn');
+    btnS.setAttribute('class', 'disappear');
+    const button = document.querySelector('.left-block__footer');
+    button.innerHTML = `<button class="left-block__footer__btn">
+    <a href="#login">Выйти</a>
+  </button>
+  <h5>Версия 1.0</h5>`;;
+    const img = document.querySelector('.avatar');
+    img.setAttribute('class', 'avatar-img')
+  }
+  redirectTweet();
+}
+
+const tweetsController = new TweetsController();
+const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+tweetsController.setCurrentUser(currentUser);
+
+function redirectTweet() {
+  const tweetsController = new TweetsController();
+  document.querySelectorAll('#main-class').forEach((item) => item.addEventListener('click', () => {
+    // document.location.href = './index.html';
+    //а сюда подргузить уже showTweet(id);
+    const id = item.firstChild.textContent;
+    tweetsController.showTweet(id);
+    const addComment = document.querySelector('#add-comment');
+    addComment.setAttribute('class', 'disappear');
+    const edit = document.querySelector('.right-block__twit_edit');
+    const del = document.querySelector('.right-block__twit_delete');
+    edit.setAttribute('class', 'disappear');
+    del.setAttribute('class', 'disappear');
+  }))
+}
+
+// const btnLogOut = document.querySelector('.left-block__footer__btn');
+// btnLogOut.addEventListener('click', (event) => {
+//   localStorage.setItem('currentUser', JSON.stringify('Гость'));
+//   document.location.href = './index.html';
+// })
+
+{/* <img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
+<img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"> */}
