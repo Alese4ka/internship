@@ -17,11 +17,11 @@ wrapper.addEventListener('click', (event) => {
       }
       break;
     }
+    checkTicTacToe();
   }
-  checkTicTacToe();
 });
 
-function checkTicTacToe() {
+function checkTicTacToe(event) {
   const array = [
     [0, 1, 2],
     [0, 3, 6],
@@ -35,10 +35,12 @@ function checkTicTacToe() {
   for (let i = 0; i < array.length; i += 1) {
     if (box[array[i][0]].innerHTML === 'x' && box[array[i][1]].innerHTML === 'x' && box[array[i][2]].innerHTML === 'x') {
       alert('Вы победили');
-      box.forEach((item) => {item.innerHTML = ''});
+      // box.forEach((item) => {item.innerHTML = ''});
     } else if (box[array[i][0]].innerHTML === 'o' && box[array[i][1]].innerHTML === 'o' && box[array[i][2]].innerHTML === 'o') {
       alert('Вы проиграли');
-      box.forEach((item) => {item.innerHTML = ''});
+      // box.forEach((item) => {item.innerHTML = ''});
     }
   }
 }
+
+// не разрешать повторный клик

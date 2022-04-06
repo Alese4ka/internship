@@ -10,8 +10,10 @@ main {
 }
 
 .box {
-  width: 30px;
+  width: 55px;
+  height: 40px;
+  padding-top: 1rem;
+  text-align: center;
   font-size: 1.125rem;
-  padding: 2rem 1rem;
   border: 1px solid black;
 }
