@@ -736,6 +736,7 @@ class TweetsController {
     tweetCollection.add(text);
     tweetFeedView.clear();
     tweetFeedView.display(tweetCollection._tws);
+    redirectTweet();
   }
 
   editTweet(id, text) {
@@ -808,15 +809,15 @@ class TweetsController {
       const hashtags = document.querySelector('.filter-hashtag').value;
       const filterConfig = {};
       filterConfig.author = author;
-      filterConfig.dateFrom = dateFrom;
-      filterConfig.dateTo = dateTo;
+      filterConfig.dateFrom = new Date(dateFrom);
+      filterConfig.dateTo = new Date(dateTo);
       filterConfig.text = text;
       let re = /\s* \s*/;
       filterConfig.hashtags = hashtags.split(re);
+      console.log(dateFrom, dateTo)
       tweetFeedView.clear()
       const filter = tweetCollection.getPage(0, 10, filterConfig);
       if (filter.length === 0) {
-        // alert('По вашему запросу ничего не найдено. Измените условия поиска');
         const rightBlock = document.querySelector('.right-block__chat');
         const newBlock =  document.createElement('div');
         newBlock.setAttribute('class', 'new-block');
@@ -830,6 +831,11 @@ class TweetsController {
       } else {
         tweetFeedView.display(filter);
       }
+      if (currentUser === 'Гость') {
+        const addTweet = document.getElementById('add-tweet');
+        addTweet.setAttribute('class', 'disappear');
+      }
+      deleteBtn();
     });
   }
 
@@ -872,22 +878,6 @@ class TweetsController {
       }
     });
   }
-  // loadFilters() {
-  //   document.querySelector('.left-block__filters__btn-clear').addEventListener('click', () => {
-  //     const author = document.querySelector('.filter-author').value;
-  //     const date = document.querySelector('.filter-date').value;
-  //     const text  = document.querySelector('.filter-text').value;
-  //     const hashtags = (document.querySelector('.filter-hashtag').value).split(',');
-  //     filterConfig = filterConfig.push(hashtags).push(text).push(date).push(author)
-  //     tweetsController.getFeed(skip = 0, top = 10, filterConfig = {})
-  //   });
-  // }
-
-  // update() {
-  //   this.tweetCollection = tweetCollection._tws;
-  //   const tweets = Array.from(this.tweetCollection);
-  //   localStorage.setItem('tws', JSON.stringify(this.tweetCollection));
-  // }
 
   registration(user) {
     const userList = new UserList();
@@ -897,15 +887,11 @@ class TweetsController {
   login(user) {
     this.tweetCollection.user = user;
   }
-
-  //и другие функции 
 }
 
-//BTNs
 loadTweets.addEventListener('click', loaderTweets);
 
 function check(){
-  console.log(JSON.parse(localStorage.getItem('tws')).length)
   const mainBlock = document.querySelectorAll('#main-class');
   if(mainBlock.length === JSON.parse(localStorage.getItem('tws')).length) {
     loadTweets.setAttribute('disabled', true);
@@ -914,25 +900,21 @@ function check(){
 }
 
 function loaderTweets() {
-  check()
+  check();
   const tweetsController = new TweetsController();
   const mainBlock = document.querySelectorAll('#main-class');
   tweetsController.getFeed(mainBlock.length,10);
-  // if (tweetsController.getFeed(mainBlock.length,10).length === 0) {
-  //     loadTweets.setAttribute('disabled', true);
-  //   }
-  // deleteBtn();
-  if(currentUser === 'Гость') {
+  if (currentUser === 'Гость') {
     const addTweet = document.getElementById('add-tweet');
     const addComment = document.getElementById('comment-id');
     addComment.setAttribute('class', 'disappear');
     addTweet.setAttribute('class', 'disappear');
+    deleteBtn();
   }
-  // redirectTweet();
+  deleteBtn();
 }
 
 btnLog.addEventListener('click', loaderPages);
-
 function loaderPages(event) {
   if(event.target === document.querySelector('.header__btn-main')) {
     document.location.href = './login.html';
@@ -940,11 +922,6 @@ function loaderPages(event) {
     document.location.href = './logup.html';
   }
 }
-
-const tweetCollection = new TweetCollection();
-const tweetView = new TweetView('tweet-id');
-const commentView = new CommentView('comment-id');
-const tweetFeedView = new TweetFeedView('tweet-feed-id');
 
 //LOCAL STORAGE
 function createLocalStorage() {
@@ -957,7 +934,12 @@ function createLocalStorage() {
 }
 
 createLocalStorage();
+const tweetCollection = new TweetCollection();
 const tweetsController = new TweetsController();
+const tweetView = new TweetView('tweet-id');
+const commentView = new CommentView('comment-id');
+const tweetFeedView = new TweetFeedView('tweet-feed-id');
+const userList = new UserList();
 const filter = tweetCollection.getPage();
 tweetsController.tweetFeedView.display(filter);
 tweetsController.filterView.display();
@@ -965,54 +947,45 @@ const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 tweetsController.setCurrentUser(currentUser);
 tweetsController.login(currentUser);
 if (currentUser !== 'Гость') {
+  // save user
+  // userList.addUser(currentUser);
   // const userList = new UserList();
   // userList.addUser(currentUser);
   const button = document.querySelector('.left-block__footer');
-    button.setAttribute('id', 'logout-btn')
-    button.innerHTML = `<button class="left-block__footer__btn">
+  button.setAttribute('id', 'logout-btn')
+  button.innerHTML = `<button class="left-block__footer__btn">
                           Выйти
                         </button>
                         <h5>Версия 1.0</h5>`;
-    button.addEventListener('click', () => {
-      document.location.href = './index.html';
-      localStorage.setItem('currentUser', JSON.stringify('Гость'));
-      logGuest();
-    })
-  // deleteBtn();
-  tweetsController.addNewTweet();
-  // const btnS = document.querySelector('.left-block__btn');
-  //btnS.setAttribute('class', 'disappear');
-  // const img = document.querySelector('.avatar');
-  // img.setAttribute('class', 'avatar-img');
+  button.addEventListener('click', () => {
+    document.location.href = './index.html';
+    localStorage.setItem('currentUser', JSON.stringify('Гость'));
+    logGuest();
+  });
+  deleteBtn();
 } else {
   logGuest();
 }
-  // redirectTweet();
 
-  function deleteBtn() {
-    tweetCollection._tws.forEach((item) => {
-      if (item.author !== currentUser) {
-        const edit = document.querySelectorAll('#svgs');
-        const del = document.querySelectorAll('#svgs-jlo');
-        edit.forEach((item) => item.setAttribute('class', 'disappear'));
-        del.forEach((item) => item.setAttribute('class', 'disappear'));
-      }
-    })
-  } 
+function deleteBtn() {
+  tweetCollection._tws.forEach((item) => {
+    if (item.author !== currentUser) {
+      const edit = document.querySelectorAll('#svgs');
+      edit.forEach((item) => item.classList.add('disappear'));
+      const del = document.querySelectorAll('#svgs-jlo');
+      del.forEach((item) => item.classList.add('disappear'));
+    } else if (item.author === 'Алеся Брановицкая' && item.author === currentUser) {
+      const edit = document.querySelectorAll('#svgs');
+      edit.forEach((item) => item.classList.remove('disappear'));
+    } else {
+      const del = document.querySelectorAll('#svgs-jlo');
+      del.forEach((item) => item.classList.remove('disappear'));
+    }
+  });
+}
 
-  function deleteBtnTweet() {
-    tweetCollection._tws.forEach((item) => {
-      if (item.author !== currentUser) {
-        const edit = document.querySelectorAll('.block-edit');
-        edit.forEach((item) => item.setAttribute('class', 'disappear'));
-      }
-    })
-  } 
-
-// function redirectTweet() {
+function redirectTweet() {
   document.querySelectorAll('#main-class').forEach((item) => item.addEventListener('click', (event) => {
-    // document.location.href = './index.html';
-    //а сюда подргузить уже showTweet(id);
     const id = item.firstChild.textContent;
     if(!event.target.classList.contains('right-block__twit_edit') && !event.target.classList.contains('right-block__twit_delete')) {
       tweetsController.showTweet(id);
@@ -1024,8 +997,8 @@ if (currentUser !== 'Гость') {
         edit.setAttribute('class', 'disappear');
         del.setAttribute('class', 'disappear');
       } else {
-        // tweetsController.addNewTweet();
-        // deleteBtnTweet()
+        const edit = document.querySelectorAll('.block-edit');
+        edit.forEach((item) => item.classList.add('disappear'));
         tweetsController.addComment();
         const btnS = document.querySelector('.left-block__btn');
         btnS.innerHTML = `<button class="tweet__btn-main header__btn">
@@ -1061,9 +1034,6 @@ if (currentUser !== 'Гость') {
         tweetsController.getFeed();
       }
     } else if (event.target.classList.contains('right-block__twit_delete')) {
-        // if (confirm("Вы действительно хотите удалить твит?")) {
-        //   tweetsController.removeTweet(id);
-        // }
         const div = document.createElement('div');
         div.innerHTML = `<div id="my_modal" class="modal">
                           <div class="modal_content">
@@ -1097,7 +1067,7 @@ if (currentUser !== 'Гость') {
       }
     })
   )
-// }
+}
 
 function logGuest() {
   const addTweet = document.getElementById('add-tweet');
@@ -1118,13 +1088,10 @@ function logGuest() {
   const button = document.querySelector('.left-block__footer');
   button.innerHTML = `<h5>Версия 1.0</h5>`;
   const img = document.querySelector('.avatar');
-  img.setAttribute('class', 'avatar')
+  img.setAttribute('class', 'avatar');
+  const blockScroll = document.querySelector('.right-block__scroll-twit');
+  blockScroll.setAttribute('style', 'height: 100vh;')
 }
-
-{/* <img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
-<img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"> */}
-
-
 
 // Check
 // const tweetCollection = new TweetCollection(tweets);
@@ -1135,14 +1102,15 @@ function logGuest() {
 // const filterView = new FilterView('filters-id');
 // setCurrentUser('Алеся Брановицкая');
 // getFeed();
-
 // addTweet('text');
 // editTweet(4, 'text FOO');
 // removeTweet(1);
 // getFeed(0, 4);
 // getFeed(0, 10, { hashtags: ['#datamola'] });
 // showTweet(10);
-
 // const filterView = new FilterView('filters-id');
 // filterView.display('Анджелина','2002-02-22', 'sum', ['#datamola','gg']);
 // addNewTweet();
+
+tweetsController.addNewTweet()
+redirectTweet()
