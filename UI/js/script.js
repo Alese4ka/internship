@@ -11,260 +11,260 @@ const btnLog = document.querySelector('.left-block__btn');
 const tweets = [
   {
     id: '1',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro #datamola',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span> <span class="hashtag">#datamola</span>',
     createdAt: new Date('2022-02-16T03:30:00'),
     author: 'Алеся Брановицкая',
     comments: [
       {
         id: '901',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-02-17T05:30:00'),
         author: 'Анджелина Джоли',
       },
       {
         id: '902',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-02-18T15:30:00'),
         author: 'Анджелина Джоли',
       },
       {
         id: '903',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-02-19T19:30:00'),
         author: 'Анджелина Джоли',
       }],
   },
   {
     id: '2',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #datamola',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#datamola</span>',
     createdAt: new Date('2022-02-21T03:30:00'),
     author: 'Анджелина Джоли',
     comments: [
       {
         id: '904',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-02-22T17:30:00'),
         author: 'Алеся Брановицкая',
       }],
   },
   {
     id: '3',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-02-24T03:30:00'),
     author: 'Анджелина Джоли',
     comments: [],
   },
   {
     id: '4',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-02-25T03:30:00'),
     author: 'Алеся Брановицкая',
     comments: [
       {
         id: '905',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-02-27T05:30:00'),
         author: 'Анджелина Джоли',
       },
       {
         id: '906',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-02-28T15:30:00'),
         author: 'Анджелина Джоли',
       }],
   },
   {
     id: '5',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-01T03:30:00'),
     author: 'Анджелина Джоли',
     comments: [],
   },
   {
     id: '6',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-02T03:30:00'),
     author: 'Анджелина Джоли',
     comments: [],
   },
   {
     id: '7',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-03T03:30:00'),
     author: 'Алеся Брановицкая',
     comments: [],
   },
   {
     id: '8',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-04T03:30:00'),
     author: 'Анджелина Джоли',
     comments: [
       {
         id: '907',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-05T05:30:00'),
         author: 'Алеся Брановицкая',
       },
       {
         id: '908',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-06T15:30:00'),
         author: 'Алеся Брановицкая',
       }],
   },
   {
     id: '9',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-07T03:30:00'),
     author: 'Анджелина Джоли',
     comments: [],
   },
   {
     id: '10',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-08T03:30:00'),
     author: 'Алеся Брановицкая',
     comments: [
       {
         id: '909',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-09T05:30:00'),
         author: 'Анджелина Джоли',
       },
       {
         id: '910',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-09T18:30:00'),
         author: 'Анджелина Джоли',
       }],
   },
   {
     id: '11',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-09T23:30:00'),
     author: 'Алеся Брановицкая',
     comments: [
       {
         id: '911',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-10T05:30:00'),
         author: 'Анджелина Джоли',
       },
       {
         id: '912',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-10T15:30:00'),
         author: 'Анджелина Джоли',
       },
       {
         id: '913',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-10T19:30:00'),
         author: 'Анджелина Джоли',
       }],
   },
   {
     id: '12',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-10T21:30:00'),
     author: 'Анджелина Джоли',
     comments: [
       {
         id: '914',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-10T22:30:00'),
         author: 'Алеся Брановицкая',
       }],
   },
   {
     id: '13',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-10T23:30:00'),
     author: 'Анджелина Джоли',
     comments: [],
   },
   {
     id: '14',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-11T03:30:00'),
     author: 'Алеся Брановицкая',
     comments: [
       {
         id: '915',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-11T05:30:00'),
         author: 'Анджелина Джоли',
       },
       {
         id: '916',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-11T08:30:00'),
         author: 'Анджелина Джоли',
       }],
   },
   {
     id: '15',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-11T11:30:00'),
     author: 'Анджелина Джоли',
     comments: [],
   },
   {
     id: '16',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-11T13:30:00'),
     author: 'Анджелина Джоли',
     comments: [],
   },
   {
     id: '17',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-11T14:30:00'),
     author: 'Алеся Брановицкая',
     comments: [],
   },
   {
     id: '18',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-12T03:30:00'),
     author: 'Анджелина Джоли',
     comments: [
       {
         id: '917',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-12T05:30:00'),
         author: 'Алеся Брановицкая',
       },
       {
         id: '918',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-12T09:30:00'),
         author: 'Алеся Брановицкая',
       }],
   },
   {
     id: '19',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-12T12:30:00'),
     author: 'Анджелина Джоли',
     comments: [],
   },
   {
     id: '20',
-    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+    text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
     createdAt: new Date('2022-03-13T09:30:00'),
     author: 'Алеся Брановицкая',
     comments: [
       {
         id: '919',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-13T12:30:00'),
         author: 'Анджелина Джоли',
       },
       {
         id: '920',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type #make #intro',
+        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type <span class="hashtag">#make</span> <span class="hashtag">#intro</span>',
         createdAt: new Date('2022-03-13T18:30:00'),
         author: 'Анджелина Джоли',
       }],
@@ -399,7 +399,6 @@ class TweetCollection {
     filterConfig.text = filterConfig.text ? filterConfig.text : '';
     if (filterConfig.hashtags === undefined) {
       array = Array.from(this._tws);
-      console.log(array)
     } else {
       for (let i = 0; i < filterConfig.hashtags.length; i += 1) {
         let twsArray = Array.from(this._tws);
@@ -501,11 +500,6 @@ class HeaderView {
     const userName = document.getElementById(this.containerId);
     const img = document.querySelector('.avatar');
     img.classList.toggle('avatar-img')
-    const button = document.querySelector('.left-block__footer');
-    button.innerHTML = `<button class="left-block__footer__btn">
-                          Выйти
-                        </button>
-                        <h5>Версия 1.0</h5>`;
     if(localStorage.getItem(currentUser) === 'Гость') {
       img.setAttribute('class', 'avatar')
       button.innerHTML = `<h5>Версия 1.0</h5>`;
@@ -609,6 +603,7 @@ class FilterView {
     if (authorV) {
       const authorInput = authorV;
       authorInput.setAttribute('class', 'filter-author');
+      authorInput.setAttribute('placeholder', 'Имя автора');
       const dateFData = dateFV;
       dateFData.setAttribute('type', 'date');
       dateFData.setAttribute('class', 'filter-date-from');
@@ -617,8 +612,10 @@ class FilterView {
       dateTData.setAttribute('class', 'filter-date-to');
       const textInput = textV;
       textInput.setAttribute('class', 'filter-text');
+      textInput.setAttribute('placeholder', 'Текст');
       const hashtagsInput = hashtagsV;
       hashtagsInput.setAttribute('class', 'filter-hashtag');
+      hashtagsInput.setAttribute('placeholder', 'Хештеги');
       authorInput.value = author;
       textInput.value = text;
       dateFData.value = dateF;
@@ -648,12 +645,12 @@ class TweetView {
     const msg = document.getElementById(this.containerId);
     if(tweet.author === 'Анджелина Джоли'){
       msg.setAttribute('class', 'tweet-jlo');
-      msg.innerHTML = `<div class="id" style="font-size:0;">${tweet.id}</div><div class="title"><div><h2>${tweet.author}<h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(tweet.createdAt)}</h4></h2></div><div><img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
+      msg.innerHTML = `<div class="id" style="font-size:0;">${tweet.id}</div><div class="title"><div><h2>${tweet.author}<h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(tweet.createdAt)}</h4></h2></div><div class="block-edit"><img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
       <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"></div></div>
       <div class="text">${tweet.text}</div>`;
     } else {
       msg.setAttribute('class', 'tweet');
-      msg.innerHTML = `<div class="id" style="font-size:0;">${tweet.id}</div><div class="title"><div><h2>${tweet.author} <h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(tweet.createdAt)}</h4></h2></div><div><img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
+      msg.innerHTML = `<div class="tweet-main"><div class="id" style="font-size:0;">${tweet.id}</div><div class="title"><div><h2>${tweet.author} <h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(tweet.createdAt)}</h4></h2></div><div class="block-edit"><img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
       <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"></div></div>
       <div class="text">${tweet.text}</div>`;
       }
@@ -668,7 +665,7 @@ class CommentView {
   display(comment) {
     const commentFeed = document.getElementById(this.containerId);
     commentFeed.setAttribute('class', 'commentsV');
-    comment.sort((a, b) => b.createdAt - a.createdAt).forEach((item) => {
+    comment.forEach((item) => {
       if(item.author === 'Анджелина Джоли'){
         const msgCom = document.createElement('div');
         msgCom.setAttribute('class', 'comment-jlo');
@@ -764,9 +761,10 @@ class TweetsController {
     commentView.setAttribute('class', 'disappear');
     const addComment = document.getElementById('add-comment');
     addComment.setAttribute('class', 'disappear');
-    tweetFeedView.clear();
+    // tweetFeedView.clear();
     const filter = tweetCollection.getPage(skip, top, filterConfig);
     tweetFeedView.display(filter);
+    return filter;
   }
 
   showTweet(id) {
@@ -817,7 +815,21 @@ class TweetsController {
       filterConfig.hashtags = hashtags.split(re);
       tweetFeedView.clear()
       const filter = tweetCollection.getPage(0, 10, filterConfig);
-      tweetFeedView.display(filter);
+      if (filter.length === 0) {
+        // alert('По вашему запросу ничего не найдено. Измените условия поиска');
+        const rightBlock = document.querySelector('.right-block__chat');
+        const newBlock =  document.createElement('div');
+        newBlock.setAttribute('class', 'new-block');
+        newBlock.innerHTML = `<div>
+        <p>По вашему запросу ничего не найдено. Измените условия поиска</p>
+        <button class="btn-main">Назад</button>
+        </div>`;
+        rightBlock.prepend(newBlock);
+        const btnMain = document.querySelector('.btn-main');
+        btnMain.addEventListener('click', () => document.location.href = './index.html')
+      } else {
+        tweetFeedView.display(filter);
+      }
     });
   }
 
@@ -831,13 +843,15 @@ class TweetsController {
     });
   }
 
-  addNewTweet(event) {
+  addNewTweet() {
     const btnAddTweet = document.querySelector('.right-block__add-twit');
     btnAddTweet.addEventListener('click', (event) => {
       if(event.target.classList.contains('right-block__add-twit__btn')) {
         let textArea = document.querySelector('.right-block__add-twit-block'); 
-        const text = textArea.value;
-        tweetsController.addTweet(text);
+        let text = textArea.value;
+        let highlighted = text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>');
+        this.innerHTML = highlighted;
+        tweetsController.addTweet(highlighted);
         textArea.value = '';
       } 
     })
@@ -890,10 +904,24 @@ class TweetsController {
 //BTNs
 loadTweets.addEventListener('click', loaderTweets);
 
+function check(){
+  console.log(JSON.parse(localStorage.getItem('tws')).length)
+  const mainBlock = document.querySelectorAll('#main-class');
+  if(mainBlock.length === JSON.parse(localStorage.getItem('tws')).length) {
+    loadTweets.setAttribute('disabled', true);
+    loadTweets.setAttribute('style', 'color: grey; box-shadow: none;cursor-pointer: none;');
+  }
+}
+
 function loaderTweets() {
+  check()
   const tweetsController = new TweetsController();
-  tweetsController.getFeed(0,20);
-  deleteBtn();
+  const mainBlock = document.querySelectorAll('#main-class');
+  tweetsController.getFeed(mainBlock.length,10);
+  // if (tweetsController.getFeed(mainBlock.length,10).length === 0) {
+  //     loadTweets.setAttribute('disabled', true);
+  //   }
+  // deleteBtn();
   if(currentUser === 'Гость') {
     const addTweet = document.getElementById('add-tweet');
     const addComment = document.getElementById('comment-id');
@@ -928,39 +956,37 @@ function createLocalStorage() {
   }
 }
 
-//BTNs
-// const btnLogOut = document.querySelector('.left-block__footer__btn');
-// btnLogOut.addEventListener('click', () => {
-//   document.location.href = './index.html';
-//   localStorage.setItem('currentUser', JSON.stringify('Гость'));
-//   logGuest();
-// })
-
-// window.onload = function () {
-  createLocalStorage();
-  const tweetsController = new TweetsController();
-  const filter = tweetCollection.getPage();
-  tweetsController.tweetFeedView.display(filter);
-  tweetsController.filterView.display();
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  tweetsController.setCurrentUser(currentUser);
-  tweetsController.login(currentUser);
-  if (currentUser !== 'Гость') {
-    // const userList = new UserList();
-    // userList.addUser(currentUser);
-    deleteBtn();
-    const btnS = document.querySelector('.left-block__btn');
-    btnS.setAttribute('class', 'disappear');
-    const button = document.createElement('button');
+createLocalStorage();
+const tweetsController = new TweetsController();
+const filter = tweetCollection.getPage();
+tweetsController.tweetFeedView.display(filter);
+tweetsController.filterView.display();
+const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+tweetsController.setCurrentUser(currentUser);
+tweetsController.login(currentUser);
+if (currentUser !== 'Гость') {
+  // const userList = new UserList();
+  // userList.addUser(currentUser);
+  const button = document.querySelector('.left-block__footer');
+    button.setAttribute('id', 'logout-btn')
     button.innerHTML = `<button class="left-block__footer__btn">
-    Выйти
-    </button>
-    <h5>Версия 1.0</h5>`;
-    const img = document.querySelector('.avatar');
-    img.setAttribute('class', 'avatar-img');
-  } else {
-    logGuest();
-  }
+                          Выйти
+                        </button>
+                        <h5>Версия 1.0</h5>`;
+    button.addEventListener('click', () => {
+      document.location.href = './index.html';
+      localStorage.setItem('currentUser', JSON.stringify('Гость'));
+      logGuest();
+    })
+  // deleteBtn();
+  tweetsController.addNewTweet();
+  // const btnS = document.querySelector('.left-block__btn');
+  //btnS.setAttribute('class', 'disappear');
+  // const img = document.querySelector('.avatar');
+  // img.setAttribute('class', 'avatar-img');
+} else {
+  logGuest();
+}
   // redirectTweet();
 
   function deleteBtn() {
@@ -970,6 +996,15 @@ function createLocalStorage() {
         const del = document.querySelectorAll('#svgs-jlo');
         edit.forEach((item) => item.setAttribute('class', 'disappear'));
         del.forEach((item) => item.setAttribute('class', 'disappear'));
+      }
+    })
+  } 
+
+  function deleteBtnTweet() {
+    tweetCollection._tws.forEach((item) => {
+      if (item.author !== currentUser) {
+        const edit = document.querySelectorAll('.block-edit');
+        edit.forEach((item) => item.setAttribute('class', 'disappear'));
       }
     })
   } 
@@ -989,8 +1024,16 @@ function createLocalStorage() {
         edit.setAttribute('class', 'disappear');
         del.setAttribute('class', 'disappear');
       } else {
-        tweetsController.addNewTweet();
+        // tweetsController.addNewTweet();
+        // deleteBtnTweet()
         tweetsController.addComment();
+        const btnS = document.querySelector('.left-block__btn');
+        btnS.innerHTML = `<button class="tweet__btn-main header__btn">
+                            Главная
+                          </button>`;
+        btnS.addEventListener('click', () => {
+          document.location.href = './index.html';
+        })
       }
     } else if (event.target.classList.contains('right-block__twit_edit')) {
       const textArea = document.querySelector('.right-block__add-twit-block');
@@ -1014,10 +1057,43 @@ function createLocalStorage() {
       function edit() {
         const sendText = newText.value;
         tweetsController.editTweet(id, sendText);
+        tweetFeedView.clear();
         tweetsController.getFeed();
       }
     } else if (event.target.classList.contains('right-block__twit_delete')) {
-        tweetsController.removeTweet(id);
+        // if (confirm("Вы действительно хотите удалить твит?")) {
+        //   tweetsController.removeTweet(id);
+        // }
+        const div = document.createElement('div');
+        div.innerHTML = `<div id="my_modal" class="modal">
+                          <div class="modal_content">
+                            <span class="close_modal_window">×</span>
+                            <p class="modal-text">Вы действительно хотите удалить твит?</p>
+                            <button class="btn-cancel">Отменить</button>
+                            <button class="btn-delete">Удалить</button>
+                          </div>
+                        </div>`;
+        document.body.appendChild(div);
+        const modal = document.getElementById('my_modal');
+        modal.style.display = 'block';
+        const span = document.getElementsByClassName('close_modal_window')[0];
+        span.addEventListener('click', () => {
+          modal.style.display = 'none';
+        });
+        window.addEventListener('click', (event) => {
+          if (event.target == modal) {
+              modal.style.display = 'none';
+          }
+        });
+        const btnDelete = document.querySelector('.btn-delete');
+        btnDelete.addEventListener('click', (event) => {
+          tweetsController.removeTweet(id);
+          modal.style.display = 'none';
+        });
+        const btnCancel = document.querySelector('.btn-cancel');
+        btnCancel.addEventListener('click', (event) => {
+          modal.style.display = 'none';
+        });
       }
     })
   )
@@ -1070,4 +1146,3 @@ function logGuest() {
 // const filterView = new FilterView('filters-id');
 // filterView.display('Анджелина','2002-02-22', 'sum', ['#datamola','gg']);
 // addNewTweet();
-// tweetsController.addNewTweet();
