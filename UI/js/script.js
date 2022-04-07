@@ -280,30 +280,6 @@ class Tweet {
     this.comments = comments;
   }
 
-  // get id() {
-  //   return this._id;
-  // }
-
-  // set id(id) {
-  //   console.log('can\'t change', id);
-  // }
-
-  // get createdAt() {
-  //   return this._createdAt;
-  // }
-
-  // set createdAt(createdAt) {
-  //   console.log('can\'t change', createdAt);
-  // }
-
-  // get author() {
-  //   return this.author;
-  // }
-
-  // set author(author) {
-  //   console.log('can\'t change', author);
-  // }
-
   static maxTextLength = 280;
 
   static validate(tw) {
@@ -324,30 +300,6 @@ class Comment {
     this.author = author;
   }
 
-  // get id() {
-  //   return this._id;
-  // }
-
-  // set id(id) {
-  //   console.log('can\'t change', id);
-  // }
-
-  // get createdAt() {
-  //   return this._createdAt;
-  // }
-
-  // set createdAt(createdAt) {
-  //   console.log('can\'t change', createdAt);
-  // }
-
-  // get author() {
-  //   return this.author;
-  // }
-
-  // set author(author) {
-  //   console.log('can\'t change', author);
-  // }
-
   static maxTextLength = 280;
 
   static validate(com) {
@@ -362,7 +314,6 @@ class Comment {
 
 class TweetCollection {
   constructor() {
-    // this._tws = new Set(tws);
     this._user = 'Гость';
     this.restore();
   }
@@ -697,7 +648,6 @@ class User {
 }
 class UserList {
   constructor() {
-    // this.users = JSON.parse(local.getItem('userList'));['Алеся Брановицкая', 'Анджелина Джоли'];
     this.restore();
   }
 
@@ -762,7 +712,6 @@ class TweetsController {
     commentView.setAttribute('class', 'disappear');
     const addComment = document.getElementById('add-comment');
     addComment.setAttribute('class', 'disappear');
-    // tweetFeedView.clear();
     const filter = tweetCollection.getPage(skip, top, filterConfig);
     tweetFeedView.display(filter);
     return filter;
@@ -947,10 +896,7 @@ const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 tweetsController.setCurrentUser(currentUser);
 tweetsController.login(currentUser);
 if (currentUser !== 'Гость') {
-  // save user
-  // userList.addUser(currentUser);
-  // const userList = new UserList();
-  // userList.addUser(currentUser);
+  tweetsController.addNewTweet()
   const button = document.querySelector('.left-block__footer');
   button.setAttribute('id', 'logout-btn')
   button.innerHTML = `<button class="left-block__footer__btn">
@@ -1112,5 +1058,4 @@ function logGuest() {
 // filterView.display('Анджелина','2002-02-22', 'sum', ['#datamola','gg']);
 // addNewTweet();
 
-tweetsController.addNewTweet()
 redirectTweet()
