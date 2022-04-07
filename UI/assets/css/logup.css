@@ -89,6 +89,9 @@ input {
 .form__password:hover {
   background-color: var(--font-color1);
 }
+input:active {
+  background-color: white;
+}
 .form__btn {
   margin-top: 2rem;
   border: none;

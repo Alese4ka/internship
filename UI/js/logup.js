@@ -15,6 +15,9 @@ logBtn.addEventListener('click', () => {
 });
 
 function redirect() {
+  if(document.querySelector('.first') !== document.querySelector('.second')) {
+    alert('Пароли не совпадают');
+  }
   document.location.href = './index.html';
   const name = document.querySelector('.form__name');
   localStorage.setItem('currentUser', JSON.stringify(name.value));
