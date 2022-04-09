@@ -41,8 +41,31 @@ main {
 .left-block__head {
   padding-top: 2.1875rem;
 }
+.left-block__btn {
+  display: flex;
+  justify-content: center;
+}
+.header__btn {
+  border: none;
+  background: var(--btn-color);
+  border-radius: 0.625rem;
+  padding: 0.5rem 0.65rem;
+}
+.header__btn-main {
+  padding: 0.5rem 2.15rem;
+  margin-right: 1rem;
+}
+.header__btn:hover {
+  background: var(--btn-color-hover);
+}
+a {
+  text-decoration: none;
+  font-size: 0.5rem;
+  line-height: 1.25rem;
+  color: var(--font-color2);
+}
 #header-id {
-  margin: 0.75rem 0 0;
+  margin: 0.75rem 0 2rem;
   font-size: 1.25rem;
   line-height: 1.75rem;
   color: var(--font-color1);
@@ -99,18 +122,19 @@ h3 {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-bottom: 4rem;
 }
 .left-block__filters__btn-clear,
 .left-block__filters__btn-apply {
   margin-top: 0.5rem;
-  padding: 0.25rem 0.75rem;
+  padding: 0.45rem 0.75rem;
   background: #eeeeee;
   border-radius: 0.625rem;
   color: var(--font-color1);
   background-color: #d89a91;
 }
 .left-block__filters__btn-apply {
-  padding: 0.25rem 0.5rem;
+  padding: 0.45rem 0.5rem;
   margin-left: 1rem;
   background-color: #6e9485;
 }
@@ -130,12 +154,10 @@ h3 {
   border-radius: 0.625rem;
   margin-top: 1rem;
   margin-bottom: 3.25rem;
+  color: var(--font-color1);
 }
 .left-block__footer__btn:hover {
   background: #9b909e;
-}
-.left-block__footer__btn > a {
-  color: var(--font-color1);
 }
 .left-block__footer > h5 {
   font-size: 0.75rem;
@@ -147,7 +169,7 @@ h3 {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  width: 80vw;
+  max-width: 100vw;
   flex: 1;
 }
 header {
@@ -160,12 +182,12 @@ header {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: center;
+  /*justify-content: center;*/
   align-items: flex-start;
   max-width: 80vw;
   height: 74vh;
   flex: 1;
-  margin: 0 5rem;
+  margin: 2rem 5rem 0 5rem;
 }
 .right-block__add-comment {
   padding: 1rem 1.5625rem 1.375rem 1.5625rem;
@@ -196,10 +218,19 @@ header {
   height: 2rem;
 }
 .right-block__add-comment__btn:hover,
-.right-block__twit_edit:hover,
-.right-block__twit_delete:hover {
-  background-color: #9bc2b3;
+.right-block__twit_edit:hover {
+  background-color: #6e9485;
   border-radius: 10%;
+}
+.right-block__twit_delete:hover {
+  background-color: #d89a91;
+  border-radius: 10%;
+}
+.right-block__twit_delete:active {
+  background-color: #ffbbb1;
+}
+.right-block__twit_edit:active {
+  background-color: #9bc2b3;
 }
 textarea {
   border: 0.0625rem solid #9f9f9f;
@@ -209,6 +240,20 @@ textarea {
   padding: 0.75rem 0 0.75rem 1rem;
 }
 .child {
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.5625rem 1.375rem 1.5625rem;
+  border: 0.0625rem solid #9f9f9f;
+  box-sizing: border-box;
+  border-radius: 0.625rem;
+  margin-bottom: 1.8125rem;
+  background: url("../../assets/img/avatar_mini.png") no-repeat 2% 15%;
+}
+.svg {
+  background: url("../../assets/img/avatar_mini.png") no-repeat 2% 15%,
+    url("../../assets/img/edit.svg") no-repeat 94% 15%,
+    url("../../assets/img/delete.svg") no-repeat 99% 13%;
   display: flex;
   flex-direction: column;
   padding: 1rem 1.5625rem 1.375rem 1.5625rem;
@@ -217,9 +262,6 @@ textarea {
   border-radius: 0.625rem;
   margin-bottom: 1.8125rem;
 }
-.child {
-  background: url("../../assets/img/avatar_mini.png") no-repeat 2% 15%;
-}
 .jlo {
   padding: 1rem 1.5625rem 1.375rem 1.5625rem;
   border: 0.0625rem solid #9f9f9f;
@@ -227,6 +269,18 @@ textarea {
   border-radius: 0.625rem;
   margin-bottom: 1.8125rem;
   background: url("../../assets/img/avatar_mini_jo.svg") no-repeat 2% 15%;
+}
+.svg-jlo {
+  background: url("../../assets/img/avatar_mini_jo.svg") no-repeat 2% 15%,
+    url("../../assets/img/edit.svg") no-repeat 94% 15%,
+    url("../../assets/img/delete.svg") no-repeat 99% 13%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.5625rem 1.375rem 1.5625rem;
+  border: 0.0625rem solid #9f9f9f;
+  box-sizing: border-box;
+  border-radius: 0.625rem;
+  margin-bottom: 1.8125rem;
 }
 .comments {
   display: flex;
@@ -399,11 +453,11 @@ span {
   width: 2rem;
   height: 2rem;
   align-self: flex-end;
+  padding: 0 1rem;
 }
-.right-block__add-twit__btn:hover,
-.right-block__twit_edit:hover,
-.right-block__twit_delete:hover {
+.right-block__add-twit__btn:hover {
   background-color: #9bc2b3;
+  padding: 0 1rem;
   border-radius: 10%;
 }
 textarea {
@@ -421,8 +475,11 @@ textarea {
   font-size: 0.875rem;
   color: #4a4a4a;
   background-color: var(--font-color1);
-  margin: 0 auto;
-  margin-top: 1rem;
+  margin: 1rem auto;
+}
+.right-block__chat__btn:active {
+  color: #787878;
+  box-shadow: 0 0.4375rem 0.625rem -0.5625rem rgb(128, 128, 128);
 }
 footer {
   box-shadow: 0 -0.4375rem 0.625rem -0.5625rem rgba(221, 221, 221, 1);
@@ -443,7 +500,72 @@ footer > a {
 .disappear {
   display: none;
 }
-
+.tweet__btn-main {
+  margin: 1rem 0;
+  padding: 0.5rem 2.15rem;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+.modal .modal_content {
+  text-align: center;
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid rgb(203, 203, 203);
+  border-radius: 10px;
+  width: 30%;
+  z-index: 99999;
+}
+.modal .modal_content .close_modal_window {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.modal-text {
+  font-family: "Ubuntu", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1rem;
+  margin: 2rem 0 1rem;
+}
+.btn-delete,
+.btn-cancel {
+  color: var(--font-color1);
+  font-family: "Ubuntu", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  padding: 0.5rem 1.5rem;
+  background: #d89a91;
+  border-radius: 10px;
+}
+.btn-cancel {
+  margin-right: 1rem;
+  background: #6e9485;
+  padding: 0.5rem 1rem;
+}
+.new-block {
+  margin: 0 auto 12rem auto;
+}
+.btn-main {
+  border: none;
+  background: var(--btn-color);
+  border-radius: 0.625rem;
+  padding: 0.5rem 2rem;
+  display: flex;
+  margin: 1rem 15rem;
+}
 @media (max-height: 32.375rem) {
   .left-block__footer__btn {
     margin-bottom: 0rem;

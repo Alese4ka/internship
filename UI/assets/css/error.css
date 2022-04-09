@@ -33,7 +33,7 @@ body {
   border: none;
   background: var(--btn-color);
   border-radius: 0.625rem;
-  padding: 0.9375rem 3rem;
+  padding: 0.5rem 2.5rem;
 }
 .header__btn:hover {
   background: var(--btn-color-hover);
@@ -85,6 +85,9 @@ footer {
 }
 h5 {
   font-size: 0.75rem;
+}
+.footer__copyright {
+  margin-left: 3rem;
 }
 footer > a {
   font-size: 0.75rem;

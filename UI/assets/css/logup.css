@@ -33,10 +33,11 @@ body {
   border: none;
   background: var(--btn-color);
   border-radius: 0.625rem;
-  padding: 0.9375rem 4rem;
+  padding: 0.5rem 2.9rem;
 }
 .header__btn-main {
-  padding: 0.9375rem 3.6rem;
+  padding: 0.5rem 2.5rem;
+  margin-right: 1rem;
 }
 .header__btn:hover {
   background: var(--btn-color-hover);
@@ -88,6 +89,9 @@ input {
 .form__password:hover {
   background-color: var(--font-color1);
 }
+input:active {
+  background-color: white;
+}
 .form__btn {
   margin-top: 2rem;
   border: none;
@@ -95,6 +99,9 @@ input {
   border-radius: 0.625rem;
   padding: 0.9375rem 4.4375rem;
   background: var(--second-color);
+  font-size: 1rem;
+  line-height: 1.3125rem;
+  color: var(--font-color2);
 }
 .form__btn > a {
   color: var(--font-color1);
@@ -112,6 +119,9 @@ footer {
 }
 h5 {
   font-size: 0.75rem;
+}
+.footer__copyright {
+  margin-left: 3rem;
 }
 footer > a {
   font-size: 0.75rem;

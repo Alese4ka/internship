@@ -16,43 +16,42 @@
       <img src="assets/img/logo_.svg" alt="logotype">
       <div>
         <button class="header__btn header__btn-main">
-          <a href="#main">Главная</a>
+          Главная
         </button>
-        <button class="header__btn">
-          <a href="#login">Войти</a>
+        <button class="header__btn header__btn-log">
+          Войти
         </button>
       </div>
     </header>
     <header class="header__mobile">
       <img src="assets/img/logo_mobile.svg" alt="logo" class="header__mobile__logo">
       <div>
-        <button class="header__btn header__btn-main header__mobile__btn">
-          <a href="#main">Главная</a>
+        <button class="header__btn header__btn-main">
+          Главная
         </button>
-        <button class="header__btn">
-          <a href="#login">Войти</a>
+        <button class="header__btn header__btn-log">
+          Войти
         </button>
       </div>
     </header>
     <main>
       <h1>Зарегистрироваться</h1>
-      <form>
-        <input type="text" placeholder="Введите имя" class="form__name">
-        <input type="password" placeholder="Введите пароль" class="form__password">
-        <input type="password" placeholder="Подтвердите пароль" class="form__password">
-        <button class="form__btn">
-          <a href="#logup">Регистрация</a>
-        </button>
+      <form onsubmit="redirect();return false">
+        <input type="text" required placeholder="Введите имя" class="form__name">
+        <input type="password" required placeholder="Введите пароль" class="form__password first">
+        <input type="password" required placeholder="Подтвердите пароль" class="form__password second">
+        <input class="form__btn" type="submit" value="Войти">
       </form>
     </main>
 
     <footer>
       <h5>Версия 1.0</h5>
-      <h5>© Алеся Брановицкая</h5>
+      <h5 class="footer__copyright">© Алеся Брановицкая</h5>
       <a href="mailto:alesun4ik@gmail.com">alesun4ik@gmail.com</a>
     </footer>
   </div>
 </body>
 
+<script src="js/logup.js"></script>
 
 </html>
