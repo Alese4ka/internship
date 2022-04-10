@@ -72,11 +72,13 @@ function createList(title, list) {
   const blockUl = document.querySelector('.block');
   blockUl.addEventListener('click', (event) => {
     if (event.target.classList.contains('li')) {
-      const containerUl = event.target.parentNode.querySelector('ul');
-      if (!containerUl) {
+      if (event.target.nextElementSibling === null) {
         return;
       }
-      containerUl.classList.toggle('hide');
+      if (event.target.nextElementSibling.tagName === 'UL') {
+        const containerUl = event.target.nextSibling.closest('ul');
+        containerUl.classList.toggle('hide');
+      }
     }
   });
 }

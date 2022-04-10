@@ -32,7 +32,7 @@ function startGame(event) {
     }
     checkTicTacToe();
   }
-};
+}
 
 function checkTicTacToe(event) {
   const array = [
