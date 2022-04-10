@@ -1,4 +1,5 @@
-/* eslint-disable no-undef */
+'use strict';
+
 const nodeList = [
   {
     value: 'Пункт 1.',

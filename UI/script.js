@@ -855,7 +855,6 @@ class TweetsController {
   }
 }
 
-//LOCAL STORAGE
 function createLocalStorage() {
   const realUsers = ['Алеся Брановицкая', 'Анджелина Джоли'];
   if(localStorage.getItem('userList') === null && localStorage.getItem('tws') === null && localStorage.getItem('currentUser') === null){

@@ -1,10 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-continue */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-undef */
-/* eslint-disable lines-around-directive */
-/* eslint-disable strict */
 'use strict';
 
 const wrapper = document.querySelector('.wrapper');
@@ -34,7 +27,7 @@ function startGame(event) {
   }
 }
 
-function checkTicTacToe(event) {
+function checkTicTacToe() {
   const array = [
     [0, 1, 2],
     [0, 3, 6],
@@ -53,5 +46,9 @@ function checkTicTacToe(event) {
       document.querySelector('.text').innerHTML = 'Вы проиграли';
       wrapper.removeEventListener('click', startGame);
     }
+  }
+  if (document.querySelectorAll('.box')[8].innerHTML !== '' && document.querySelector('.text').innerHTML !== 'Вы выиграли' && document.querySelector('.text').innerHTML !== 'Вы проиграли') {
+    document.querySelector('.text').innerHTML = 'Ничья';
+    wrapper.removeEventListener('click', startGame);
   }
 }
