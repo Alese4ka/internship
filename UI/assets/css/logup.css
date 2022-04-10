@@ -73,7 +73,7 @@ form {
   border-radius: 0.525rem;
 }
 ::-webkit-input-placeholder {
-  color: var(--font-color1);
+  color: #d5d5d5;
 }
 input {
   margin: 1rem 0 0.5rem 0;
@@ -81,7 +81,7 @@ input {
 .form__name,
 .form__password {
   padding: 1rem 4rem 1rem 1rem;
-  background-color: #d5d5d5;
+  background-color: var(--font-color1);
   border: 0.125rem solid var(--second-color);
   border-radius: 0.625rem;
 }
