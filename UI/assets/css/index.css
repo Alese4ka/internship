@@ -44,6 +44,7 @@ main {
 .left-block__btn {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 .header__btn {
   border: none;
@@ -65,18 +66,26 @@ a {
   color: var(--font-color2);
 }
 #header-id {
-  margin: 0.75rem 0 2rem;
+  word-wrap: break-word;
+  margin: 0.75rem 2rem 1rem 2rem;
   font-size: 1.25rem;
   line-height: 1.75rem;
   color: var(--font-color1);
 }
 .avatar {
-  background: url("../../assets/img/guest.png") no-repeat center;
   padding: 5rem;
 }
-.avatar-img {
+#avatar-guest {
+  background: url("../../assets/img/guest.png") no-repeat center;
+}
+#avatar-img {
+  background: url("../../assets/img/user.svg") no-repeat center;
+}
+#avatar-bra {
   background: url("../../assets/img/avatar.png") no-repeat center;
-  padding: 5rem;
+}
+#avatar-jlo {
+  background: url("../../assets/img/jlo.png") no-repeat center;
 }
 .left-block__head__btn {
   border: none;
@@ -239,7 +248,8 @@ textarea {
   resize: none;
   padding: 0.75rem 0 0.75rem 1rem;
 }
-.child {
+#main-class {
+  word-wrap: break-word;
   width: 1000px;
   display: flex;
   flex-direction: column;
@@ -248,9 +258,8 @@ textarea {
   box-sizing: border-box;
   border-radius: 0.625rem;
   margin-bottom: 1.8125rem;
-  background: url("../../assets/img/avatar_mini.png") no-repeat 2% 15%;
 }
-.svg {
+.svg-edit {
   background: url("../../assets/img/avatar_mini.png") no-repeat 2% 15%,
     url("../../assets/img/edit.svg") no-repeat 94% 15%,
     url("../../assets/img/delete.svg") no-repeat 99% 13%;
@@ -262,25 +271,14 @@ textarea {
   border-radius: 0.625rem;
   margin-bottom: 1.8125rem;
 }
-.jlo {
-  padding: 1rem 1.5625rem 1.375rem 1.5625rem;
-  border: 0.0625rem solid #9f9f9f;
-  box-sizing: border-box;
-  border-radius: 0.625rem;
-  margin-bottom: 1.8125rem;
-  background: url("../../assets/img/avatar_mini_jo.svg") no-repeat 2% 15%;
+.user {
+  background: url("../../assets/img/user_mini.svg") no-repeat 2% 15%;
 }
-.svg-jlo {
-  background: url("../../assets/img/avatar_mini_jo.svg") no-repeat 2% 15%,
-    url("../../assets/img/edit.svg") no-repeat 94% 15%,
-    url("../../assets/img/delete.svg") no-repeat 99% 13%;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem 1.5625rem 1.375rem 1.5625rem;
-  border: 0.0625rem solid #9f9f9f;
-  box-sizing: border-box;
-  border-radius: 0.625rem;
-  margin-bottom: 1.8125rem;
+.child {
+  background: url("../../assets/img/avatar_mini.png") no-repeat 2% 15%;
+}
+.jlo {
+  background: url("../../assets/img/avatar_mini_jo.svg") no-repeat 2% 15%;
 }
 .comments {
   display: flex;
@@ -294,6 +292,7 @@ textarea {
 .tweet-jlo,
 .comment,
 .comment-jlo {
+  word-wrap: break-word;
   padding: 1rem 1.5625rem 1.375rem 1.5625rem;
   border: 0.0625rem solid #9f9f9f;
   box-sizing: border-box;
@@ -324,7 +323,7 @@ textarea {
   margin: 0 0 1rem 4.5rem;
 }
 .text {
-  max-width: 48rem;
+  width: 48rem;
   padding: 0 8rem 0 4.5rem;
 }
 .right-block__twit,
@@ -409,7 +408,8 @@ span {
   color: #1339ff;
   cursor: pointer;
 }
-.right-block__add-twit-block {
+.right-block__add-twit-block,
+.right-block__edit-twit-block {
   margin: 0 2rem;
 }
 .right-block__add-twit-none {
@@ -446,7 +446,8 @@ span {
   justify-content: space-around;
   padding: 1rem 1.75rem 1.375rem 1.75rem;
 }
-.right-block__add-twit__btn {
+.right-block__add-twit__btn,
+.right-block__edit-twit__btn {
   border: none;
   cursor: pointer;
   background: url("../../assets/img/send.svg") no-repeat center;
@@ -500,9 +501,17 @@ footer > a {
 .disappear {
   display: none;
 }
-.tweet__btn-main {
-  margin: 1rem 0;
+.tweet__btn-main,
+.tweet__btn-main-guest {
+  margin: 1rem 0 2.5rem;
   padding: 0.5rem 2.15rem;
+}
+.tweet__btn-main-guest {
+  color: var(--font-color1);
+  background-color: #6e9485;
+}
+.tweet__btn-main-guest:hover {
+  background-color: #9bc2b3;
 }
 .modal {
   display: none;
@@ -558,13 +567,18 @@ footer > a {
 .new-block {
   margin: 0 auto 12rem auto;
 }
+.new-block-guest {
+  width: 70vw;
+  margin: 10rem auto;
+  text-align: center;
+}
 .btn-main {
   border: none;
   background: var(--btn-color);
   border-radius: 0.625rem;
   padding: 0.5rem 2rem;
   display: flex;
-  margin: 1rem 15rem;
+  margin: 1rem auto;
 }
 @media (max-height: 32.375rem) {
   .left-block__footer__btn {

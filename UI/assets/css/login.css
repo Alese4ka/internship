@@ -98,7 +98,7 @@ input {
   background: var(--second-color);
   font-size: 1rem;
   line-height: 1.3125rem;
-  color: var(--font-color2);
+  color: var(--font-color1);
 }
 .form__btn > a {
   color: var(--font-color1);
@@ -122,6 +122,13 @@ h5 {
 }
 footer > a {
   font-size: 0.75rem;
+}
+#new-p {
+  color: #ff8d8d;
+  text-align: center;
+}
+.disappear {
+  display: none;
 }
 @media (max-width: 48.25rem) {
   .header__btn {
