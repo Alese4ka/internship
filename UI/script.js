@@ -332,7 +332,6 @@ class TweetCollection {
     });
   }
 
-
   getPage(skip = 0, top = 10, filterConfig = {}) {
     let array = [];
     filterConfig.author = filterConfig.author ? filterConfig.author : '';
@@ -345,13 +344,13 @@ class TweetCollection {
       for (let i = 0; i < filterConfig.hashtags.length; i += 1) {
         let twsArray = Array.from(this._tws);
         array = array.concat(twsArray
-          .filter((twsArray) => twsArray.text
-            .toLowerCase().indexOf(filterConfig.hashtags[i].toLowerCase()) !== -1));
+        .filter((twsArray) => twsArray.text
+        .toLowerCase().indexOf(filterConfig.hashtags[i].toLowerCase()) !== -1));
       }
     }
     return array
       .filter((array) => array.author
-        .toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
+      .toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
       .filter(({ createdAt }) => !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt)
       || (filterConfig.dateTo && filterConfig.dateTo < createdAt)))
       .filter((array) => array.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
@@ -462,12 +461,28 @@ class TweetFeedView {
   display(tweets) {
     const addTweet = document.getElementById('add-tweet');
     addTweet.setAttribute('class', 'right-block__add-twit');
-    addTweet.innerHTML = `<img src="assets/img/avatar_mini.png" alt="avatar">
+    if (currentUser === 'Анджелина Джоли') {
+      addTweet.innerHTML = `<img src="assets/img/avatar_mini_jo.svg" alt="avatar">
                           <textarea cols="185" rows="5" maxlength="280" style="width: 100%;"
                           placeholder="О чем бы вы хотели рассказать?" class="right-block__add-twit-block"></textarea>
                           <textarea cols="185" rows="5" maxlength="280" style="width: 100%;" placeholder="Расскажите?"
                           class="right-block__add-twit-none"></textarea>
                           <button class="right-block__add-twit__btn"></button>`;
+    } else if (currentUser === 'Алеся Брановицкая') {
+      addTweet.innerHTML = `<img src="assets/img/avatar_mini.png" alt="avatar">
+                          <textarea cols="185" rows="5" maxlength="280" style="width: 100%;"
+                          placeholder="О чем бы вы хотели рассказать?" class="right-block__add-twit-block"></textarea>
+                          <textarea cols="185" rows="5" maxlength="280" style="width: 100%;" placeholder="Расскажите?"
+                          class="right-block__add-twit-none"></textarea>
+                          <button class="right-block__add-twit__btn"></button>`;
+    } else {
+      addTweet.innerHTML = `<img src="assets/img/user_mini.svg" alt="avatar">
+                          <textarea cols="185" rows="5" maxlength="280" style="width: 100%;"
+                          placeholder="О чем бы вы хотели рассказать?" class="right-block__add-twit-block"></textarea>
+                          <textarea cols="185" rows="5" maxlength="280" style="width: 100%;" placeholder="Расскажите?"
+                          class="right-block__add-twit-none"></textarea>
+                          <button class="right-block__add-twit__btn"></button>`;
+    }
     const btn = document.querySelector('#right-block__chat__btn');
     btn.setAttribute('class', 'right-block__chat__btn');
     const tweetFeed = document.getElementById(this.containerId);
@@ -476,7 +491,6 @@ class TweetFeedView {
     array.sort((a, b) => b.createdAt - a.createdAt).forEach((item) => {
       const msg = document.createElement('div');
       if (item.author === currentUser) {
-        console.log(typeof item.author, typeof currentUser)
         msg.setAttribute('id', 'main-class');
         msg.setAttribute('class', 'user');
         msg.innerHTML = `<div class="id" style="font-size:0;">${item.id}</div><div class="title"><div><h2>${item.author}<h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(item.createdAt)}</h4></h2></div><div id="svg-edit">
@@ -578,16 +592,28 @@ class TweetView {
 
   display(tweet) {
     const msg = document.getElementById(this.containerId);
-    if(tweet.author === 'Анджелина Джоли'){
-      msg.setAttribute('class', 'tweet-jlo');
-      msg.innerHTML = `<div class="id" style="font-size:0;">${tweet.id}</div><div class="title"><div><h2>${tweet.author}<h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(tweet.createdAt)}</h4></h2></div><div class="block-edit"><img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
+    if (tweet.author === currentUser) {
+      msg.innerHTML = `<div class="id" style="font-size:0;">${tweet.id}</div><div class="title"><div><h2>${tweet.author}<h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(tweet.createdAt)}</h4></h2></div><div><img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
       <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"></div></div>
       <div class="text">${tweet.text}</div>`;
+      if (tweet.author === 'Анджелина Джоли'){
+        msg.setAttribute('class', 'tweet-jlo');
+      } else if (tweet.author === 'Алеся Брановицкая') {
+        msg.setAttribute('class', 'tweet-child');
+      } else {
+        msg.setAttribute('class', 'tweet');
+      }
     } else {
-      msg.setAttribute('class', 'tweet');
-      msg.innerHTML = `<div class="tweet-main"><div class="id" style="font-size:0;">${tweet.id}</div><div class="title"><div><h2>${tweet.author} <h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(tweet.createdAt)}</h4></h2></div><div class="block-edit"><img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
-      <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"></div></div>
+      msg.innerHTML = `<div class="id" style="font-size:0;">${tweet.id}</div>
+      <div class="title"><div><h2>${tweet.author}<h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(tweet.createdAt)}</h4></h2></div></div>
       <div class="text">${tweet.text}</div>`;
+      if (tweet.author === 'Анджелина Джоли'){
+        msg.setAttribute('class', 'tweet-jlo');
+      } else if (tweet.author === 'Алеся Брановицкая') {
+        msg.setAttribute('class', 'tweet-child');
+      } else {
+        msg.setAttribute('class', 'tweet');
+      }
     }
   }
 }
@@ -601,15 +627,21 @@ class CommentView {
     const commentFeed = document.getElementById(this.containerId);
     commentFeed.setAttribute('class', 'commentsV');
     comment.forEach((item) => {
-      if(item.author === 'Анджелина Джоли'){
+      if (item.author === 'Анджелина Джоли'){
         const msgCom = document.createElement('div');
         msgCom.setAttribute('class', 'comment-jlo');
         msgCom.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(item.createdAt)}</h4></h2></div> 
         <div class="text">${item.text}</div>`;
         commentFeed.appendChild(msgCom);
-      } else {
+      } else if (item.author === 'Алеся Брановицкая') {
         const msgCom = document.createElement('div');
         msgCom.setAttribute('class', 'comment');
+        msgCom.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(item.createdAt)}</h4></h2></div> 
+        <div class="text">${item.text}</div>`;
+        commentFeed.appendChild(msgCom);
+      } else {
+        const msgCom = document.createElement('div');
+        msgCom.setAttribute('class', 'user-comment');
         msgCom.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(item.createdAt)}</h4></h2></div> 
         <div class="text">${item.text}</div>`;
         commentFeed.appendChild(msgCom);
@@ -623,21 +655,7 @@ class CommentView {
     child.forEach((item) => item.remove());
     jlo.forEach((item) => item.remove());
   }
-}
-
-class UserSet {
-  constructor() {
-    this.restore();
-  }
-
-  save() {
-    localStorage.setItem('currentUser', JSON.stringify(this.user));
-  }
-
-  restore() {
-    this.user = JSON.parse(localStorage.getItem('currentUser'));
-  }
-}
+} 
 
 class UserList {
   constructor() {
@@ -728,10 +746,22 @@ class TweetsController {
     this.commentView.display(newTweet.comments);
     const addComment = document.getElementById('add-comment');
     addComment.setAttribute('class', 'right-block__add-comment');
-    addComment.innerHTML = `<img src="assets/img/avatar_25.png" alt="avatar">
+    if (currentUser === 'Анджелина Джоли') {
+      addComment.innerHTML = `<img src="assets/img/jlo-comment.svg" alt="avatar">
                             <textarea cols="155" rows="1" maxlength="280" style="width: 100%;" placeholder="Написать комментарий"
                             class="right-block__add-comment__block"></textarea>
                             <button class="right-block__add-comment__btn"></button>`;
+    } else if (currentUser === 'Алеся Брановицкая') {
+      addComment.innerHTML = `<img src="assets/img/avatar_25.png" alt="avatar">
+                            <textarea cols="155" rows="1" maxlength="280" style="width: 100%;" placeholder="Написать комментарий"
+                            class="right-block__add-comment__block"></textarea>
+                            <button class="right-block__add-comment__btn"></button>`;
+    } else {
+      addComment.innerHTML = `<img src="assets/img/user-comment.svg" alt="avatar">
+                            <textarea cols="155" rows="1" maxlength="280" style="width: 100%;" placeholder="Написать комментарий"
+                            class="right-block__add-comment__block"></textarea>
+                            <button class="right-block__add-comment__btn"></button>`;
+    }
   }
 
   formatDate(date) {
@@ -773,6 +803,8 @@ class TweetsController {
         <button class="btn-main">Назад</button>
         </div>`;
         rightBlock.prepend(newBlock);
+        const loadTweets = document.querySelector('#right-block__chat__btn'); 
+        loadTweets.setAttribute('class', 'disappear');
         const btnMain = document.querySelector('.btn-main');
         btnMain.addEventListener('click', () => {
           pageMain();
@@ -883,8 +915,7 @@ document.addEventListener('click', (event) => {
       if (currentUser === 'Гость') {
         id = event.target.parentNode.querySelector('.id').textContent;
       } else {
-        console.log(typeof event.target.parentNode.parentNode.querySelector('.id').textContent)
-        id = event.target.parentNode.parentNode.querySelector('.id').textContent;
+        id = event.target.parentNode.querySelector('.id').textContent;
       }
       tweetsController.showTweet(id);
       if (currentUser === 'Гость') {
@@ -903,8 +934,6 @@ document.addEventListener('click', (event) => {
           tweetsController.setCurrentUser(currentUser);
         });
       } else {
-        const edit = document.querySelectorAll('.block-edit');
-        edit.forEach((item) => item.classList.add('disappear'));
         tweetsController.addComment();
         const btnS = document.querySelector('.left-block__btn');
         const mainBtn = document.createElement('button');
@@ -979,19 +1008,19 @@ document.addEventListener('click', (event) => {
     pageLogIn();
   } else if (event.target === document.querySelector('.header__btn-reg')) {
     pageLogUp();
-  } else if (event.target === document.querySelector('#right-block__chat__btn')) {  
+  } else if (event.target === document.querySelector('#right-block__chat__btn')) { 
     const mainBlock = document.querySelectorAll('#main-class');
-    const loadTweets = document.querySelector('#right-block__chat__btn');
+    const loadTweets = document.querySelector('#right-block__chat__btn'); 
     tweetsController.getFeed(mainBlock.length, 10);
+    if (tweetsController.getFeed(mainBlock.length, 10).length < 10) {
+      loadTweets.setAttribute('disabled', true);
+      loadTweets.setAttribute('style', 'color: grey; box-shadow: none;cursor-pointer: none;');
+    } 
     if (currentUser === 'Гость') {
       const addTweet = document.getElementById('add-tweet');
       const addComment = document.getElementById('comment-id');
       addComment.setAttribute('class', 'disappear');
       addTweet.setAttribute('class', 'disappear');
-    }
-    if(JSON.parse(localStorage.getItem('tws')).length === mainBlock.length) {
-      loadTweets.setAttribute('disabled', true);
-      loadTweets.setAttribute('style', 'color: grey; box-shadow: none;cursor-pointer: none;');
     }
   } else if (event.target === document.querySelector('.right-block__add-twit__btn')) { 
     tweetsController.addNewTweet();
@@ -1013,169 +1042,6 @@ document.addEventListener('click', (event) => {
     }
   }
 });
-
-function pageLogIn() {
-  const head = document.getElementsByTagName('head')[0];
-    head.innerHTML = `<meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/reset.css">
-    <link rel="stylesheet" href="assets/css/login.css">
-    <title>Log in</title>`;
-    document.body.innerHTML = `<div class="wrapper">
-    <header class="header__desktop">
-      <img src="assets/img/logo_.svg" alt="logotype">
-      <div>
-        <button class="header__btn header__btn-main">
-          Главная
-        </button>
-        <button class="header__btn header__btn-reg">
-          Регистрация
-        </button>
-      </div>
-    </header>
-    <header class="header__mobile">
-      <img src="assets/img/logo_mobile.svg" alt="logo" class="header__mobile__logo">
-      <div>
-        <button class="header__btn header__btn-main header__mobile__btn">
-          Главная
-        </button>
-        <button class="header__btn header__btn-reg">
-          Регистрация
-        </button>
-      </div>
-    </header>
-    <main>
-      <h1>Войти</h1>
-      <form onsubmit="redirectLogIn();return false">
-        <input type="text" required placeholder="Введите имя" class="form__name">
-        <p id="new-p" class="disappear">Неверное имя</p>
-        <input type="password" required placeholder="Введите пароль" class="form__password">
-        <input class="form__btn log" type="submit" value="Войти">
-      </form>
-    </main>
-
-    <footer>
-      <h5>Версия 1.0</h5>
-      <h5 class="footer__copyright">© Алеся Брановицкая</h5>
-      <a href="mailto:alesun4ik@gmail.com">alesun4ik@gmail.com</a>
-    </footer>
-  </div>`;
-  const mainBtn = document.querySelector('.header__btn-main');
-  const regBtn = document.querySelector('.header__btn-reg');
-  mainBtn.addEventListener('click', () => {
-    pageMain();
-    renderMainGuest();
-  });
-  regBtn.addEventListener('click', () => {
-    pageLogUp();
-  });
-}
-
-function pageLogUp() {
-  const head = document.getElementsByTagName('head')[0];
-  head.innerHTML = `<meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/reset.css">
-  <link rel="stylesheet" href="assets/css/logup.css">
-  <title>Log up</title>`;
-  document.body.innerHTML = `<div class="wrapper">
-  <header class="header__desktop">
-    <img src="assets/img/logo_.svg" alt="logotype">
-    <div>
-      <button class="header__btn header__btn-main">
-        Главная
-      </button>
-      <button class="header__btn header__btn-log">
-        Войти
-      </button>
-    </div>
-  </header>
-  <header class="header__mobile">
-    <img src="assets/img/logo_mobile.svg" alt="logo" class="header__mobile__logo">
-    <div>
-      <button class="header__btn header__btn-main">
-        Главная
-      </button>
-      <button class="header__btn header__btn-log">
-        Войти
-      </button>
-    </div>
-  </header>
-  <main>
-    <h1>Зарегистрироваться</h1>
-    <form onsubmit="redirectLogUp();return false">
-      <input type="text" required placeholder="Введите имя" class="form__name">
-      <input type="password" required placeholder="Введите пароль" class="form__password first">
-      <input type="password" required placeholder="Подтвердите пароль" class="form__password second">
-      <p id="new-p" class="disappear">Пароли не совпадают</p>
-      <input class="form__btn" type="submit" value="Войти">
-    </form>
-  </main>
-
-  <footer>
-    <h5>Версия 1.0</h5>
-    <h5 class="footer__copyright">© Алеся Брановицкая</h5>
-    <a href="mailto:alesun4ik@gmail.com">alesun4ik@gmail.com</a>
-  </footer>
-  </div>`;
-  const mainBtn = document.querySelector('.header__btn-main');
-  const logBtn = document.querySelector('.header__btn-log');
-  mainBtn.addEventListener('click', () => {
-    pageMain();
-    renderMainGuest();
-  });
-  logBtn.addEventListener('click', () => {
-    pageLogIn();
-  });
-}
-
-function redirectLogIn() {
-  const name = document.querySelector('.form__name');
-  const userList = JSON.parse(localStorage.getItem('userList'));
-  const nameVal = name.value;
-  if (userList.some((item) => item === nameVal)) {
-    pageMain();
-    tweetsController.getFeed();
-    renderMainUsers();
-    localStorage.setItem('currentUser', JSON.stringify(nameVal));
-    tweetsController.setCurrentUser(nameVal);
-    tweetsController.login(nameVal);
-    currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    tweetsController.setCurrentUser(currentUser);
-  } else {
-    const nameInp = document.querySelector('.form__name');
-    nameInp.style.border = '0.125rem solid #ff8d8d';
-    const newP = document.querySelector('#new-p');
-    newP.classList.toggle('disappear');
-    return;
-  }
-}
-
-function redirectLogUp() {
-  if (document.querySelector('.first').value !== document.querySelector('.second').value) {
-    const firstPas = document.querySelector('.first');
-    firstPas.style.border = '0.125rem solid #ff8d8d';
-    const secondPas = document.querySelector('.second');
-    secondPas.style.border = '0.125rem solid #ff8d8d';
-    const newP = document.querySelector('#new-p');
-    newP.classList.toggle('disappear');
-    return;
-  }
-  const name = document.querySelector('.form__name');
-  const userList = JSON.parse(localStorage.getItem('userList'));
-  userList.push(name.value);
-  localStorage.setItem('userList', JSON.stringify(userList));
-  pageMain();
-  tweetsController.getFeed();
-  renderMainUsers();
-  localStorage.setItem('currentUser', JSON.stringify(name.value));
-  tweetsController.setCurrentUser(name.value);
-  tweetsController.registration(name.value);
-  currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  tweetsController.setCurrentUser(currentUser);
-}
 
 function pageMain() {
   const head = document.getElementsByTagName('head')[0];
@@ -1264,6 +1130,171 @@ function pageMain() {
         </footer>
       </section>
     </main>`;
+}
+
+function pageLogIn() {
+  const head = document.getElementsByTagName('head')[0];
+    head.innerHTML = `<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/login.css">
+    <title>Log in</title>`;
+    document.body.innerHTML = `<div class="wrapper">
+    <header class="header__desktop">
+      <img src="assets/img/logo_.svg" alt="logotype">
+      <div>
+        <button class="header__btn header__btn-main">
+          Главная
+        </button>
+        <button class="header__btn header__btn-reg">
+          Регистрация
+        </button>
+      </div>
+    </header>
+    <header class="header__mobile">
+      <img src="assets/img/logo_mobile.svg" alt="logo" class="header__mobile__logo">
+      <div>
+        <button class="header__btn header__btn-main header__mobile__btn">
+          Главная
+        </button>
+        <button class="header__btn header__btn-reg">
+          Регистрация
+        </button>
+      </div>
+    </header>
+    <main>
+      <h1>Войти</h1>
+      <form onsubmit="redirectLogIn();return false">
+        <input type="text" required placeholder="Введите имя" class="form__name">
+        <p id="new-p" class="disappear">Неверное имя</p>
+        <input type="password" required placeholder="Введите пароль" class="form__password">
+        <input class="form__btn log" type="submit" value="Войти">
+      </form>
+    </main>
+
+    <footer>
+      <h5>Версия 1.0</h5>
+      <h5 class="footer__copyright">© Алеся Брановицкая</h5>
+      <a href="mailto:alesun4ik@gmail.com">alesun4ik@gmail.com</a>
+    </footer>
+  </div>`;
+  const mainBtn = document.querySelector('.header__btn-main');
+  const regBtn = document.querySelector('.header__btn-reg');
+  mainBtn.addEventListener('click', () => {
+    pageMain();
+    tweetsController.getFeed();
+    renderMainGuest();
+  });
+  regBtn.addEventListener('click', () => {
+    pageLogUp();
+  });
+}
+
+function pageLogUp() {
+  const head = document.getElementsByTagName('head')[0];
+  head.innerHTML = `<meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/logup.css">
+  <title>Log up</title>`;
+  document.body.innerHTML = `<div class="wrapper">
+  <header class="header__desktop">
+    <img src="assets/img/logo_.svg" alt="logotype">
+    <div>
+      <button class="header__btn header__btn-main">
+        Главная
+      </button>
+      <button class="header__btn header__btn-log">
+        Войти
+      </button>
+    </div>
+  </header>
+  <header class="header__mobile">
+    <img src="assets/img/logo_mobile.svg" alt="logo" class="header__mobile__logo">
+    <div>
+      <button class="header__btn header__btn-main">
+        Главная
+      </button>
+      <button class="header__btn header__btn-log">
+        Войти
+      </button>
+    </div>
+  </header>
+  <main>
+    <h1>Зарегистрироваться</h1>
+    <form onsubmit="redirectLogUp();return false">
+      <input type="text" required placeholder="Введите имя" class="form__name">
+      <input type="password" required placeholder="Введите пароль" class="form__password first">
+      <input type="password" required placeholder="Подтвердите пароль" class="form__password second">
+      <p id="new-p" class="disappear">Пароли не совпадают</p>
+      <input class="form__btn" type="submit" value="Войти">
+    </form>
+  </main>
+
+  <footer>
+    <h5>Версия 1.0</h5>
+    <h5 class="footer__copyright">© Алеся Брановицкая</h5>
+    <a href="mailto:alesun4ik@gmail.com">alesun4ik@gmail.com</a>
+  </footer>
+  </div>`;
+  const mainBtn = document.querySelector('.header__btn-main');
+  const logBtn = document.querySelector('.header__btn-log');
+  mainBtn.addEventListener('click', () => {
+    pageMain();
+    tweetsController.getFeed();
+    renderMainGuest();
+  });
+  logBtn.addEventListener('click', () => {
+    pageLogIn();
+  });
+}
+
+function redirectLogIn() {
+  const name = document.querySelector('.form__name');
+  const userList = JSON.parse(localStorage.getItem('userList'));
+  const nameVal = name.value;
+  if (userList.some((item) => item === nameVal)) {
+    pageMain();
+    tweetsController.getFeed();
+    renderMainUsers();
+    localStorage.setItem('currentUser', JSON.stringify(nameVal));
+    tweetsController.setCurrentUser(nameVal);
+    tweetsController.login(nameVal);
+    currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    tweetsController.setCurrentUser(currentUser);
+  } else {
+    const nameInp = document.querySelector('.form__name');
+    nameInp.style.border = '0.125rem solid #ff8d8d';
+    const newP = document.querySelector('#new-p');
+    newP.classList.toggle('disappear');
+    return;
+  }
+}
+
+function redirectLogUp() {
+  if (document.querySelector('.first').value !== document.querySelector('.second').value) {
+    const firstPas = document.querySelector('.first');
+    firstPas.style.border = '0.125rem solid #ff8d8d';
+    const secondPas = document.querySelector('.second');
+    secondPas.style.border = '0.125rem solid #ff8d8d';
+    const newP = document.querySelector('#new-p');
+    newP.classList.toggle('disappear');
+    return;
+  }
+  const name = document.querySelector('.form__name');
+  const userList = JSON.parse(localStorage.getItem('userList'));
+  userList.push(name.value);
+  localStorage.setItem('userList', JSON.stringify(userList));
+  pageMain();
+  tweetsController.getFeed();
+  renderMainUsers();
+  localStorage.setItem('currentUser', JSON.stringify(name.value));
+  tweetsController.setCurrentUser(name.value);
+  tweetsController.registration(name.value);
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  tweetsController.setCurrentUser(currentUser);
 }
 
 function renderMainUsers() {
