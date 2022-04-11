@@ -47,8 +47,10 @@ function checkTicTacToe() {
       wrapper.removeEventListener('click', startGame);
     }
   }
-  if (document.querySelectorAll('.box')[8].innerHTML !== '' && document.querySelector('.text').innerHTML !== 'Вы выиграли' && document.querySelector('.text').innerHTML !== 'Вы проиграли') {
-    document.querySelector('.text').innerHTML = 'Ничья';
-    wrapper.removeEventListener('click', startGame);
+  if (box[0].innerHTML !== '' && box[1].innerHTML !== '' && box[2].innerHTML !== '' && box[3].innerHTML !== '' && box[4].innerHTML !== '' && box[5].innerHTML !== '' && box[6].innerHTML !== '' && box[7].innerHTML !== '' && box[8].innerHTML !== '') {
+    if (document.querySelector('.text').innerHTML !== 'Вы выиграли' && document.querySelector('.text').innerHTML !== 'Вы проиграли') {
+      document.querySelector('.text').innerHTML = 'Ничья';
+      wrapper.removeEventListener('click', startGame);
+    }
   }
 }
