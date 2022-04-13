@@ -73,7 +73,7 @@ form {
   border-radius: 0.525rem;
 }
 ::-webkit-input-placeholder {
-  color: var(--font-color1);
+  color: #d5d5d5;
 }
 input {
   margin: 1rem 0 0.5rem 0;
@@ -81,13 +81,17 @@ input {
 .form__name,
 .form__password {
   padding: 1rem 4rem 1rem 1rem;
-  background-color: #d5d5d5;
+  background-color: var(--font-color1);
   border: 0.125rem solid var(--second-color);
   border-radius: 0.625rem;
 }
 .form__name:hover,
 .form__password:hover {
   background-color: var(--font-color1);
+}
+#new-p {
+  color: #ff8d8d;
+  text-align: center;
 }
 input:active {
   background-color: white;
@@ -101,7 +105,7 @@ input:active {
   background: var(--second-color);
   font-size: 1rem;
   line-height: 1.3125rem;
-  color: var(--font-color2);
+  color: var(--font-color1);
 }
 .form__btn > a {
   color: var(--font-color1);
@@ -125,6 +129,9 @@ h5 {
 }
 footer > a {
   font-size: 0.75rem;
+}
+.disappear {
+  display: none;
 }
 @media (max-width: 48.25rem) {
   .header__btn {

@@ -1,10 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-continue */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-undef */
-/* eslint-disable lines-around-directive */
-/* eslint-disable strict */
 'use strict';
 
 const wrapper = document.querySelector('.wrapper');
@@ -32,9 +25,9 @@ function startGame(event) {
     }
     checkTicTacToe();
   }
-};
+}
 
-function checkTicTacToe(event) {
+function checkTicTacToe() {
   const array = [
     [0, 1, 2],
     [0, 3, 6],
@@ -51,6 +44,12 @@ function checkTicTacToe(event) {
       wrapper.removeEventListener('click', startGame);
     } else if (box[array[i][0]].classList.contains('o') && box[array[i][1]].classList.contains('o') && box[array[i][2]].classList.contains('o')) {
       document.querySelector('.text').innerHTML = 'Вы проиграли';
+      wrapper.removeEventListener('click', startGame);
+    }
+  }
+  if (box[0].innerHTML !== '' && box[1].innerHTML !== '' && box[2].innerHTML !== '' && box[3].innerHTML !== '' && box[4].innerHTML !== '' && box[5].innerHTML !== '' && box[6].innerHTML !== '' && box[7].innerHTML !== '' && box[8].innerHTML !== '') {
+    if (document.querySelector('.text').innerHTML !== 'Вы выиграли' && document.querySelector('.text').innerHTML !== 'Вы проиграли') {
+      document.querySelector('.text').innerHTML = 'Ничья';
       wrapper.removeEventListener('click', startGame);
     }
   }
