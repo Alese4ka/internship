@@ -264,7 +264,7 @@ const tweets = [
 ];
 
 class Tweet {
-  constructor(text, id = String(Math.ceil((Math.random(new Date())) * 1000)), createdAt = new Date(), author = tweetsController.tweetCollection._user, comments = []) {
+  constructor(text, id = String(Math.ceil((Math.random(new Date())) * 1000)+1000), createdAt = new Date(), author = tweetsController.tweetCollection._user, comments = []) {
     this.id = id
     this.text = text;
     this.createdAt = createdAt;
@@ -898,13 +898,8 @@ if (currentUser !== 'Гость') {
 
 document.addEventListener('click', (event) => {
   if(event.target.closest('#main-class')) {
-    let id;
-    if(!event.target.classList.contains('right-block__twit_edit') && !event.target.classList.contains('right-block__twit_delete')) {
-      if (currentUser === 'Гость') {
-        id = event.target.parentNode.querySelector('.id').textContent;
-      } else {
-        id = event.target.parentNode.querySelector('.id').textContent;
-      }
+    if(event.target.classList.contains('comments')) {
+      const id = event.target.parentNode.querySelector('.id').textContent;
       tweetsController.showTweet(id);
       if (currentUser === 'Гость') {
         const addComment = document.querySelector('#add-comment');
@@ -937,7 +932,8 @@ document.addEventListener('click', (event) => {
         });
       }
     } else if (event.target.classList.contains('right-block__twit_edit')) {
-      id = event.target.parentNode.previousSibling.parentNode.previousSibling.textContent;
+      const id = event.target.parentNode.previousSibling.parentNode.previousSibling.textContent;
+      console.log('iii')
       const textArea = document.querySelector('.right-block__add-twit-block');
       textArea.setAttribute('class', 'disappear');
       const textBtn = document.querySelector('.right-block__add-twit__btn');
@@ -956,11 +952,13 @@ document.addEventListener('click', (event) => {
       const text = event.target.parentNode.parentNode.parentNode.querySelector('.text').textContent;  
       newTextArea.value = text;
       textNewBtn.addEventListener('click', () => {
+        console.log('send')
         const sendText = newTextArea.value;
+        console.log(sendText, id)
         tweetsController.editTweet(id, sendText);
       });
     } else if (event.target.classList.contains('right-block__twit_delete')) {
-      id = event.target.parentNode.previousSibling.parentNode.previousSibling.textContent;
+      const id = event.target.parentNode.previousSibling.parentNode.previousSibling.textContent;
       const div = document.createElement('div');
       div.innerHTML = `<div id="my_modal" class="modal">
                           <div class="modal_content">
