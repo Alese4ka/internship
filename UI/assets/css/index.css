@@ -189,7 +189,6 @@ header {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  height: 74vh;
   flex: 1;
   margin: 2rem 3.5rem 0 5rem;
 }
@@ -281,7 +280,7 @@ textarea {
   padding: 1rem;
   text-align: center;
   background: url("../../assets/img/comment.svg") no-repeat right;
-  background-position-x: 56rem;
+  background-position-x: 55rem;
   cursor: pointer;
 }
 .tweet,
