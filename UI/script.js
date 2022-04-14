@@ -3,8 +3,8 @@
 let login;
 let password;
 let token;
-// console.log(login)
-// console.log(password)
+let log;
+let pass;
 
 // const tweets = [
 //   {
@@ -269,174 +269,174 @@ let token;
 //   },
 // ];
 
-class Tweet {
-  constructor(text, id = String(Math.ceil((Math.random(new Date())) * 1000)+1000), createdAt = new Date(), author = tweetsController.tweetCollection._user, comments = []) {
-    this.id = id
-    this.text = text;
-    this.createdAt = createdAt;
-    this.author = author;
-    this.comments = comments;
-  }
+// class Tweet {
+//   constructor(text, id = String(Math.ceil((Math.random(new Date())) * 1000)+1000), createdAt = new Date(), author = tweetsController.tweetCollection._user, comments = []) {
+//     this.id = id
+//     this.text = text;
+//     this.createdAt = createdAt;
+//     this.author = author;
+//     this.comments = comments;
+//   }
 
-  static maxTextLength = 280;
+//   static maxTextLength = 280;
 
-  static validate(tw) {
-    if (typeof tw.id === 'string' && tw.text.length <= Tweet.maxTextLength
-    && typeof tw.text === 'string' && toString.call(tw.createdAt) === '[object Date]'
-    && typeof tw.author === 'string' && tw.comments instanceof Array) {
-      return true;
-    }
-    return false;
-  }
-}
+//   static validate(tw) {
+//     if (typeof tw.id === 'string' && tw.text.length <= Tweet.maxTextLength
+//     && typeof tw.text === 'string' && toString.call(tw.createdAt) === '[object Date]'
+//     && typeof tw.author === 'string' && tw.comments instanceof Array) {
+//       return true;
+//     }
+//     return false;
+//   }
+// }
 
-class Comment {
-  constructor(text, id = String(Math.ceil((Math.random(new Date())) * 1000)), createdAt = new Date(), author = tweetsController.tweetCollection._user) {
-    this.id = id;
-    this.text = text;
-    this.createdAt = createdAt;
-    this.author = author;
-  }
+// class Comment {
+//   constructor(text, id = String(Math.ceil((Math.random(new Date())) * 1000)), createdAt = new Date(), author = tweetsController.tweetCollection._user) {
+//     this.id = id;
+//     this.text = text;
+//     this.createdAt = createdAt;
+//     this.author = author;
+//   }
 
-  static maxTextLength = 280;
+//   static maxTextLength = 280;
 
-  static validate(com) {
-    if (typeof com.id === 'string' && com.text.length <= Comment.maxTextLength
-    && typeof com.text === 'string' && toString.call(com.createdAt) === '[object Date]'
-    && typeof com.author === 'string') {
-      return true;
-    }
-    return false;
-  }
-}
+//   static validate(com) {
+//     if (typeof com.id === 'string' && com.text.length <= Comment.maxTextLength
+//     && typeof com.text === 'string' && toString.call(com.createdAt) === '[object Date]'
+//     && typeof com.author === 'string') {
+//       return true;
+//     }
+//     return false;
+//   }
+// }
 
-class TweetCollection {
-  constructor() {
-    this._user = 'Гость';
-    this.restore();
-  }
+// class TweetCollection {
+//   constructor() {
+//     this._user = 'Гость';
+//     this.restore();
+//   }
 
-  get user() {
-    return this._user;
-  }
+//   get user() {
+//     return this._user;
+//   }
 
-  set user(user) {
-    this._user = user;
-  }
+//   set user(user) {
+//     this._user = user;
+//   }
 
-  save() {
-    localStorage.setItem('tws', JSON.stringify(Array.from(this._tws)));
-  }
+//   save() {
+//     localStorage.setItem('tws', JSON.stringify(Array.from(this._tws)));
+//   }
 
-  restore() {
-    this._tws = new Set(JSON.parse(localStorage.getItem('tws')));
-    this._tws.forEach((item) => {
-      item.createdAt = new Date(item.createdAt);
-      item.comments.forEach((item) => {
-        item.createdAt = new Date(item.createdAt);
-      })
-    });
-  }
+//   restore() {
+//     this._tws = new Set(JSON.parse(localStorage.getItem('tws')));
+//     this._tws.forEach((item) => {
+//       item.createdAt = new Date(item.createdAt);
+//       item.comments.forEach((item) => {
+//         item.createdAt = new Date(item.createdAt);
+//       })
+//     });
+//   }
 
-  getPage(skip = 0, top = 10, filterConfig = {}) {
-    let array = [];
-    filterConfig.author = filterConfig.author ? filterConfig.author : '';
-    filterConfig.dateFrom = filterConfig.dateFrom ? filterConfig.dateFrom : null;
-    filterConfig.dateTo = filterConfig.dateTo ? filterConfig.dateTo : null;
-    filterConfig.text = filterConfig.text ? filterConfig.text : '';
-    if (filterConfig.hashtags === undefined) {
-      array = Array.from(this._tws);
-    } else {
-      for (let i = 0; i < filterConfig.hashtags.length; i += 1) {
-        let twsArray = Array.from(this._tws);
-        array = array.concat(twsArray
-        .filter((twsArray) => twsArray.text
-        .toLowerCase().indexOf(filterConfig.hashtags[i].toLowerCase()) !== -1));
-      }
-    }
-    return array
-      .filter((array) => array.author
-      .toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
-      .filter(({ createdAt }) => !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt)
-      || (filterConfig.dateTo && filterConfig.dateTo < createdAt)))
-      .filter((array) => array.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
-      .sort((a, b) => b.createdAt - a.createdAt)
-      .slice(skip, skip + top);
-  }
+//   getPage(skip = 0, top = 10, filterConfig = {}) {
+//     let array = [];
+//     filterConfig.author = filterConfig.author ? filterConfig.author : '';
+//     filterConfig.dateFrom = filterConfig.dateFrom ? filterConfig.dateFrom : null;
+//     filterConfig.dateTo = filterConfig.dateTo ? filterConfig.dateTo : null;
+//     filterConfig.text = filterConfig.text ? filterConfig.text : '';
+//     if (filterConfig.hashtags === undefined) {
+//       array = Array.from(this._tws);
+//     } else {
+//       for (let i = 0; i < filterConfig.hashtags.length; i += 1) {
+//         let twsArray = Array.from(this._tws);
+//         array = array.concat(twsArray
+//         .filter((twsArray) => twsArray.text
+//         .toLowerCase().indexOf(filterConfig.hashtags[i].toLowerCase()) !== -1));
+//       }
+//     }
+//     return array
+//       .filter((array) => array.author
+//       .toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
+//       .filter(({ createdAt }) => !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt)
+//       || (filterConfig.dateTo && filterConfig.dateTo < createdAt)))
+//       .filter((array) => array.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
+//       .sort((a, b) => b.createdAt - a.createdAt)
+//       .slice(skip, skip + top);
+//   }
 
-  get(id) {
-    for (let value of this._tws) {
-      if (value.id === String(id)) {
-        return value;
-      }
-      continue;
-    }
-    return false;
-  }
+//   get(id) {
+//     for (let value of this._tws) {
+//       if (value.id === String(id)) {
+//         return value;
+//       }
+//       continue;
+//     }
+//     return false;
+//   }
 
-  add(text) {
-    if (this._user !== 'Гость') {
-      const tweet = new Tweet(text);
-      if (Tweet.validate(tweet) && tweet.author === tweetsController.tweetCollection._user) {
-        this._tws.add(tweet);
-        this.save();
-        return true;
-      }
-    }
-    return false;
-  }
+//   add(text) {
+//     if (this._user !== 'Гость') {
+//       const tweet = new Tweet(text);
+//       if (Tweet.validate(tweet) && tweet.author === tweetsController.tweetCollection._user) {
+//         this._tws.add(tweet);
+//         this.save();
+//         return true;
+//       }
+//     }
+//     return false;
+//   }
 
-  edit(id, text) {
-    const clone = this.get(id);
-    if (text.length <= Tweet.maxTextLength
-      && typeof text === 'string' && clone.id === String(id) 
-      && Tweet.validate(clone) && clone.author === tweetsController.tweetCollection._user) {
-        clone.text = text;
-        this.save();
-        return true;
-    }
-    return false;
-  }
+//   edit(id, text) {
+//     const clone = this.get(id);
+//     if (text.length <= Tweet.maxTextLength
+//       && typeof text === 'string' && clone.id === String(id) 
+//       && Tweet.validate(clone) && clone.author === tweetsController.tweetCollection._user) {
+//         clone.text = text;
+//         this.save();
+//         return true;
+//     }
+//     return false;
+//   }
 
-  remove(id) {
-    const deleteTweet = this.get(id);
-    if (deleteTweet.id === String(id) && deleteTweet.author === this._user) {
-      this._tws.delete(deleteTweet);
-      this.save();
-      return true;
-    }
-    return false;
-  }
+//   remove(id) {
+//     const deleteTweet = this.get(id);
+//     if (deleteTweet.id === String(id) && deleteTweet.author === this._user) {
+//       this._tws.delete(deleteTweet);
+//       this.save();
+//       return true;
+//     }
+//     return false;
+//   }
 
-  addComment(id, text) {
-    if (this._user !== 'Гость') {
-      const comment = new Comment(text);
-      if (this.get(id).id === String(id) && Comment.validate(comment)) {
-        this.get(id).comments.push(comment);
-        this.save();
-        return true;
-      }
-    }
-    return false;
-  }
+//   addComment(id, text) {
+//     if (this._user !== 'Гость') {
+//       const comment = new Comment(text);
+//       if (this.get(id).id === String(id) && Comment.validate(comment)) {
+//         this.get(id).comments.push(comment);
+//         this.save();
+//         return true;
+//       }
+//     }
+//     return false;
+//   }
 
-  addAll(tws) {
-    const noValidArr = [];
-    for (let i = 0; i < tws.length; i += 1) {
-      if (!Tweet.validate(tws[i])) {
-        noValidArr.push(tws[i]);
-      }
-      this._tws.add(tws[i]);
-      this.save();
-    }
-    return noValidArr;
-  }
+//   addAll(tws) {
+//     const noValidArr = [];
+//     for (let i = 0; i < tws.length; i += 1) {
+//       if (!Tweet.validate(tws[i])) {
+//         noValidArr.push(tws[i]);
+//       }
+//       this._tws.add(tws[i]);
+//       this.save();
+//     }
+//     return noValidArr;
+//   }
 
-  clear() {
-    this._tws.clear();
-    this.save();
-  }
-}
+//   clear() {
+//     this._tws.clear();
+//     this.save();
+//   }
+// }
 
 class HeaderView {
   constructor(containerId) {
@@ -644,31 +644,33 @@ class CommentView {
   clear() {
     const child = document.querySelectorAll('.comment');
     const jlo = document.querySelectorAll('.comment-jlo');
+    const user = document.querySelectorAll('.user-comment');
     child.forEach((item) => item.remove());
     jlo.forEach((item) => item.remove());
+    user.forEach((item) => item.remove());
   }
 } 
 
-class UserList {
-  constructor() {
-    this.restore();
-  }
+// class UserList {
+//   constructor() {
+//     this.restore();
+//   }
 
-  addUser(user) {
-    if(this.users.some((item) => item !== user)){
-      this.users.push(user);
-      this.save();
-    }
-  }
+//   addUser(user) {
+//     if(this.users.some((item) => item !== user)){
+//       this.users.push(user);
+//       this.save();
+//     }
+//   }
 
-  save() {
-    localStorage.setItem('userList', JSON.stringify(this.users));
-  }
+//   save() {
+//     localStorage.setItem('userList', JSON.stringify(this.users));
+//   }
 
-  restore() {
-    this.users = JSON.parse(localStorage.getItem('userList'));
-  }
-}
+//   restore() {
+//     this.users = JSON.parse(localStorage.getItem('userList'));
+//   }
+// }
 
 class TweetsController {
   constructor() {
@@ -689,24 +691,24 @@ class TweetsController {
     tweetFeedApiService.user = user;
   }
 
-  addTweet(text) {
-    this.tweetCollection.add(text);
-    this.tweetFeedView.clear();
-    const filter = this.tweetCollection.getPage();
-    this.tweetFeedView.display(filter);
-  }
+  // addTweet(text) {
+  //   this.tweetCollection.add(text);
+  //   this.tweetFeedView.clear();
+  //   const filter = this.tweetCollection.getPage();
+  //   this.tweetFeedView.display(filter);
+  // }
 
-  editTweet(id, text) {
-    this.tweetCollection.edit(id, text);
-    this.tweetFeedView.clear();
-    this.tweetFeedView.display(this.tweetCollection._tws);
-  }
+  // editTweet(id, text) {
+  //   this.tweetCollection.edit(id, text);
+  //   this.tweetFeedView.clear();
+  //   this.tweetFeedView.display(this.tweetCollection._tws);
+  // }
 
-  removeTweet(id) {
-    this.tweetCollection.remove(id);
-    this.tweetFeedView.clear();
-    this.tweetFeedView.display(this.tweetCollection._tws);
-  }
+  // removeTweet(id) {
+  //   this.tweetCollection.remove(id);
+  //   this.tweetFeedView.clear();
+  //   this.tweetFeedView.display(this.tweetCollection._tws);
+  // }
 
   getFeed(skip, top, filterConfig) {
     const tweetView = document.querySelector('#tweet-id');
@@ -716,10 +718,10 @@ class TweetsController {
     commentView.setAttribute('class', 'disappear');
     const addComment = document.getElementById('add-comment');
     addComment.setAttribute('class', 'disappear');
-    this.wrapperForGetTweets(skip, top, filterConfig);
+    this.wrapperForGetTweets(skip, top);
   }
 
-  async wrapperForGetTweets(skip, top, filterConfig) {
+  async wrapperForGetTweets(skip, top) {
     let arrayString = await tweetFeedApiService.get();
     const arrayTweets = JSON.parse(arrayString);
     arrayTweets.forEach((item) => {
@@ -728,30 +730,10 @@ class TweetsController {
         item.createdAt = new Date(item.createdAt);
       })
     });
-    const filter = getPage(skip, top, filterConfig);
+    const filter = getPage(skip, top);
     this.tweetFeedView.display(filter);
-    function getPage(skip = 0, top = 10, filterConfig = {}) {
-      let array = [];
-      filterConfig.author = filterConfig.author ? filterConfig.author : '';
-      filterConfig.dateFrom = filterConfig.dateFrom ? filterConfig.dateFrom : null;
-      filterConfig.dateTo = filterConfig.dateTo ? filterConfig.dateTo : null;
-      filterConfig.text = filterConfig.text ? filterConfig.text : '';
-      if (filterConfig.hashtags === undefined) {
-        array = arrayTweets;
-      } else {
-        for (let i = 0; i < filterConfig.hashtags.length; i += 1) {
-          let twsArray = arrayTweets;
-          array = array.concat(twsArray
-          .filter((twsArray) => twsArray.text
-          .toLowerCase().indexOf(filterConfig.hashtags[i].toLowerCase()) !== -1));
-        }
-      }
-      return array
-        .filter((array) => array.author
-        .toLowerCase().indexOf(filterConfig.author.toLowerCase()) !== -1)
-        .filter(({ createdAt }) => !((filterConfig.dateFrom && filterConfig.dateFrom > createdAt)
-        || (filterConfig.dateTo && filterConfig.dateTo < createdAt)))
-        .filter((array) => array.text.toLowerCase().indexOf(filterConfig.text.toLowerCase()) !== -1)
+    function getPage(skip = 0, top = 10) {
+      return arrayTweets
         .sort((a, b) => b.createdAt - a.createdAt)
         .slice(skip, skip + top);
     }
@@ -786,7 +768,7 @@ class TweetsController {
     const filtersBlock = document.querySelector('.left-block__filters');
     filtersBlock.setAttribute('class', 'index');
     const addTweet = document.querySelector('#add-tweet');
-    addTweet.setAttribute('class', 'disappear');
+    addTweet.style.display = 'none';
     const chat = document.querySelector('.right-block__scroll-twit');
     chat.setAttribute('class', 'disappear');
     const btn = document.querySelector('.right-block__chat__btn');
@@ -829,57 +811,20 @@ class TweetsController {
     document.querySelector('.left-block__filters__btn-apply').addEventListener('click', () => {
       const author = document.querySelector('.filter-author').value;
       const dateFrom = document.querySelector('.filter-date-from').value;
+      const defaultDateFrom = '1970-01-01';
       const dateTo = document.querySelector('.filter-date-to').value;
+      const defaultDateTo = '2022-04-22';
       const text  = document.querySelector('.filter-text').value;
       const hashtags = document.querySelector('.filter-hashtag').value;
       const filterConfig = {};
-      filterConfig.author = author;
-      filterConfig.dateFrom = new Date(dateFrom);
-      filterConfig.dateTo = new Date(dateTo);
-      filterConfig.text = text;
+      filterConfig.author = author ? `&author=${author}` : '';
+      filterConfig.text = text ? `&text=${text}` : '';
+      filterConfig.dateFrom = dateFrom ? `&dateFrom=${JSON.stringify(new Date(dateFrom)).replace(/\"/g, "")}` : `&dateFrom=${JSON.stringify(new Date(defaultDateFrom)).replace(/\"/g, "")}`;
+      filterConfig.dateTo = dateTo ? `&dateTo=${JSON.stringify(new Date(dateTo)).replace(/\"/g, "")}` : `&dateTo=${JSON.stringify(new Date(defaultDateTo)).replace(/\"/g, "")}`;
       let re = /\s* \s*/;
-      filterConfig.hashtags = hashtags.split(re);
-      this.tweetFeedView.clear();
-      const filter = this.wrapperForGetTweets(0, 10, filterConfig);
-      const mainBlock = document.querySelectorAll('#main-class');
-      if (mainBlock.length === 0) {
-        const rightBlock = document.querySelector('.right-block__chat');
-        const newBlock =  document.createElement('div');
-        newBlock.setAttribute('class', 'new-block-guest');
-        newBlock.innerHTML = `<div>
-        <p>По вашему запросу ничего не найдено. Измените условия поиска</p>
-        <button class="btn-main">Назад</button>
-        </div>`;
-        rightBlock.prepend(newBlock);
-        const loadTweets = document.querySelector('#right-block__chat__btn'); 
-        loadTweets.setAttribute('class', 'disappear');
-        const btnMain = document.querySelector('.btn-main');
-        btnMain.addEventListener('click', () => {
-          pageMain();
-          tweetsController.wrapperForGetTweets(0, 10, filterConfig);
-          renderMainUsers();
-          currentUser = JSON.parse(localStorage.getItem('currentUser'));
-          tweetsController.setCurrentUser(currentUser);
-        });
-        if (currentUser === 'Гость') {
-          const addTweet = document.getElementById('add-tweet');
-          addTweet.setAttribute('class', 'disappear');
-          const btnMain = document.querySelector('.btn-main');
-          btnMain.addEventListener('click', () => {
-            pageMain();
-            tweetsController.getFeed();
-            renderMainGuest();
-            currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            tweetsController.setCurrentUser(currentUser);
-          });
-        }
-      } else {
-        this.tweetFeedView.display(filter);
-        if (currentUser === 'Гость') {
-          const addTweet = document.getElementById('add-tweet');
-          addTweet.setAttribute('class', 'disappear');
-        }
-      }
+      filterConfig.hashtags = hashtags ? `&hashtags=${hashtags.split(re)}` : '';
+      console.log(filterConfig.dateFrom, filterConfig.dateTo)
+      tweetFeedApiService.getFilterTweets(0, 10, filterConfig);
     });
   }
 
@@ -920,10 +865,7 @@ class TweetsController {
         let textArea = document.querySelector('.right-block__add-comment__block'); 
         const text = textArea.value;
         const id = document.querySelector('.id').textContent;
-        this.tweetCollection.addComment(id, text);
-        this.commentView.clear();
-        const tweet = this.tweetCollection.get(id);
-        this.commentView.display(tweet.comments);
+        tweetFeedApiService.postComment(id, text);
         textArea.value = '';
       }
     });
@@ -948,6 +890,102 @@ class TweetFeedApiService {
       .then(result => {
         return result;
       })
+      .catch(error => console.log('error', error));
+  }
+
+  getFilterTweets(skip, top, filterConfig) {
+    let requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+
+    let url = 'https://jslabapi.datamola.com/';
+    url += 'tweet?';
+    url += 'count=';
+    url += top;
+    url += '&from=';
+    url += skip;
+    url += filterConfig.author;
+    url += filterConfig.text;
+    url += filterConfig.dateFrom;
+    url += filterConfig.dateTo;
+    url += filterConfig.hashtags;
+    
+    console.log(url)
+
+    fetch(url, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        console.log(result)
+        const arrayTweets = JSON.parse(result);
+        arrayTweets.forEach((item) => {
+          item.createdAt = new Date(item.createdAt);
+          item.comments.forEach((item) => {
+            item.createdAt = new Date(item.createdAt);
+          })
+        });
+        tweetsController.tweetFeedView.clear();
+        tweetsController.tweetFeedView.display(arrayTweets);
+        if (arrayTweets.length === 0) {
+          const rightBlock = document.querySelector('.right-block__chat');
+          const newBlock =  document.createElement('div');
+          newBlock.setAttribute('class', 'new-block-guest');
+          newBlock.innerHTML = `<div>
+          <p>По вашему запросу ничего не найдено. Измените условия поиска</p>
+          <button class="btn-main">Назад</button>
+          </div>`;
+          rightBlock.prepend(newBlock);
+          const loadTweets = document.querySelector('#right-block__chat__btn'); 
+          loadTweets.style.display = 'none';
+          const btnMain = document.querySelector('.btn-main');
+          btnMain.addEventListener('click', () => {
+            pageMain();
+            tweetsController.wrapperForGetTweets(0, 10, filterConfig);
+            renderMainUsers();
+            currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            tweetsController.setCurrentUser(currentUser);
+          });
+          if (currentUser === 'Гость') {
+            const addTweet = document.getElementById('add-tweet');
+            addTweet.setAttribute('class', 'disappear');
+            const btnMain = document.querySelector('.btn-main');
+            btnMain.addEventListener('click', () => {
+              pageMain();
+              tweetsController.getFeed();
+              renderMainGuest();
+              currentUser = JSON.parse(localStorage.getItem('currentUser'));
+              tweetsController.setCurrentUser(currentUser);
+            });
+          }
+        } else {
+          if (currentUser === 'Гость') {
+            const addTweet = document.getElementById('add-tweet');
+            addTweet.setAttribute('class', 'disappear');
+          }
+        }
+      })
+      .catch(error => console.log('error', error));
+  }
+
+  postRegistration(login, password) {
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    let raw = JSON.stringify({
+      "login": login,
+      "password": password
+    });
+
+    let requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("https://jslabapi.datamola.com/registration", requestOptions)
+      .then(response => response.text())
+      .then(result => this.postLogin(login, password))
       .catch(error => console.log('error', error));
   }
 
@@ -1016,21 +1054,96 @@ class TweetFeedApiService {
       .catch(error => console.log('error', error));
   }
 
-  put() {
+  putTweet(id, text) {
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${JSON.parse(localStorage.getItem('token'))}`);
+    myHeaders.append("Content-Type", "application/json");
 
+    let raw = JSON.stringify({
+      "text": text
+    });
+
+    let requestOptions = {
+      method: 'PUT',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    let something="https://jslabapi.datamola.com/tweet/";
+    something+=id;
+
+    fetch(something, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        tweetsController.tweetFeedView.clear();
+        tweetsController.getFeed();
+      })
+      .catch(error => console.log('error', error));
   }
 
-  delete() {
+  postComment(id, text) {
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${JSON.parse(localStorage.getItem('token'))}`);
+    myHeaders.append("Content-Type", "application/json");
 
+    let raw = JSON.stringify({
+      "text": text
+    });
+
+    let requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    let something="https://jslabapi.datamola.com/tweet/";
+    console.log(id)
+    something+=id;
+    something+='/comment'
+    console.log(something)
+
+    fetch(something, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        tweetsController.commentView.clear();
+        const tweet = JSON.parse(result);
+        console.log(tweet.comments)
+        tweet.comments.forEach((item) => {
+          item.createdAt = new Date(item.createdAt);
+        });
+        tweetsController.commentView.display(tweet.comments);
+      })
+      .catch(error => console.log('error', error));
+  }
+
+  delete(id) {
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${JSON.parse(localStorage.getItem('token'))}` );
+
+    let requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    let something="https://jslabapi.datamola.com/tweet/";
+    something+=id
+    
+    fetch(something, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        tweetsController.tweetFeedView.clear();
+        tweetsController.getFeed();
+      })
+      .catch(error => console.war('error', error));
   }
 }
 
 function createLocalStorage() {
-  const realUsers = ['Алеся Брановицкая', 'Анджелина Джоли'];
-  if (localStorage.getItem('userList') === null && localStorage.getItem('tws') === null && localStorage.getItem('currentUser') === null){
+  if (localStorage.getItem('currentUser') === null){
     localStorage.setItem('currentUser', JSON.stringify('Гость'));
-    // localStorage.setItem('userList', JSON.stringify(realUsers));
-    // localStorage.setItem('tws', JSON.stringify(tweets));
   }
 }
 
@@ -1085,7 +1198,6 @@ document.addEventListener('click', (event) => {
       }
     } else if (event.target.classList.contains('right-block__twit_edit')) {
       const id = event.target.parentNode.previousSibling.parentNode.previousSibling.textContent;
-      console.log('iii')
       const textArea = document.querySelector('.right-block__add-twit-block');
       textArea.setAttribute('class', 'disappear');
       const textBtn = document.querySelector('.right-block__add-twit__btn');
@@ -1104,10 +1216,8 @@ document.addEventListener('click', (event) => {
       const text = event.target.parentNode.parentNode.parentNode.querySelector('.text').textContent;  
       newTextArea.value = text;
       textNewBtn.addEventListener('click', () => {
-        console.log('send')
         const sendText = newTextArea.value;
-        console.log(sendText, id)
-        tweetsController.editTweet(id, sendText);
+        tweetFeedApiService.putTweet(id, sendText);
       });
     } else if (event.target.classList.contains('right-block__twit_delete')) {
       const id = event.target.parentNode.previousSibling.parentNode.previousSibling.textContent;
@@ -1134,7 +1244,7 @@ document.addEventListener('click', (event) => {
       });
       const btnDelete = document.querySelector('.btn-delete');
       btnDelete.addEventListener('click', () => {
-        tweetsController.removeTweet(id);
+        tweetFeedApiService.delete(id);
         modal.style.display = 'none';
       });
       const btnCancel = document.querySelector('.btn-cancel');
@@ -1396,11 +1506,8 @@ function pageLogUp() {
   });
 }
 
-
-
 function redirectLogIn() {
   const name = document.querySelector('.form__name');
-  // const userList = JSON.parse(localStorage.getItem('userList'));
   login = name.value;
   const passwordInput = document.querySelector('.form__password');
   password = passwordInput.value;
@@ -1408,30 +1515,32 @@ function redirectLogIn() {
 }
 
 function redirectLogUp() {
-  if (document.querySelector('.first').value !== document.querySelector('.second').value) {
-    const firstPas = document.querySelector('.first');
+  const firstPas = document.querySelector('.first');
+  const secondPas = document.querySelector('.second');
+  if (firstPas.value !== secondPas.value) {
     firstPas.style.border = '0.125rem solid #ff8d8d';
-    const secondPas = document.querySelector('.second');
     secondPas.style.border = '0.125rem solid #ff8d8d';
     const newP = document.querySelector('#new-p');
     newP.classList.toggle('disappear');
     return;
   }
   const name = document.querySelector('.form__name');
-  const userList = JSON.parse(localStorage.getItem('userList'));
-  userList.push(name.value);
-  localStorage.setItem('userList', JSON.stringify(userList));
-  pageMain();
-  tweetsController.getFeed();
-  renderMainUsers();
-  localStorage.setItem('currentUser', JSON.stringify(name.value));
-  tweetsController.setCurrentUser(name.value);
-  tweetsController.registration(name.value);
-  currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  tweetsController.setCurrentUser(currentUser);
-  tweetsController.tweetFeedView.clear();
-  const filter =  tweetsController.tweetCollection.getPage();
-  tweetsController.tweetFeedView.display(filter);
+  console.log()
+  log = name.value;
+  pass = secondPas.value;
+  console.log(log, pass);
+  tweetFeedApiService.postRegistration(log, pass);
+  // pageMain();
+  // tweetsController.getFeed();
+  // renderMainUsers();
+  // localStorage.setItem('currentUser', JSON.stringify(name.value));
+  // tweetsController.setCurrentUser(name.value);
+  // // tweetsController.registration(name.value);
+  // currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  // tweetsController.setCurrentUser(currentUser);
+  // tweetsController.tweetFeedView.clear();
+  // const filter =  tweetsController.tweetCollection.getPage();
+  // tweetsController.tweetFeedView.display(filter);
 }
 
 function renderMainUsers() {
@@ -1502,3 +1611,5 @@ function renderMainGuest() {
   const blockScroll = document.querySelector('.right-block__scroll-twit');
   blockScroll.setAttribute('style', 'height: 100vh;');
 }
+
+
