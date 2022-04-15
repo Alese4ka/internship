@@ -1241,20 +1241,22 @@ function renderMainUsers() {
                             Выйти
                           </button>
                           <h5>Версия 1.0</h5>`;
-  button.addEventListener('click', () => {
-    localStorage.setItem('currentUser', JSON.stringify('Гость'));
-    tweetsController.filterView.display();
-    pageMain(); 
-    tweetsController.getFeed();
-    renderMainGuest();
-    currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    tweetsController.setCurrentUser(currentUser); 
-    localStorage.removeItem('token');
-    const addTweet = document.getElementById('add-tweet');
-    const addComment = document.getElementById('comment-id');
-    addComment.setAttribute('class', 'disappear');
-    addTweet.setAttribute('class', 'disappear');
-    });
+  button.addEventListener('click', (event) => {
+    if (event.target.closest('.left-block__footer__btn')) {
+      localStorage.setItem('currentUser', JSON.stringify('Гость'));
+      tweetsController.filterView.display();
+      pageMain(); 
+      tweetsController.getFeed();
+      renderMainGuest();
+      currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      tweetsController.setCurrentUser(currentUser); 
+      localStorage.removeItem('token');
+      const addTweet = document.getElementById('add-tweet');
+      const addComment = document.getElementById('comment-id');
+      addComment.setAttribute('class', 'disappear');
+      addTweet.setAttribute('class', 'disappear');
+    }
+  });
 }
 
 function renderMainGuest() {
