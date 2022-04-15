@@ -89,7 +89,7 @@ input {
 .form__password:hover {
   background-color: var(--font-color1);
 }
-#new-p {
+#new-p, #new-pass{
   color: #ff8d8d;
   text-align: center;
 }

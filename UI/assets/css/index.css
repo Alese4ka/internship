@@ -280,7 +280,7 @@ textarea {
   padding: 1rem;
   text-align: center;
   background: url("../../assets/img/comment.svg") no-repeat right;
-  background-position-x: 55rem;
+  background-position-x: 56rem;
   cursor: pointer;
 }
 .tweet,
@@ -592,6 +592,9 @@ footer > a {
 }
 .index {
   z-index: -1;
+}
+.hashtag {
+  cursor: auto;
 }
 @media (max-height: 32.375rem) {
   .left-block__footer__btn {
