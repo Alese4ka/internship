@@ -271,7 +271,7 @@ class TweetsController {
       countTweets = filter;
       return countTweets;
     } catch(err) {
-        tweetFeedApiService._error(err); 
+        pageError(); 
     }
   }
 
@@ -432,7 +432,7 @@ class TweetFeedApiService {
       .then(result => {
         return result;
       })
-      .catch(error => console.warn('error', error));
+      .catch(error => pageError());
   }
 
   getFilterTweets(skip, top, filterConfig) {
@@ -479,7 +479,6 @@ class TweetFeedApiService {
           const btnMain = document.querySelector('.btn-main');
           btnMain.addEventListener('click', () => {
             pageMain();
-            tweetsController.wrapperForGetTweets(0, 10);
             renderMainUsers();
             currentUser = JSON.parse(localStorage.getItem('currentUser'));
             tweetsController.setCurrentUser(currentUser);
@@ -491,7 +490,6 @@ class TweetFeedApiService {
             const btnMain = document.querySelector('.btn-main');
             btnMain.addEventListener('click', () => {
               pageMain();
-              tweetsController.getFeed();
               renderMainGuest();
               currentUser = JSON.parse(localStorage.getItem('currentUser'));
               tweetsController.setCurrentUser(currentUser);
@@ -505,7 +503,7 @@ class TweetFeedApiService {
           }
         }
       })
-      .catch(error => console.warn('error', error));
+      .catch(error => pageError());
   }
 
   postRegistration(login, password) {
@@ -526,14 +524,16 @@ class TweetFeedApiService {
       .then(result => {
         console.log(result)
         let res = JSON.parse(result);
-        if (res.statusCode !== 409) {
+        if (res.statusCode !== 409 && res.hasOwnProperty('statusCode')) {
           this.postLogin(login, password);
-        } else {
+        } else if (res.statusCode === 409) {
           const nameInp = document.querySelector('.form__name');
           nameInp.style.border = '0.125rem solid #ff8d8d';
           const newP = document.querySelector('#new-p');
           newP.classList.toggle('disappear');
           return;
+        } else {
+          this._error(res);
         }
       })
       .catch(error => console.warn('error', error));
@@ -557,7 +557,7 @@ class TweetFeedApiService {
     .then(result => {
       console.log(result)
       let token = JSON.parse(result);
-      if (token.statusCode !== 403) {
+      if (token.statusCode !== 403 && !token.hasOwnProperty('statusCode')) {
         currentUser = login;
         pageMain();
         localStorage.setItem('token', JSON.stringify(token.token));
@@ -566,12 +566,14 @@ class TweetFeedApiService {
         tweetsController.login(login);
         renderMainUsers();
         setCheckFeedTweets();
-      } else {
+      } else if (token.statusCode === 403) {
         const nameInp = document.querySelector('.form__name');
         nameInp.style.border = '0.125rem solid #ff8d8d';
         const newP = document.querySelector('#new-p');
         newP.classList.toggle('disappear');
         return;
+      } else {
+        this._error(res);
       }
     })
     .catch(error => console.warn(error));
@@ -592,6 +594,10 @@ class TweetFeedApiService {
     fetch(`${this.address}tweet`, requestOptions)
       .then(response => response.text())
       .then(result => {
+        const res = JSON.parse(result);
+        if (res.hasOwnProperty('statusCode')) {
+          this._error(res);
+        }
         tweetsController.tweetFeedView.clear();
         tweetsController.getFeed();
       })
@@ -616,6 +622,11 @@ class TweetFeedApiService {
     fetch(url, requestOptions)
       .then(response => response.text())
       .then(result => {
+        const res = JSON.parse(result);
+        console.log(res)
+        if (res.hasOwnProperty('statusCode')) {
+          this._error(res);
+        }
         tweetsController.tweetFeedView.clear();
         tweetsController.getFeed();
         setCheckFeedTweets();
@@ -642,6 +653,10 @@ class TweetFeedApiService {
     fetch(url, requestOptions)
       .then(response => response.text())
       .then(result => {
+        const res = JSON.parse(result);
+        if (res.hasOwnProperty('statusCode')) {
+          this._error(res);
+        }
         tweetsController.commentView.clear();
         const tweet = JSON.parse(result);
         console.log(tweet.comments)
@@ -669,8 +684,16 @@ class TweetFeedApiService {
     fetch(url, requestOptions)
       .then(response => response.text())
       .then(result => {
-        tweetsController.tweetFeedView.clear();
-        tweetsController.getFeed();
+        console.log(result, result === '')
+        if (result === '') {
+          tweetsController.tweetFeedView.clear();
+          tweetsController.getFeed();
+        } else {
+          const res = JSON.parse(result);
+          if (res.hasOwnProperty('statusCode')) {
+            this._error(res);
+          }
+        }
       })
       .catch(error => console.warn('error', error));
   }
@@ -689,8 +712,7 @@ class TweetFeedApiService {
   }
 
   _error(result) {
-    error = JSON.parse(result);
-    if (error.statusCode === 401) {
+    if (result.statusCode === 401) {
       pageLogIn();
       const main = document.querySelector('main');
       const errorToken = document.createElement('p');
@@ -735,7 +757,7 @@ function setCheckFeedTweets() {
     console.log('update');
     tweetsController.tweetFeedView.clear();
     tweetsController.getFeed();
-  }, 3*1000); 
+  }, 300*1000); 
 }
 
 
@@ -791,7 +813,7 @@ document.addEventListener('click', (event) => {
         btnS.append(mainBtn);
         mainBtn.addEventListener('click', () => {
           pageMain();
-          tweetsController.getFeed();
+          // tweetsController.getFeed();
           renderMainGuest();
           currentUser = JSON.parse(localStorage.getItem('currentUser'));
           tweetsController.setCurrentUser(currentUser);
@@ -806,7 +828,7 @@ document.addEventListener('click', (event) => {
         btnS.append(mainBtn);
         mainBtn.addEventListener('click', () => {
           pageMain();
-          tweetsController.getFeed();
+          // tweetsController.getFeed();
           renderMainUsers();
           currentUser = JSON.parse(localStorage.getItem('currentUser'));
           tweetsController.setCurrentUser(currentUser);
@@ -1074,7 +1096,7 @@ function pageLogIn() {
   const regBtn = document.querySelector('.header__btn-reg');
   mainBtn.addEventListener('click', () => {
     pageMain();
-    tweetsController.getFeed();
+    // tweetsController.getFeed();
     renderMainGuest();
     setCheckFeedTweets();
   });
@@ -1137,7 +1159,7 @@ function pageLogUp() {
   const logBtn = document.querySelector('.header__btn-log');
   mainBtn.addEventListener('click', () => {
     pageMain();
-    tweetsController.getFeed();
+    // tweetsController.getFeed();
     renderMainGuest();
     setCheckFeedTweets();
   });
@@ -1243,13 +1265,13 @@ function redirectLogUp() {
 function redirectPageMain() {
   if (currentUser === 'Гость') {
     pageMain();
-    tweetsController.getFeed();
+    // tweetsController.getFeed();
     renderMainGuest();
     currentUser = JSON.parse(localStorage.getItem('currentUser'));
     tweetsController.setCurrentUser(currentUser);
   } else {
     pageMain();
-    tweetsController.getFeed();
+    // tweetsController.getFeed();
     renderMainUsers();
     currentUser = JSON.parse(localStorage.getItem('currentUser'));
     tweetsController.setCurrentUser(currentUser);
@@ -1284,7 +1306,6 @@ function renderMainUsers() {
       localStorage.setItem('currentUser', JSON.stringify('Гость'));
       tweetsController.filterView.display();
       pageMain(); 
-      tweetsController.getFeed();
       renderMainGuest();
       currentUser = JSON.parse(localStorage.getItem('currentUser'));
       tweetsController.setCurrentUser(currentUser); 
