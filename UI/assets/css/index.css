@@ -280,7 +280,7 @@ textarea {
   padding: 1rem;
   text-align: center;
   background: url("../../assets/img/comment.svg") no-repeat right;
-  background-position-x: 56rem;
+  background-position-x: 55rem;
   cursor: pointer;
 }
 .tweet,
