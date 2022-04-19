@@ -4,7 +4,7 @@ const url = 'https://jslabapi.datamola.com/';
 let login;
 let password;
 let countTweets;
-let fCountTweets;
+let filterCountTweets;
 let log;
 let pass;
 
@@ -501,7 +501,6 @@ class TweetFeedApiService {
         const btn = document.querySelector('.right-block__chat__btns');
         btn.addEventListener('click', () => {
           const mainBlock = document.querySelectorAll('#main-class');
-          tweetsController.tweetFeedView.clear();
           tweetFeedApiService.getFilterTweets(0, mainBlock.length+10, filterConfig);
           compareLengths();
           if (currentUser === 'Гость') {
@@ -511,8 +510,9 @@ class TweetFeedApiService {
             addTweet.setAttribute('class', 'disappear');
           }
           function compareLengths() {
-            if (mainBlock.length ===  0) {
+            if (filterCountTweets.length >= 30) {
               btn.setAttribute('style', 'display: none;');
+              return;
             }
           }
         })
@@ -525,6 +525,8 @@ class TweetFeedApiService {
           addTweet.setAttribute('class', 'disappear');
         }
       }
+      fCountTweets = arrayTweets;
+      return filterCountTweets
       })
       .catch(error => pageError());
   }
