@@ -503,7 +503,6 @@ class TweetFeedApiService {
           const mainBlock = document.querySelectorAll('#main-class');
           tweetsController.tweetFeedView.clear();
           tweetFeedApiService.getFilterTweets(0, mainBlock.length+10, filterConfig);
-          console.log(mainBlock.length)
           compareLengths();
           if (currentUser === 'Гость') {
             const addTweet = document.getElementById('add-tweet');
@@ -546,7 +545,6 @@ class TweetFeedApiService {
     fetch(`${this.address}registration`, requestOptions)
       .then(response => response.text())
       .then(result => {
-      console.log('reg', result)
         let res = JSON.parse(result);
         if (res.statusCode !== 409 && !res.hasOwnProperty('statusCode')) {
           this.postLogin(login, password);
@@ -579,7 +577,6 @@ class TweetFeedApiService {
     fetch(`${this.address}login`, requestOptions)
     .then(response => response.text())
     .then(result => {
-      console.log('log', result)
       let token = JSON.parse(result);
       if (token.statusCode !== 403 && !token.hasOwnProperty('statusCode')) {
         currentUser = login;
@@ -709,7 +706,6 @@ class TweetFeedApiService {
     fetch(url, requestOptions)
       .then(response => response.text())
       .then(result => {
-      console.log('del', result)
         if (result === '') {
           tweetsController.tweetFeedView.clear();
           tweetsController.getFeed();
@@ -774,8 +770,7 @@ let checkFeedTweets;
 setCheckFeedTweets();
 
 function setCheckFeedTweets() {
-  checkFeedTweets = setInterval(function(){
-    console.log('update');
+  checkFeedTweets = setInterval(function() {
     tweetsController.tweetFeedView.clear();
     tweetsController.getFeed();
   }, 300*1000); 
@@ -1053,6 +1048,7 @@ function pageMain() {
           </div>
           <div id="tweet-feed-id" class="right-block__scroll-twit">
           </div>
+          <button class="right-block__chat__btns">Загрузить еще</button>
           <button id="right-block__chat__btn" class="right-block__chat__btn">Загрузить еще</button>
         </section>
         <article id="add-comment">
