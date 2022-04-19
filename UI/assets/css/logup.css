@@ -89,7 +89,8 @@ input {
 .form__password:hover {
   background-color: var(--font-color1);
 }
-#new-p, #new-pass{
+#new-p,
+#new-pass {
   color: #ff8d8d;
   text-align: center;
 }
@@ -133,6 +134,24 @@ footer > a {
 .disappear {
   display: none;
 }
+@media (max-width: 31.25rem) {
+  .btns {
+    display: flex;
+    flex-direction: column;
+  }
+  .header__btn {
+    padding: 0.4rem 1.75rem;
+  }
+  .header__btn-main {
+    margin-right: 0;
+    margin-bottom: 0.25rem;
+  }
+  h5,
+  footer > a {
+    font-size: 0.6rem;
+  }
+}
+/* }
 @media (max-width: 48.25rem) {
   .header__btn {
     padding: 0.5rem 3.1rem;
@@ -182,4 +201,4 @@ footer > a {
   .header__mobile {
     height: 25vh;
   }
-}
+} */

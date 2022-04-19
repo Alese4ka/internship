@@ -4,6 +4,7 @@ const url = 'https://jslabapi.datamola.com/';
 let login;
 let password;
 let countTweets;
+let fCountTweets;
 let log;
 let pass;
 
@@ -346,8 +347,9 @@ class TweetsController {
   }
 
   loaderFilters() {
-    document.querySelector('.left-block__filters__btn-apply').addEventListener('click', () => {
+    document.querySelector('.left-block__filters__btn-apply').addEventListener('click', (event) => {
       clearInterval(checkFeedTweets);
+      document.querySelector('.right-block__chat__btns').style.display = 'block';
       const author = document.querySelector('.filter-author').value;
       const dateFrom = document.querySelector('.filter-date-from').value;
       const defaultDateFrom = '1970-01-01';
@@ -379,6 +381,8 @@ class TweetsController {
       }
       this.tweetFeedView.clear();
       this.getFeed();
+      document.querySelector('.right-block__chat__btn').style.display = 'block';
+      document.querySelector('.right-block__chat__btns').style.display = 'none';
       if (currentUser === 'Гость') {
         const addTweet = document.getElementById('add-tweet');
         const addComment = document.getElementById('comment-id');
@@ -461,6 +465,7 @@ class TweetFeedApiService {
         });
         tweetsController.tweetFeedView.clear();
         tweetsController.tweetFeedView.display(arrayTweets);
+        document.querySelector('#right-block__chat__btn').style.display = 'none';
         if (arrayTweets.length === 0) {
           const rightBlock = document.querySelector('.right-block__chat');
           const newBlock =  document.createElement('div');
@@ -470,34 +475,57 @@ class TweetFeedApiService {
           <button class="btn-main">Назад</button>
           </div>`;
           rightBlock.prepend(newBlock);
-          const loadTweets = document.querySelector('#right-block__chat__btn'); 
-          loadTweets.style.display = 'none';
           const btnMain = document.querySelector('.btn-main');
           btnMain.addEventListener('click', () => {
-            pageMain();
-            renderMainUsers();
-            currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            tweetsController.setCurrentUser(currentUser);
             setCheckFeedTweets();
+            document.querySelector('.filter-author').value = '';
+            document.querySelector('.filter-date-from').value = '';
+            document.querySelector('.filter-date-to').value = '';
+            document.querySelector('.filter-text').value = '';
+            document.querySelector('.filter-hashtag').value = '';
+            if (document.querySelector('.new-block-guest')) {
+              document.querySelector('.right-block__chat').removeChild(document.querySelector('.new-block-guest'));
+            }
+            tweetsController.tweetFeedView.clear();
+            tweetsController.getFeed();
+            document.querySelector('.right-block__chat__btn').style.display = 'block';
+            document.querySelector('.right-block__chat__btns').style.display = 'none';
+            if (currentUser === 'Гость') {
+              const addTweet = document.getElementById('add-tweet');
+              const addComment = document.getElementById('comment-id');
+              addComment.setAttribute('class', 'disappear');
+              addTweet.setAttribute('class', 'disappear');
+            }
           });
+        } else if (arrayTweets.length >= 10) {
+        const btn = document.querySelector('.right-block__chat__btns');
+        btn.addEventListener('click', () => {
+          const mainBlock = document.querySelectorAll('#main-class');
+          tweetsController.tweetFeedView.clear();
+          tweetFeedApiService.getFilterTweets(0, mainBlock.length+10, filterConfig);
+          console.log(mainBlock.length)
+          compareLengths();
           if (currentUser === 'Гость') {
             const addTweet = document.getElementById('add-tweet');
-            addTweet.setAttribute('class', 'disappear');
-            const btnMain = document.querySelector('.btn-main');
-            btnMain.addEventListener('click', () => {
-              pageMain();
-              renderMainGuest();
-              currentUser = JSON.parse(localStorage.getItem('currentUser'));
-              tweetsController.setCurrentUser(currentUser);
-              setCheckFeedTweets();
-            });
-          }
-        } else {
-          if (currentUser === 'Гость') {
-            const addTweet = document.getElementById('add-tweet');
+            const addComment = document.getElementById('comment-id');
+            addComment.setAttribute('class', 'disappear');
             addTweet.setAttribute('class', 'disappear');
           }
+          function compareLengths() {
+            if (mainBlock.length ===  0) {
+              btn.setAttribute('style', 'display: none;');
+            }
+          }
+        })
+      } else if (arrayTweets.length < 10) {
+        const btn = document.querySelector('.right-block__chat__btns');
+        btn.setAttribute('style', 'display: none;');
+      } else {
+        if (currentUser === 'Гость') {
+          const addTweet = document.getElementById('add-tweet');
+          addTweet.setAttribute('class', 'disappear');
         }
+      }
       })
       .catch(error => pageError());
   }
@@ -518,9 +546,9 @@ class TweetFeedApiService {
     fetch(`${this.address}registration`, requestOptions)
       .then(response => response.text())
       .then(result => {
-        console.log(result)
+      console.log('reg', result)
         let res = JSON.parse(result);
-        if (res.statusCode !== 409 && res.hasOwnProperty('statusCode')) {
+        if (res.statusCode !== 409 && !res.hasOwnProperty('statusCode')) {
           this.postLogin(login, password);
         } else if (res.statusCode === 409) {
           const nameInp = document.querySelector('.form__name');
@@ -551,7 +579,7 @@ class TweetFeedApiService {
     fetch(`${this.address}login`, requestOptions)
     .then(response => response.text())
     .then(result => {
-      console.log(result)
+      console.log('log', result)
       let token = JSON.parse(result);
       if (token.statusCode !== 403 && !token.hasOwnProperty('statusCode')) {
         currentUser = login;
@@ -590,7 +618,6 @@ class TweetFeedApiService {
     fetch(`${this.address}tweet`, requestOptions)
       .then(response => response.text())
       .then(result => {
-        console.log(result);
         const res = JSON.parse(result);
         if (res.hasOwnProperty('statusCode')) {
           this._error(res);
@@ -621,7 +648,6 @@ class TweetFeedApiService {
       .then(response => response.text())
       .then(result => {
         const res = JSON.parse(result);
-        console.log(res)
         if (res.hasOwnProperty('statusCode')) {
           this._error(res);
         } else {
@@ -652,14 +678,12 @@ class TweetFeedApiService {
     fetch(url, requestOptions)
       .then(response => response.text())
       .then(result => {
-        console.log(result)
         const res = JSON.parse(result);
         if (res.hasOwnProperty('statusCode')) {
           this._error(res);
         } else {
           tweetsController.commentView.clear();
           const tweet = JSON.parse(result);
-          console.log(tweet.comments)
           tweet.comments.forEach((item) => {
             item.createdAt = new Date(item.createdAt);
           });
@@ -685,10 +709,11 @@ class TweetFeedApiService {
     fetch(url, requestOptions)
       .then(response => response.text())
       .then(result => {
-        console.log(result, result === '')
+      console.log('del', result)
         if (result === '') {
           tweetsController.tweetFeedView.clear();
           tweetsController.getFeed();
+          setCheckFeedTweets();
         } else {
           const res = JSON.parse(result);
           if (res.hasOwnProperty('statusCode')) {
@@ -713,9 +738,7 @@ class TweetFeedApiService {
   }
 
   _error(result) {
-    console.log(result, result.statusCode === 401)
     if (result.statusCode === 401) {
-      console.log('lil')
       pageLogIn();
       const main = document.querySelector('main');
       const errorToken = document.createElement('p');
@@ -799,8 +822,8 @@ setInterval(function() {
 document.addEventListener('click', (event) => {
   if (event.target.closest('#main-class')) {
     if (event.target.classList.contains('comments')) {
-      const id = event.target.parentNode.querySelector('.id').textContent;
-      tweetsController.showTweet(id);
+      const idTweet = event.target.parentNode.querySelector('.id').textContent;
+      tweetsController.showTweet(idTweet);
       if (currentUser === 'Гость') {
         const addComment = document.querySelector('#add-comment');
         addComment.setAttribute('class', 'disappear');
@@ -861,7 +884,7 @@ document.addEventListener('click', (event) => {
       });
     } else if (event.target.classList.contains('right-block__twit_delete')) {
       clearInterval(checkFeedTweets);
-      const id = event.target.parentNode.previousSibling.parentNode.previousSibling.textContent;
+      const idDelete = event.target.parentNode.previousSibling.parentNode.previousSibling.textContent;
       const div = document.createElement('div');
       div.innerHTML = `<div id="my_modal" class="modal">
                           <div class="modal_content">
@@ -886,11 +909,12 @@ document.addEventListener('click', (event) => {
         }
       });
       const btnDelete = document.querySelector('.btn-delete');
-      btnDelete.addEventListener('click', () => {
-        tweetFeedApiService.delete(id);
+      btnDelete.addEventListener('click', btnClickDelete);
+      function btnClickDelete() {
+        tweetFeedApiService.delete(idDelete);
         modal.style.display = 'none';
-        setCheckFeedTweets();
-      });
+        btnDelete.removeEventListener('click', btnClickDelete);
+      }
       const btnCancel = document.querySelector('.btn-cancel');
       btnCancel.addEventListener('click', () => {
         modal.style.display = 'none';
@@ -1020,8 +1044,8 @@ function pageMain() {
               <tr>
                 <td>
                   <div class="left-block__filters__btn">
-                    <button class="left-block__filters__btn-clear">Сбросить</button>
-                    <button class="left-block__filters__btn-apply">Применить</button>
+                     <button class="left-block__filters__btn-clear">Сбросить</button>
+                     <button class="left-block__filters__btn-apply">Применить</button>
                   </div>
                 </td>
               </tr>
@@ -1053,7 +1077,7 @@ function pageLogIn() {
     document.body.innerHTML = `<div class="wrapper">
     <header class="header__desktop">
       <img src="assets/img/logo_.svg" alt="logotype">
-      <div>
+      <div class="btns">
         <button class="header__btn header__btn-main">
           Главная
         </button>
@@ -1099,6 +1123,7 @@ function pageLogIn() {
   regBtn.addEventListener('click', () => {
     pageLogUp();
   });
+  
 }
 
 function pageLogUp() {
@@ -1112,7 +1137,7 @@ function pageLogUp() {
   document.body.innerHTML = `<div class="wrapper">
   <header class="header__desktop">
     <img src="assets/img/logo_.svg" alt="logotype">
-    <div>
+    <div class="btns">
       <button class="header__btn header__btn-main">
         Главная
       </button>
