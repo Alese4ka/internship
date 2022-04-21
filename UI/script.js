@@ -252,7 +252,7 @@ class TweetsController {
 
   async wrapperForGetTweets(skip, top) {
     try {
-      let arrayString = await tweetFeedApiService.get();
+      let arrayString = await tweetFeedApiService.get(skip, top);
       const arrayTweets = JSON.parse(arrayString);
       arrayTweets.forEach((item) => {
         item.createdAt = new Date(item.createdAt);
@@ -421,13 +421,20 @@ class TweetFeedApiService {
     this.user = user;
   }
 
-  get() {
+  get(skip = 0, top = 10) {
     let requestOptions = {
       method: 'GET',
       redirect: 'follow'
     };
+
+    let url = this.address;
+    url += 'tweet?';
+    url += 'count=';
+    url += top;
+    url += '&from=';
+    url += skip;
     
-    return fetch(`${this.address}tweet?count=1000`, requestOptions)
+    return fetch(url, requestOptions)
       .then(response => response.text())
       .then(result => {
         return result;
@@ -539,7 +546,7 @@ class TweetFeedApiService {
 
     let requestOptions = {
       method: 'POST',
-      headers: this._headersLog(login, password),
+      headers: this._headers(login, password),
       body: raw,
       redirect: 'follow'
     };
@@ -571,7 +578,7 @@ class TweetFeedApiService {
 
     let requestOptions = {
       method: 'POST',
-      headers: this._headersLog(login, password),
+      headers: this._headers(login, password),
       body: raw,
       redirect: 'follow'
     };
@@ -609,7 +616,7 @@ class TweetFeedApiService {
   
     let requestOptions = {
       method: 'POST',
-      headers: this._headersPost(),
+      headers: this._headers(),
       body: raw,
       redirect: 'follow'
     };
@@ -635,7 +642,7 @@ class TweetFeedApiService {
 
     let requestOptions = {
       method: 'PUT',
-      headers: this._headersPost(),
+      headers: this._headers(),
       body: raw,
       redirect: 'follow'
     };
@@ -665,7 +672,7 @@ class TweetFeedApiService {
   
     let requestOptions = {
       method: 'POST',
-      headers: this._headersPost(),
+      headers: this._headers(),
       body: raw,
       redirect: 'follow'
     };
@@ -693,12 +700,9 @@ class TweetFeedApiService {
   }
 
   delete(id) {
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${JSON.parse(localStorage.getItem('token'))}`);
-
     let requestOptions = {
       method: 'DELETE',
-      headers: myHeaders,
+      headers: this._headers(),
       redirect: 'follow'
     };
 
@@ -722,13 +726,7 @@ class TweetFeedApiService {
       .catch(error => pageError());
   }
 
-  _headersLog() {
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    return myHeaders;
-  }
-
-  _headersPost() {
+  _headers() {
     let myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${JSON.parse(localStorage.getItem('token'))}`);
     myHeaders.append("Content-Type", "application/json");
@@ -777,44 +775,6 @@ function setCheckFeedTweets() {
     tweetsController.getFeed();
   }, 300*1000); 
 }
-
-
-setInterval(function() {
-  if (currentUser !== 'Гость') {
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${JSON.parse(localStorage.getItem('token'))}`);
-
-    let requestOptions = {
-      method: 'DELETE',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-
-    let url = `${tweetFeedApiService.address}tweet/`;
-    url += 'id';
-    
-    fetch(url, requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        let res = JSON.parse(result);
-        if (res.statusCode === 401) {
-          pageLogIn();
-          const main = document.querySelector('main');
-          const errorToken = document.createElement('p');
-          errorToken.innerHTML = 'Время вашей сессии истекло. Пожалуйста, войдите снова.';
-          errorToken.setAttribute('class', 'error-token');
-          main.prepend(errorToken);
-          localStorage.setItem('currentUser', JSON.stringify('Гость'));
-          currentUser = JSON.parse(localStorage.getItem('currentUser'));
-          localStorage.removeItem('token');
-        } else {
-          return;
-        }
-      })
-      .catch(error => pageError());
-  }
-}, 3*1000); 
-
 
 document.addEventListener('click', (event) => {
   if (event.target.closest('#main-class')) {
@@ -928,25 +888,18 @@ document.addEventListener('click', (event) => {
     clearInterval(checkFeedTweets);
     const mainBlock = document.querySelectorAll('#main-class');
     const loadTweets = document.querySelector('#right-block__chat__btn'); 
-    tweetsController.getFeed(mainBlock.length, 10);
+    tweetsController.tweetFeedView.clear();
+    tweetsController.getFeed(0, 10 + mainBlock.length);
     if (currentUser === 'Гость') {
       const addTweet = document.getElementById('add-tweet');
       const addComment = document.getElementById('comment-id');
       addComment.setAttribute('class', 'disappear');
       addTweet.setAttribute('class', 'disappear');
     }
-    compareLengths();
-    async function compareLengths() {
-      try {
-        await tweetFeedApiService.get();
-        if (countTweets.length < 10) {
-          loadTweets.setAttribute('disabled', true);
-          loadTweets.setAttribute('style', 'color: grey; box-shadow: none;cursor-pointer: none;');
-        } 
-      } catch(err) {
-          pageError(); 
-      }
-    }
+    if (countTweets.length % 10 !== 0) {
+      loadTweets.setAttribute('disabled', true);
+      loadTweets.setAttribute('style', 'color: grey; box-shadow: none;cursor-pointer: none;');
+    } 
   } else if (event.target.parentNode === document.querySelector('#add-tweet')) { 
     clearInterval(checkFeedTweets);
     if (event.target === document.querySelector('.right-block__add-twit__btn')) {
