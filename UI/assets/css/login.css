@@ -123,55 +123,34 @@ h5 {
 footer > a {
   font-size: 0.75rem;
 }
-#new-p {
+#new-p,
+#new-pass {
   color: #ff8d8d;
   text-align: center;
 }
 .disappear {
   display: none;
 }
-@media (max-width: 48.25rem) {
-  .header__btn {
-    padding: 0.5rem 1.5rem;
-  }
-  .header__btn-main {
-    padding: 0.5rem 2.65rem;
-  }
-  h1 {
-    font-size: 1.25rem;
-  }
+.error-token {
+  font-size: 1rem;
+  text-align: center;
+  color: rgb(235 235 235);
+  margin-bottom: 2rem;
 }
-@media (max-width: 34.375rem) {
-  .header__desktop {
-    display: none;
-  }
-  .header__mobile {
+@media (max-width: 31.25rem) {
+  .btns {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background: url("../../assets/img/bg.png") no-repeat center;
-    background-size: cover;
-    max-width: 100%;
-    z-index: -1;
-    height: 25vh;
   }
-  .header__mobile__logo {
-    width: 6rem;
-    height: 6rem;
+  .header__btn {
+    padding: 0.4rem 1rem;
   }
-  .header__mobile__btn {
-    margin-right: 1rem;
+  .header__btn-main {
+    margin-right: 0;
+    margin-bottom: 0.25rem;
   }
-  main {
-    background-color: var(--font-color1);
-    justify-content: flex-start;
-    margin-top: 2rem;
-    height: 63vh;
-  }
-  h1 {
-    color: var(--font-color2);
-  }
-  footer {
-    box-shadow: 0 -0.4375rem 0.625rem -0.5625rem rgba(221, 221, 221, 1);
+  h5,
+  footer > a {
+    font-size: 0.6rem;
   }
 }
