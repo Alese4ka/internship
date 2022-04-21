@@ -354,7 +354,7 @@ class TweetsController {
       const dateFrom = document.querySelector('.filter-date-from').value;
       const defaultDateFrom = '1970-01-01';
       const dateTo = document.querySelector('.filter-date-to').value;
-      const defaultDateTo = '2022-04-22';
+      const defaultDateTo = '2022-04-30';
       const text  = document.querySelector('.filter-text').value;
       const hashtags = document.querySelector('.filter-hashtag').value;
       const filterConfig = {};
@@ -532,7 +532,7 @@ class TweetFeedApiService {
           addTweet.setAttribute('class', 'disappear');
         }
       }
-      fCountTweets = arrayTweets;
+      filterCountTweets = arrayTweets;
       return filterCountTweets
       })
       .catch(error => pageError());
