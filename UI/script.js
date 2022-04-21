@@ -7,6 +7,7 @@ let countTweets;
 let filterCountTweets;
 let log;
 let pass;
+let filterConfig;
 
 class HeaderView {
   constructor(containerId) {
@@ -278,7 +279,7 @@ class TweetsController {
     wrapperForGetTweet(id);
     async function wrapperForGetTweet(id) {
       try {
-        let arrayString = await tweetFeedApiService.get();
+        let arrayString = await tweetFeedApiService.get(0,1000);
         const arrayTweets = JSON.parse(arrayString);
         arrayTweets.forEach((item) => {
           item.createdAt = new Date(item.createdAt);
@@ -311,7 +312,9 @@ class TweetsController {
     const chat = document.querySelector('.right-block__scroll-twit');
     chat.setAttribute('class', 'disappear');
     const btn = document.querySelector('.right-block__chat__btn');
-    btn.setAttribute('class', 'disappear');
+    btn.setAttribute('style', 'display: none;');
+    const btnFilter = document.querySelector('.right-block__chat__btns');
+    btnFilter.setAttribute('style', 'display: none;');
     const addComment = document.getElementById('add-comment');
     addComment.setAttribute('class', 'right-block__add-comment');
     if (currentUser === 'Анджелина Джоли') {
@@ -357,7 +360,7 @@ class TweetsController {
       const defaultDateTo = '2022-04-30';
       const text  = document.querySelector('.filter-text').value;
       const hashtags = document.querySelector('.filter-hashtag').value;
-      const filterConfig = {};
+      filterConfig = {};
       filterConfig.author = author ? `&author=${author}` : '';
       filterConfig.text = text ? `&text=${text}` : '';
       filterConfig.dateFrom = dateFrom ? `&dateFrom=${JSON.stringify(new Date(dateFrom)).replace(/\"/g, "")}` : `&dateFrom=${JSON.stringify(new Date(defaultDateFrom)).replace(/\"/g, "")}`;
@@ -474,6 +477,8 @@ class TweetFeedApiService {
         tweetsController.tweetFeedView.display(arrayTweets);
         document.querySelector('#right-block__chat__btn').style.display = 'none';
         if (arrayTweets.length === 0) {
+          const btn = document.querySelector('.right-block__chat__btns');
+          btn.setAttribute('style', 'display: none;');
           const rightBlock = document.querySelector('.right-block__chat');
           const newBlock =  document.createElement('div');
           newBlock.setAttribute('class', 'new-block-guest');
@@ -490,50 +495,22 @@ class TweetFeedApiService {
             document.querySelector('.filter-date-to').value = '';
             document.querySelector('.filter-text').value = '';
             document.querySelector('.filter-hashtag').value = '';
-            if (document.querySelector('.new-block-guest')) {
-              document.querySelector('.right-block__chat').removeChild(document.querySelector('.new-block-guest'));
+            if (newBlock) {
+              document.querySelector('.right-block__chat').removeChild(newBlock);
             }
-            tweetsController.tweetFeedView.clear();
             tweetsController.getFeed();
             document.querySelector('.right-block__chat__btn').style.display = 'block';
-            document.querySelector('.right-block__chat__btns').style.display = 'none';
             if (currentUser === 'Гость') {
               const addTweet = document.getElementById('add-tweet');
-              const addComment = document.getElementById('comment-id');
-              addComment.setAttribute('class', 'disappear');
               addTweet.setAttribute('class', 'disappear');
             }
           });
-        } else if (arrayTweets.length >= 10) {
-        const btn = document.querySelector('.right-block__chat__btns');
-        btn.addEventListener('click', () => {
-          const mainBlock = document.querySelectorAll('#main-class');
-          tweetFeedApiService.getFilterTweets(0, mainBlock.length+10, filterConfig);
-          compareLengths();
-          if (currentUser === 'Гость') {
-            const addTweet = document.getElementById('add-tweet');
-            const addComment = document.getElementById('comment-id');
-            addComment.setAttribute('class', 'disappear');
-            addTweet.setAttribute('class', 'disappear');
-          }
-          function compareLengths() {
-            if (filterCountTweets.length >= 30) {
-              btn.setAttribute('style', 'display: none;');
-              return;
-            }
-          }
-        })
-      } else if (arrayTweets.length < 10) {
-        const btn = document.querySelector('.right-block__chat__btns');
-        btn.setAttribute('style', 'display: none;');
-      } else {
-        if (currentUser === 'Гость') {
-          const addTweet = document.getElementById('add-tweet');
-          addTweet.setAttribute('class', 'disappear');
+        } else if (arrayTweets.length < 10) {
+          const btn = document.querySelector('.right-block__chat__btns');
+          btn.setAttribute('style', 'display: none;');
         }
-      }
-      filterCountTweets = arrayTweets;
-      return filterCountTweets
+        filterCountTweets = arrayTweets;
+        return filterCountTweets
       })
       .catch(error => pageError());
   }
@@ -896,10 +873,20 @@ document.addEventListener('click', (event) => {
       addComment.setAttribute('class', 'disappear');
       addTweet.setAttribute('class', 'disappear');
     }
-    if (countTweets.length % 10 !== 0) {
-      loadTweets.setAttribute('disabled', true);
-      loadTweets.setAttribute('style', 'color: grey; box-shadow: none;cursor-pointer: none;');
-    } 
+    compareLengths();
+    async function compareLengths() {
+      let arrayString = await tweetFeedApiService.get(0, 1000);
+      const arrayTweets = JSON.parse(arrayString);
+      arrayTweets.forEach((item) => {
+        item.createdAt = new Date(item.createdAt);
+        item.comments.forEach((item) => {
+          item.createdAt = new Date(item.createdAt);
+        })
+      });
+      if ((arrayTweets.length - mainBlock.length) < 10) {
+        loadTweets.setAttribute('style', 'display: none;');
+      } 
+    }
   } else if (event.target.parentNode === document.querySelector('#add-tweet')) { 
     clearInterval(checkFeedTweets);
     if (event.target === document.querySelector('.right-block__add-twit__btn')) {
@@ -924,6 +911,48 @@ document.addEventListener('click', (event) => {
     }
   } else if (event.target === document.querySelector('.right-block')) {
     setCheckFeedTweets();
+  } else if (event.target === document.querySelector('.right-block__chat__btns')) {
+    const mainBlock = document.querySelectorAll('#main-class');
+    tweetFeedApiService.getFilterTweets(0, mainBlock.length + 10, filterConfig);
+    if (currentUser === 'Гость') {
+      const addTweet = document.getElementById('add-tweet');
+      addTweet.setAttribute('class', 'disappear');
+    }
+    compareLengths(0,1000, filterConfig);
+    function compareLengths(skip, top, filterConfig) {
+      let requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+  
+      let url = tweetFeedApiService.address;
+      url += 'tweet?';
+      url += 'count=';
+      url += top;
+      url += '&from=';
+      url += skip;
+      url += filterConfig.author;
+      url += filterConfig.text;
+      url += filterConfig.dateFrom;
+      url += filterConfig.dateTo;
+      url += filterConfig.hashtags;
+  
+      fetch(url, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+          const arrayTweets = JSON.parse(result);
+          arrayTweets.forEach((item) => {
+            item.createdAt = new Date(item.createdAt);
+            item.comments.forEach((item) => {
+              item.createdAt = new Date(item.createdAt);
+            })
+          });
+          if ((arrayTweets.length - mainBlock.length) < 10) {
+            document.querySelector('.right-block__chat__btns').setAttribute('style', 'display: none;');
+          }
+        })
+        .catch(error => pageError());
+    }
   }
 });
 
