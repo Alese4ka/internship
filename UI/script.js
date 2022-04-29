@@ -1245,10 +1245,8 @@ function formatDate(date) {
 }
 
 async function compareLengths(skip, top, filterConfig, btn) {
-  console.log(skip, top, filterConfig, btn)
   try {
     const array = await tweetFeedApiService.get(skip, top, filterConfig);
-    console.log(array)
     array.forEach((item) => {
       item.createdAt = new Date(item.createdAt);
       item.comments.forEach((item) => {
