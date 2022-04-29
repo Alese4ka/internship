@@ -1240,7 +1240,8 @@ async function compareLengths(skip, top, filterConfig, btn) {
         item.createdAt = new Date(item.createdAt);
       })
     });
-    if (array.length === main.length) {
+    const arr = await tweetFeedApiService.get(0, 10 + main.length, filterConfig);
+    if (array.length === arr.length) {
       btn.setAttribute('style', 'display: none;');
     } 
   } catch(err) {
