@@ -6,6 +6,7 @@ let password;
 let log;
 let pass;
 let filterConfig;
+let main;
 
 class HeaderView {
   constructor(containerId) {
@@ -43,28 +44,12 @@ class TweetFeedView {
     commentView.setAttribute('class', 'disappear');
     const addComment = document.getElementById('add-comment');
     addComment.setAttribute('class', 'disappear');
-    if (currentUser === 'Анджелина Джоли') {
-      addTweet.innerHTML = `<img src="assets/img/avatar_mini_jo.svg" alt="avatar">
+    addTweet.innerHTML = `<img src="assets/img/user_mini.svg" alt="avatar">
                           <textarea cols="185" rows="5" maxlength="280" style="width: 100%;"
                           placeholder="О чем бы вы хотели рассказать?" class="right-block__add-twit-block"></textarea>
                           <textarea cols="185" rows="5" maxlength="280" style="width: 100%;" placeholder="Расскажите?"
                           class="right-block__add-twit-none"></textarea>
                           <button class="right-block__add-twit__btn"></button>`;
-    } else if (currentUser === 'Алеся Брановицкая') {
-      addTweet.innerHTML = `<img src="assets/img/avatar_mini.png" alt="avatar">
-                          <textarea cols="185" rows="5" maxlength="280" style="width: 100%;"
-                          placeholder="О чем бы вы хотели рассказать?" class="right-block__add-twit-block"></textarea>
-                          <textarea cols="185" rows="5" maxlength="280" style="width: 100%;" placeholder="Расскажите?"
-                          class="right-block__add-twit-none"></textarea>
-                          <button class="right-block__add-twit__btn"></button>`;
-    } else {
-      addTweet.innerHTML = `<img src="assets/img/user_mini.svg" alt="avatar">
-                          <textarea cols="185" rows="5" maxlength="280" style="width: 100%;"
-                          placeholder="О чем бы вы хотели рассказать?" class="right-block__add-twit-block"></textarea>
-                          <textarea cols="185" rows="5" maxlength="280" style="width: 100%;" placeholder="Расскажите?"
-                          class="right-block__add-twit-none"></textarea>
-                          <button class="right-block__add-twit__btn"></button>`;
-    }
     const btn = document.querySelector('#right-block__chat__btn');
     btn.setAttribute('class', 'right-block__chat__btn');
     const tweetFeed = document.getElementById(this.containerId);
@@ -784,6 +769,7 @@ document.addEventListener('click', (event) => {
   } else if (event.target === document.querySelector('#right-block__chat__btn')) {
     clearInterval(checkFeedTweets);
     const mainBlock = document.querySelectorAll('#main-class');
+    main = mainBlock;
     const loadTweets = document.querySelector('#right-block__chat__btn'); 
     tweetsController.tweetFeedView.clear();
     tweetsController.getFeed(0, 10 + mainBlock.length);
@@ -793,7 +779,7 @@ document.addEventListener('click', (event) => {
       addComment.setAttribute('class', 'disappear');
       addTweet.setAttribute('class', 'disappear');
     }
-    compareLengths(0, 10 + mainBlock.length, filterConfig, loadTweets);
+    compareLengths(0, 1000000, filterConfig, loadTweets);
   } else if (event.target.parentNode === document.querySelector('#add-tweet')) { 
     clearInterval(checkFeedTweets);
     if (event.target === document.querySelector('.right-block__add-twit__btn')) {
@@ -825,13 +811,14 @@ document.addEventListener('click', (event) => {
     setCheckFeedTweets();
   } else if (event.target === document.querySelector('.right-block__chat__btns')) {
     const mainBlock = document.querySelectorAll('#main-class');
+    main = mainBlock;
     tweetsController.filterView.getFilterTweets(0, mainBlock.length + 10, filterConfig);
     if (currentUser === 'Гость') {
       const addTweet = document.getElementById('add-tweet');
       addTweet.setAttribute('class', 'disappear');
     }
     const loadFilters = document.querySelector('.right-block__chat__btns');
-    compareLengths(0, 10 + mainBlock.length, filterConfig, loadFilters);
+    compareLengths(0, 1000, filterConfig, loadFilters);
   }
 });
 
@@ -1253,7 +1240,7 @@ async function compareLengths(skip, top, filterConfig, btn) {
         item.createdAt = new Date(item.createdAt);
       })
     });
-    if (array.length % 10 !== 0) {
+    if (array.length === main.length) {
       btn.setAttribute('style', 'display: none;');
     } 
   } catch(err) {
