@@ -3,8 +3,6 @@
 const url = 'https://jslabapi.datamola.com/';
 let login;
 let password;
-let countTweets;
-let filterCountTweets;
 let log;
 let pass;
 let filterConfig;
@@ -70,7 +68,7 @@ class TweetFeedView {
       if (item.author === currentUser) {
         msg.setAttribute('id', 'main-class');
         msg.setAttribute('class', 'user');
-        msg.innerHTML = `<div class="id" style="font-size:0;">${item.id}</div><div class="title"><div><h2>${item.author}<h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(item.createdAt)}</h4></h2></div><div id="svg-edit">
+        msg.innerHTML = `<div class="id" style="font-size:0;">${item.id}</div><div class="title"><div><h2>${item.author}<h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div><div id="svg-edit">
         <img src="assets/img/edit.svg" alt="edit" class="right-block__twit_edit">
         <img src="assets/img/delete.svg" alt="delete" class="right-block__twit_delete"></div></div><div class="text">${item.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>')}</div><div class="comments">${item.comments.length}</div>`;
         tweetFeed.appendChild(msg);
@@ -82,7 +80,7 @@ class TweetFeedView {
       } else {
         msg.setAttribute('id', 'main-class');
         msg.setAttribute('class', 'user');
-        msg.innerHTML = `<div class="id" style="font-size:0;">${item.id}</div><div class="title"><div><h2>${item.author}<h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(item.createdAt)}</h4></h2></div></div><div class="text">${item.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>')}</div><div class="comments">${item.comments.length}</div>`;
+        msg.innerHTML = `<div class="id" style="font-size:0;">${item.id}</div><div class="title"><div><h2>${item.author}<h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div></div><div class="text">${item.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>')}</div><div class="comments">${item.comments.length}</div>`;
         tweetFeed.appendChild(msg);
         if (item.author === 'Анджелина Джоли'){
           msg.setAttribute('class', 'jlo');
@@ -118,8 +116,8 @@ class FilterView {
                                 <button class="left-block__filters__btn-clear">Сбросить</button>
                                 <button class="left-block__filters__btn-apply">Применить</button>
                               </div>`;
-    tweetsController.clearFilters();
-    tweetsController.loaderFilters();
+    tweetsController.filterView.clearFilters();
+    tweetsController.filterView.loaderFilters();
     const filters = document.getElementById(this.containerId);
     const authorV = FilterView.authorFil;
     const dateFV = FilterView.dateFFil;
@@ -160,6 +158,105 @@ class FilterView {
       hashtagsInput.value = hashtags.join(' ');
     }
   }
+
+  async getFilterTweets(skip, top, filterConfig) {
+    try {
+      const result = await tweetFeedApiService.get(skip, top, filterConfig);
+      result.forEach((item) => {
+        item.createdAt = new Date(item.createdAt);
+        item.comments.forEach((item) => {
+        item.createdAt = new Date(item.createdAt);
+        })
+      });
+      tweetsController.tweetFeedView.clear();
+      tweetsController.tweetFeedView.display(result);
+      document.querySelector('#right-block__chat__btn').style.display = 'none';
+      if (result.length === 0) {
+        const btn = document.querySelector('.right-block__chat__btns');
+        btn.setAttribute('style', 'display: none;');
+        const rightBlock = document.querySelector('.right-block__chat');
+        if (!document.querySelector('.new-block-guest')) {
+          const newBlock =  document.createElement('div');
+          newBlock.setAttribute('class', 'new-block-guest');
+          newBlock.innerHTML = `<div>
+          <p>По вашему запросу ничего не найдено. Измените условия поиска</p>
+          <button class="btn-main">Назад</button>
+          </div>`;
+          rightBlock.prepend(newBlock);
+        }
+        const btnMain = document.querySelector('.btn-main');
+        btnMain.addEventListener('click', () => {
+          setCheckFeedTweets();
+          document.querySelector('.filter-author').value = '';
+          document.querySelector('.filter-date-from').value = '';
+          document.querySelector('.filter-date-to').value = '';
+          document.querySelector('.filter-text').value = '';
+          document.querySelector('.filter-hashtag').value = '';
+          if (document.querySelector('.new-block-guest')) {
+            document.querySelector('.right-block__chat').removeChild(document.querySelector('.new-block-guest'));
+          }
+          tweetsController.getFeed();
+          document.querySelector('.right-block__chat__btn').style.display = 'block';
+          if (currentUser === 'Гость') {
+            const addTweet = document.getElementById('add-tweet');
+            addTweet.setAttribute('class', 'disappear');
+          }
+        });
+      } else if (result.length < 10) {
+        const btn = document.querySelector('.right-block__chat__btns');
+        btn.setAttribute('style', 'display: none;');
+      }
+      return result;
+    } catch(err) {
+      pageError(); 
+    }
+  }
+
+  loaderFilters() {
+    document.querySelector('.left-block__filters__btn-apply').addEventListener('click', (event) => {
+      clearInterval(checkFeedTweets);
+      document.querySelector('.right-block__chat__btns').style.display = 'block';
+      const author = document.querySelector('.filter-author').value;
+      const dateFrom = document.querySelector('.filter-date-from').value;
+      const defaultDateFrom = '1970-01-01';
+      const dateTo = document.querySelector('.filter-date-to').value;
+      const defaultDateTo = '2022-04-30';
+      const text  = document.querySelector('.filter-text').value;
+      const hashtags = document.querySelector('.filter-hashtag').value;
+      filterConfig = {};
+      filterConfig.author = author ? `&author=${author}` : '';
+      filterConfig.text = text ? `&text=${text}` : '';
+      filterConfig.dateFrom = dateFrom ? `&dateFrom=${JSON.stringify(new Date(dateFrom)).replace(/\"/g, "")}` : `&dateFrom=${JSON.stringify(new Date(defaultDateFrom)).replace(/\"/g, "")}`;
+      filterConfig.dateTo = dateTo ? `&dateTo=${JSON.stringify(new Date(dateTo)).replace(/\"/g, "")}` : `&dateTo=${JSON.stringify(new Date(defaultDateTo)).replace(/\"/g, "")}`;
+      const re = /\s* \s*/;
+      filterConfig.hashtags = hashtags ? `&hashtags=${hashtags.split(re)}` : '';
+      this.getFilterTweets(0, 10, filterConfig);
+    });
+  }
+
+  clearFilters() {
+    document.querySelector('.left-block__filters__btn-clear').addEventListener('click', () => {
+      setCheckFeedTweets();
+      document.querySelector('.filter-author').value = '';
+      document.querySelector('.filter-date-from').value = '';
+      document.querySelector('.filter-date-to').value = '';
+      document.querySelector('.filter-text').value = '';
+      document.querySelector('.filter-hashtag').value = '';
+      if (document.querySelector('.new-block-guest')) {
+        document.querySelector('.right-block__chat').removeChild(document.querySelector('.new-block-guest'));
+      }
+      tweetsController.tweetFeedView.clear();
+      tweetsController.getFeed();
+      document.querySelector('.right-block__chat__btn').style.display = 'block';
+      document.querySelector('.right-block__chat__btns').style.display = 'none';
+      if (currentUser === 'Гость') {
+        const addTweet = document.getElementById('add-tweet');
+        const addComment = document.getElementById('comment-id');
+        addComment.setAttribute('class', 'disappear');
+        addTweet.setAttribute('class', 'disappear');
+      }
+    });
+  }
 }
 
 class TweetView {
@@ -169,7 +266,7 @@ class TweetView {
 
   display(tweet) {
     const msg = document.getElementById(this.containerId);
-      msg.innerHTML = `<div class="id" style="font-size:0;">${tweet.id}</div><div class="title"><div><h2>${tweet.author}<h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(tweet.createdAt)}</h4></h2></div></div>
+      msg.innerHTML = `<div class="id" style="font-size:0;">${tweet.id}</div><div class="title"><div><h2>${tweet.author}<h4 style="margin-top: 0.25rem;">${formatDate(tweet.createdAt)}</h4></h2></div></div>
       <div class="text">${tweet.text}</div>`;
       if (tweet.author === 'Анджелина Джоли'){
         msg.setAttribute('class', 'tweet-jlo');
@@ -193,19 +290,19 @@ class CommentView {
       if (item.author === 'Анджелина Джоли'){
         const msgCom = document.createElement('div');
         msgCom.setAttribute('class', 'comment-jlo');
-        msgCom.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(item.createdAt)}</h4></h2></div> 
+        msgCom.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
         <div class="text">${item.text}</div>`;
         commentFeed.appendChild(msgCom);
       } else if (item.author === 'Алеся Брановицкая') {
         const msgCom = document.createElement('div');
         msgCom.setAttribute('class', 'comment');
-        msgCom.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(item.createdAt)}</h4></h2></div> 
+        msgCom.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
         <div class="text">${item.text}</div>`;
         commentFeed.appendChild(msgCom);
       } else {
         const msgCom = document.createElement('div');
         msgCom.setAttribute('class', 'user-comment');
-        msgCom.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${tweetsController.formatDate(item.createdAt)}</h4></h2></div> 
+        msgCom.innerHTML = `<div class="title"><h2>${item.author} <h4 style="margin-top: 0.25rem;">${formatDate(item.createdAt)}</h4></h2></div> 
         <div class="text">${item.text}</div>`;
         commentFeed.appendChild(msgCom);
       }
@@ -240,7 +337,7 @@ class TweetsController {
     tweetFeedApiService.user = user;
   }
 
-  getFeed(skip, top) {
+  async getFeed(skip, top) {
     const tweetView = document.querySelector('#tweet-id');
     tweetView.setAttribute('class', 'disappear');
     const commentView = document.querySelector('#comment-id');
@@ -248,27 +345,16 @@ class TweetsController {
     commentView.setAttribute('class', 'disappear');
     const addComment = document.getElementById('add-comment');
     addComment.setAttribute('class', 'disappear');
-    this.wrapperForGetTweets(skip, top);
-  }
-
-  async wrapperForGetTweets(skip, top) {
     try {
-      let arrayString = await tweetFeedApiService.get(skip, top);
-      const arrayTweets = JSON.parse(arrayString);
-      arrayTweets.forEach((item) => {
+      const array = await tweetFeedApiService.get(skip, top);
+      array.forEach((item) => {
         item.createdAt = new Date(item.createdAt);
         item.comments.forEach((item) => {
           item.createdAt = new Date(item.createdAt);
         })
-      });
-      const filter = getPage(skip, top);
-      tweetsController.tweetFeedView.display(filter);
-      function getPage(skip = 0, top = 10) {
-        return arrayTweets
-          .slice(skip, skip + top);
-      }
-      countTweets = filter;
-      return countTweets;
+      })
+      this.tweetFeedView.display(array);
+      return array;
     } catch(err) {
         pageError(); 
     }
@@ -279,9 +365,8 @@ class TweetsController {
     wrapperForGetTweet(id);
     async function wrapperForGetTweet(id) {
       try {
-        let arrayString = await tweetFeedApiService.get(0,1000);
-        const arrayTweets = JSON.parse(arrayString);
-        arrayTweets.forEach((item) => {
+        const array = await tweetFeedApiService.get(0, 1000);
+        array.forEach((item) => {
           item.createdAt = new Date(item.createdAt);
           item.comments.forEach((item) => {
             item.createdAt = new Date(item.createdAt);
@@ -291,7 +376,7 @@ class TweetsController {
         tweetsController.tweetView.display(newTweet);
         tweetsController.commentView.display(newTweet.comments);
         function get(id) {
-          for (let value of arrayTweets) {
+          for (let value of array) {
             if (value.id === String(id)) {
               return value;
             }
@@ -335,66 +420,6 @@ class TweetsController {
     }
   }
 
-  formatDate(date) {
-    let dd = date.getDate();
-    if (dd < 10) dd = `0${dd}`;
-    let mm = date.getMonth() + 1;
-    if (mm < 10) mm = `0${mm}`;
-    let yy = date.getFullYear() % 100;
-    if (yy < 10) yy = `0${yy}`;
-    let tt = date.getHours();
-    if (tt < 10) tt = `0${tt}`;
-    let m = date.getMinutes();
-    if (m < 10) m = `0${m}`;
-    return `${dd}.${mm}.${yy} ${tt}.${m}`;
-  }
-
-  loaderFilters() {
-    document.querySelector('.left-block__filters__btn-apply').addEventListener('click', (event) => {
-      clearInterval(checkFeedTweets);
-      document.querySelector('.right-block__chat__btns').style.display = 'block';
-      const author = document.querySelector('.filter-author').value;
-      const dateFrom = document.querySelector('.filter-date-from').value;
-      const defaultDateFrom = '1970-01-01';
-      const dateTo = document.querySelector('.filter-date-to').value;
-      const defaultDateTo = '2022-04-30';
-      const text  = document.querySelector('.filter-text').value;
-      const hashtags = document.querySelector('.filter-hashtag').value;
-      filterConfig = {};
-      filterConfig.author = author ? `&author=${author}` : '';
-      filterConfig.text = text ? `&text=${text}` : '';
-      filterConfig.dateFrom = dateFrom ? `&dateFrom=${JSON.stringify(new Date(dateFrom)).replace(/\"/g, "")}` : `&dateFrom=${JSON.stringify(new Date(defaultDateFrom)).replace(/\"/g, "")}`;
-      filterConfig.dateTo = dateTo ? `&dateTo=${JSON.stringify(new Date(dateTo)).replace(/\"/g, "")}` : `&dateTo=${JSON.stringify(new Date(defaultDateTo)).replace(/\"/g, "")}`;
-      let re = /\s* \s*/;
-      filterConfig.hashtags = hashtags ? `&hashtags=${hashtags.split(re)}` : '';
-      tweetFeedApiService.getFilterTweets(0, 10, filterConfig);
-    });
-  }
-
-  clearFilters() {
-    document.querySelector('.left-block__filters__btn-clear').addEventListener('click', () => {
-      setCheckFeedTweets();
-      document.querySelector('.filter-author').value = '';
-      document.querySelector('.filter-date-from').value = '';
-      document.querySelector('.filter-date-to').value = '';
-      document.querySelector('.filter-text').value = '';
-      document.querySelector('.filter-hashtag').value = '';
-      if (document.querySelector('.new-block-guest')) {
-        document.querySelector('.right-block__chat').removeChild(document.querySelector('.new-block-guest'));
-      }
-      this.tweetFeedView.clear();
-      this.getFeed();
-      document.querySelector('.right-block__chat__btn').style.display = 'block';
-      document.querySelector('.right-block__chat__btns').style.display = 'none';
-      if (currentUser === 'Гость') {
-        const addTweet = document.getElementById('add-tweet');
-        const addComment = document.getElementById('comment-id');
-        addComment.setAttribute('class', 'disappear');
-        addTweet.setAttribute('class', 'disappear');
-      }
-    });
-  }
-
   addNewTweet() {
     let textArea = document.querySelector('.right-block__add-twit-block'); 
     let text = textArea.value;
@@ -424,7 +449,7 @@ class TweetFeedApiService {
     this.user = user;
   }
 
-  get(skip = 0, top = 10) {
+  get(skip = 0, top = 10, filterConfig = {}) {
     let requestOptions = {
       method: 'GET',
       redirect: 'follow'
@@ -436,86 +461,16 @@ class TweetFeedApiService {
     url += top;
     url += '&from=';
     url += skip;
+    url += filterConfig.author ?? '';
+    url += filterConfig.text ?? '';
+    url += filterConfig.dateFrom ?? '';
+    url += filterConfig.dateTo ?? '';
+    url += filterConfig.hashtags ?? '';
     
-    return fetch(url, requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        return result;
-      })
-      .catch(error => pageError());
+    return this._fetch(url, requestOptions);
   }
 
-  getFilterTweets(skip, top, filterConfig) {
-    let requestOptions = {
-      method: 'GET',
-      redirect: 'follow'
-    };
-
-    let url = this.address;
-    url += 'tweet?';
-    url += 'count=';
-    url += top;
-    url += '&from=';
-    url += skip;
-    url += filterConfig.author;
-    url += filterConfig.text;
-    url += filterConfig.dateFrom;
-    url += filterConfig.dateTo;
-    url += filterConfig.hashtags;
-
-    fetch(url, requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        const arrayTweets = JSON.parse(result);
-        arrayTweets.forEach((item) => {
-          item.createdAt = new Date(item.createdAt);
-          item.comments.forEach((item) => {
-            item.createdAt = new Date(item.createdAt);
-          })
-        });
-        tweetsController.tweetFeedView.clear();
-        tweetsController.tweetFeedView.display(arrayTweets);
-        document.querySelector('#right-block__chat__btn').style.display = 'none';
-        if (arrayTweets.length === 0) {
-          const btn = document.querySelector('.right-block__chat__btns');
-          btn.setAttribute('style', 'display: none;');
-          const rightBlock = document.querySelector('.right-block__chat');
-          const newBlock =  document.createElement('div');
-          newBlock.setAttribute('class', 'new-block-guest');
-          newBlock.innerHTML = `<div>
-          <p>По вашему запросу ничего не найдено. Измените условия поиска</p>
-          <button class="btn-main">Назад</button>
-          </div>`;
-          rightBlock.prepend(newBlock);
-          const btnMain = document.querySelector('.btn-main');
-          btnMain.addEventListener('click', () => {
-            setCheckFeedTweets();
-            document.querySelector('.filter-author').value = '';
-            document.querySelector('.filter-date-from').value = '';
-            document.querySelector('.filter-date-to').value = '';
-            document.querySelector('.filter-text').value = '';
-            document.querySelector('.filter-hashtag').value = '';
-            if (newBlock) {
-              document.querySelector('.right-block__chat').removeChild(newBlock);
-            }
-            tweetsController.getFeed();
-            document.querySelector('.right-block__chat__btn').style.display = 'block';
-            if (currentUser === 'Гость') {
-              const addTweet = document.getElementById('add-tweet');
-              addTweet.setAttribute('class', 'disappear');
-            }
-          });
-        } else if (arrayTweets.length < 10) {
-          const btn = document.querySelector('.right-block__chat__btns');
-          btn.setAttribute('style', 'display: none;');
-        }
-        filterCountTweets = arrayTweets;
-        return filterCountTweets
-      })
-      .catch(error => pageError());
-  }
-
-  postRegistration(login, password) {
+  async postRegistration(login, password) {
     let raw = JSON.stringify({
       "login": login,
       "password": password
@@ -528,26 +483,22 @@ class TweetFeedApiService {
       redirect: 'follow'
     };
 
-    fetch(`${this.address}registration`, requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        let res = JSON.parse(result);
-        if (res.statusCode !== 409 && !res.hasOwnProperty('statusCode')) {
-          this.postLogin(login, password);
-        } else if (res.statusCode === 409) {
-          const nameInp = document.querySelector('.form__name');
-          nameInp.style.border = '0.125rem solid #ff8d8d';
-          const newP = document.querySelector('#new-p');
-          newP.classList.toggle('disappear');
-          return;
-        } else {
-          this._error(res);
-        }
-      })
-      .catch(error => pageError());
+    try {
+      const result = await this._fetch(`${this.address}registration`, requestOptions);
+      if (result.statusCode !== 409 && !result.hasOwnProperty('statusCode')) {
+        this.postLogin(login, password);
+      } else if (result.statusCode === 409) {
+        errorName();
+        return;
+      } else {
+        this._error(result);
+      }
+    } catch(err) {
+        pageError(); 
+    }
   }
 
-  postLogin(login, password) {
+  async postLogin(login, password) {
     let raw = JSON.stringify({
       "login": login,
       "password": password
@@ -560,33 +511,29 @@ class TweetFeedApiService {
       redirect: 'follow'
     };
 
-    fetch(`${this.address}login`, requestOptions)
-    .then(response => response.text())
-    .then(result => {
-      let token = JSON.parse(result);
-      if (token.statusCode !== 403 && !token.hasOwnProperty('statusCode')) {
+    try {
+      const result = await this._fetch(`${this.address}login`, requestOptions);
+      if (result.statusCode !== 403 && !result.hasOwnProperty('statusCode')) {
         currentUser = login;
         pageMain();
-        localStorage.setItem('token', JSON.stringify(token.token));
+        localStorage.setItem('token', JSON.stringify(result.token));
         localStorage.setItem('currentUser', JSON.stringify(login));
         tweetsController.setCurrentUser(login);
         tweetsController.login(login);
         renderMainUsers();
         setCheckFeedTweets();
-      } else if (token.statusCode === 403) {
-        const nameInp = document.querySelector('.form__name');
-        nameInp.style.border = '0.125rem solid #ff8d8d';
-        const newP = document.querySelector('#new-p');
-        newP.classList.toggle('disappear');
+      } else if (result.statusCode === 403) {
+        errorName();
         return;
       } else {
-        this._error(res);
+        this._error(result);
       }
-    })
-    .catch(error => pageError());
+    } catch(err) {
+    pageError(); 
+    }
   }
 
-  postTweet(text) {
+  async postTweet(text) {
     let raw = JSON.stringify({
       "text": text
     });
@@ -597,22 +544,21 @@ class TweetFeedApiService {
       body: raw,
       redirect: 'follow'
     };
-  
-    fetch(`${this.address}tweet`, requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        const res = JSON.parse(result);
-        if (res.hasOwnProperty('statusCode')) {
-          this._error(res);
-        } else {
-          tweetsController.tweetFeedView.clear();
-          tweetsController.getFeed();
-        }
-      })
-      .catch(error => pageError());
+   
+    try { 
+      const result = await this._fetch(`${this.address}tweet`, requestOptions);    
+      if (result.hasOwnProperty('statusCode')) {
+        this._error(result);
+      } else {
+        tweetsController.tweetFeedView.clear();
+        tweetsController.getFeed();
+      } 
+    } catch(err) {
+      pageError(); 
+    }
   }
 
-  putTweet(id, text) {
+  async putTweet(id, text) {
     let raw = JSON.stringify({
       "text": text
     });
@@ -627,22 +573,21 @@ class TweetFeedApiService {
     let url = `${this.address}tweet/`;
     url += id;
 
-    fetch(url, requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        const res = JSON.parse(result);
-        if (res.hasOwnProperty('statusCode')) {
-          this._error(res);
-        } else {
-          tweetsController.tweetFeedView.clear();
-          tweetsController.getFeed();
-          setCheckFeedTweets();
-        }
-      })
-      .catch(error => pageError());
+    try {
+      const result = await this._fetch(url, requestOptions);    
+      if (result.hasOwnProperty('statusCode')) {
+        this._error(result);
+      } else {
+        tweetsController.tweetFeedView.clear();
+        tweetsController.getFeed();
+        setCheckFeedTweets();
+      }
+    } catch(err) {
+      pageError(); 
+    }
   }
 
-  postComment(id, text) {
+  async postComment(id, text) {
     let raw = JSON.stringify({
       "text": text
     });
@@ -658,22 +603,20 @@ class TweetFeedApiService {
     url += id;
     url += '/comment';
 
-    fetch(url, requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        const res = JSON.parse(result);
-        if (res.hasOwnProperty('statusCode')) {
-          this._error(res);
-        } else {
-          tweetsController.commentView.clear();
-          const tweet = JSON.parse(result);
-          tweet.comments.forEach((item) => {
-            item.createdAt = new Date(item.createdAt);
-          });
-          tweetsController.commentView.display(tweet.comments);
-        }
-      })
-      .catch(error => pageError());
+    try {
+      const result = await this._fetch(url, requestOptions);   
+      if (result.hasOwnProperty('statusCode')) {
+        this._error(result);
+      } else {
+        tweetsController.commentView.clear();
+        result.comments.forEach((item) => {
+          item.createdAt = new Date(item.createdAt);
+        });
+        tweetsController.commentView.display(result.comments);
+      }
+    } catch(err) {
+      pageError(); 
+    }
   }
 
   delete(id) {
@@ -694,9 +637,13 @@ class TweetFeedApiService {
           tweetsController.getFeed();
           setCheckFeedTweets();
         } else {
-          const res = JSON.parse(result);
-          if (res.hasOwnProperty('statusCode')) {
-            this._error(res);
+          try {
+            const res = JSON.parse(result);
+            if (res.hasOwnProperty('statusCode')) {
+              this._error(res);
+            }
+          } catch(err) {
+            pageError(); 
           }
         }
       })
@@ -708,6 +655,15 @@ class TweetFeedApiService {
     myHeaders.append("Authorization", `Bearer ${JSON.parse(localStorage.getItem('token'))}`);
     myHeaders.append("Content-Type", "application/json");
     return myHeaders;
+  }
+
+  _fetch(url, requestOptions) {
+    return fetch(url, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        return result;
+      })
+      .catch(error => pageError());
   }
 
   _error(result) {
@@ -873,20 +829,7 @@ document.addEventListener('click', (event) => {
       addComment.setAttribute('class', 'disappear');
       addTweet.setAttribute('class', 'disappear');
     }
-    compareLengths();
-    async function compareLengths() {
-      let arrayString = await tweetFeedApiService.get(0, 1000);
-      const arrayTweets = JSON.parse(arrayString);
-      arrayTweets.forEach((item) => {
-        item.createdAt = new Date(item.createdAt);
-        item.comments.forEach((item) => {
-          item.createdAt = new Date(item.createdAt);
-        })
-      });
-      if ((arrayTweets.length - mainBlock.length) < 10) {
-        loadTweets.setAttribute('style', 'display: none;');
-      } 
-    }
+    compareLengths(0, 10 + mainBlock.length, filterConfig, loadTweets);
   } else if (event.target.parentNode === document.querySelector('#add-tweet')) { 
     clearInterval(checkFeedTweets);
     if (event.target === document.querySelector('.right-block__add-twit__btn')) {
@@ -913,46 +856,13 @@ document.addEventListener('click', (event) => {
     setCheckFeedTweets();
   } else if (event.target === document.querySelector('.right-block__chat__btns')) {
     const mainBlock = document.querySelectorAll('#main-class');
-    tweetFeedApiService.getFilterTweets(0, mainBlock.length + 10, filterConfig);
+    tweetsController.filterView.getFilterTweets(0, mainBlock.length + 10, filterConfig);
     if (currentUser === 'Гость') {
       const addTweet = document.getElementById('add-tweet');
       addTweet.setAttribute('class', 'disappear');
     }
-    compareLengths(0,1000, filterConfig);
-    function compareLengths(skip, top, filterConfig) {
-      let requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-      };
-  
-      let url = tweetFeedApiService.address;
-      url += 'tweet?';
-      url += 'count=';
-      url += top;
-      url += '&from=';
-      url += skip;
-      url += filterConfig.author;
-      url += filterConfig.text;
-      url += filterConfig.dateFrom;
-      url += filterConfig.dateTo;
-      url += filterConfig.hashtags;
-  
-      fetch(url, requestOptions)
-        .then(response => response.text())
-        .then(result => {
-          const arrayTweets = JSON.parse(result);
-          arrayTweets.forEach((item) => {
-            item.createdAt = new Date(item.createdAt);
-            item.comments.forEach((item) => {
-              item.createdAt = new Date(item.createdAt);
-            })
-          });
-          if ((arrayTweets.length - mainBlock.length) < 10) {
-            document.querySelector('.right-block__chat__btns').setAttribute('style', 'display: none;');
-          }
-        })
-        .catch(error => pageError());
-    }
+    const loadFilters = document.querySelector('.right-block__chat__btns');
+    compareLengths(0, 10 + mainBlock.length, filterConfig, loadFilters);
   }
 });
 
@@ -1236,6 +1146,13 @@ function pageError() {
 </div>`
 }
 
+function errorName() {
+  const nameInp = document.querySelector('.form__name');
+  nameInp.style.border = '0.125rem solid #ff8d8d';
+  const newP = document.querySelector('#new-p');
+  newP.classList.toggle('disappear');
+}
+
 function redirectLogIn() {
   const name = document.querySelector('.form__name');
   login = name.value;
@@ -1342,4 +1259,37 @@ function renderMainGuest() {
   button.innerHTML = `<h5>Версия 1.0</h5>`;
   const blockScroll = document.querySelector('.right-block__scroll-twit');
   blockScroll.setAttribute('style', 'height: 100vh;');
+}
+
+function formatDate(date) {
+  let dd = date.getDate();
+  if (dd < 10) dd = `0${dd}`;
+  let mm = date.getMonth() + 1;
+  if (mm < 10) mm = `0${mm}`;
+  let yy = date.getFullYear() % 100;
+  if (yy < 10) yy = `0${yy}`;
+  let tt = date.getHours();
+  if (tt < 10) tt = `0${tt}`;
+  let m = date.getMinutes();
+  if (m < 10) m = `0${m}`;
+  return `${dd}.${mm}.${yy} ${tt}.${m}`;
+}
+
+async function compareLengths(skip, top, filterConfig, btn) {
+  console.log(skip, top, filterConfig, btn)
+  try {
+    const array = await tweetFeedApiService.get(skip, top, filterConfig);
+    console.log(array)
+    array.forEach((item) => {
+      item.createdAt = new Date(item.createdAt);
+      item.comments.forEach((item) => {
+        item.createdAt = new Date(item.createdAt);
+      })
+    });
+    if (array.length % 10 !== 0) {
+      btn.setAttribute('style', 'display: none;');
+    } 
+  } catch(err) {
+    pageError(); 
+  }
 }
