@@ -779,6 +779,7 @@ document.addEventListener('click', (event) => {
       addComment.setAttribute('class', 'disappear');
       addTweet.setAttribute('class', 'disappear');
     }
+    filterConfig = {};
     compareLengths(0, 1000000, filterConfig, loadTweets);
   } else if (event.target.parentNode === document.querySelector('#add-tweet')) { 
     clearInterval(checkFeedTweets);
@@ -1241,6 +1242,7 @@ async function compareLengths(skip, top, filterConfig, btn) {
       })
     });
     const arr = await tweetFeedApiService.get(0, 10 + main.length, filterConfig);
+    console.log(array.length, arr.length)
     if (array.length === arr.length) {
       btn.setAttribute('style', 'display: none;');
     } 
