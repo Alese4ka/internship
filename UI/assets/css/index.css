@@ -487,7 +487,8 @@ textarea {
   background-color: var(--font-color1);
   margin: 1rem auto;
 }
-.right-block__chat__btn:active {
+.right-block__chat__btn:active,
+.right-block__chat__btns:active {
   color: #787878;
   box-shadow: 0 0.4375rem 0.625rem -0.5625rem rgb(128, 128, 128);
 }
